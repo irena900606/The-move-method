@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE MOVE METHOD</title>
+
 <style>
 :root{
   --bg:#0c0e0c;
@@ -15,82 +15,254 @@
   --muted:#a1a797;
   --accent:#c0c99c;
 }
+
 *{box-sizing:border-box}
+
 body{
-  margin:0;background:var(--bg);color:var(--text);
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
 }
+
 header{
   padding:27px 20px 23px;
   border-bottom:1px solid var(--line);
   background:#111410;
 }
-.header-inner,main{max-width:900px;margin:auto}
-.logo{font-size:25px;font-weight:900;letter-spacing:3px}
-.tagline{font-size:10px;letter-spacing:3px;color:var(--accent);margin-top:8px}
-.hero{padding:35px 20px 25px}
-.eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent)}
-h1{font-size:38px;line-height:1.05;margin:13px 0}
-.hero p{color:var(--muted);font-size:14px;line-height:1.7;max-width:550px}
-main{padding:0 16px 40px}
+
+.header-inner,main{
+  max-width:900px;
+  margin:auto;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.tagline{
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--accent);
+  margin-top:8px;
+}
+
+.hero{
+  padding:35px 20px 25px;
+}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:3px;
+  color:var(--accent);
+}
+
+h1{
+  font-size:38px;
+  line-height:1.05;
+  margin:13px 0;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  max-width:550px;
+}
+
+main{
+  padding:0 16px 40px;
+}
+
 .week-title{
-  display:flex;justify-content:space-between;align-items:center;
-  margin:20px 0 18px;gap:10px
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0 18px;
+  gap:10px;
 }
-.week-title h2{font-size:16px;letter-spacing:2px;margin:0}
-.week-title span{font-size:10px;color:var(--muted);letter-spacing:1px}
+
+.week-title h2{
+  font-size:16px;
+  letter-spacing:2px;
+  margin:0;
+}
+
+.week-title span{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
 .day-card{
-  background:var(--card);border:1px solid var(--line);
-  border-radius:13px;margin-bottom:17px;overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:13px;
+  margin-bottom:17px;
+  overflow:hidden;
 }
+
 .day-header{
-  padding:19px 18px;background:var(--card2);
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:19px 18px;
+  background:var(--card2);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
 }
-.day-name{font-size:21px;font-weight:900;letter-spacing:1px}
-.day-focus{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:1px}
+
+.day-name{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.day-focus{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:6px;
+  letter-spacing:1px;
+}
+
 .tag{
-  border:1px solid #687354;color:var(--accent);
-  border-radius:30px;padding:7px 10px;font-size:9px;
-  letter-spacing:1px;white-space:nowrap
+  border:1px solid #687354;
+  color:var(--accent);
+  border-radius:30px;
+  padding:7px 10px;
+  font-size:9px;
+  letter-spacing:1px;
+  white-space:nowrap;
 }
-.content{padding:5px 18px 16px}
+
+.day-header::after{
+  content:"+";
+  font-size:24px;
+  color:var(--accent);
+  margin-left:auto;
+}
+
+.day-card.open .day-header::after{
+  content:"−";
+}
+
+.content{
+  display:none;
+  padding:5px 18px 16px;
+}
+
+.day-card.open .content{
+  display:block;
+}
+
 .section{
-  padding:16px 0 13px;border-bottom:1px solid var(--line)
+  padding:16px 0 13px;
+  border-bottom:1px solid var(--line);
 }
-.section:last-child{border-bottom:0}
+
+.section:last-child{
+  border-bottom:0;
+}
+
 .section-heading{
-  display:flex;align-items:center;gap:9px;
-  font-size:11px;font-weight:800;letter-spacing:1.5px;
-  color:var(--accent);margin-bottom:11px
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  color:var(--accent);
+  margin-bottom:11px;
 }
+
 .number{
-  color:#777f68;font-size:10px;
-  border:1px solid #41483a;border-radius:5px;padding:4px 6px
+  color:#777f68;
+  font-size:10px;
+  border:1px solid #41483a;
+  border-radius:5px;
+  padding:4px 6px;
 }
+
 .work-label{
-  display:inline-block;background:#30382a;color:#dce5c5;
-  padding:6px 9px;border-radius:5px;font-size:10px;
-  letter-spacing:1px;margin:2px 0 10px
+  display:inline-block;
+  background:#30382a;
+  color:#dce5c5;
+  padding:6px 9px;
+  border-radius:5px;
+  font-size:10px;
+  letter-spacing:1px;
+  margin:2px 0 10px;
 }
-ul{padding-left:19px;margin:5px 0}
-li{font-size:14px;line-height:1.8;color:#e7e9e2}
-p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
-.small{font-size:12px!important;color:var(--muted)!important}
-.subheading{font-size:12px;font-weight:bold;color:#d5d9ca;margin:10px 0 5px}
-.rest{font-size:11px;color:var(--muted);margin:8px 0}
+
+ul{
+  padding-left:19px;
+  margin:5px 0;
+}
+
+li{
+  font-size:14px;
+  line-height:1.8;
+  color:#e7e9e2;
+}
+
+p.detail{
+  font-size:14px;
+  line-height:1.8;
+  margin:4px 0;
+  color:#e7e9e2;
+}
+
+.small{
+  font-size:12px!important;
+  color:var(--muted)!important;
+}
+
+.subheading{
+  font-size:12px;
+  font-weight:bold;
+  color:#d5d9ca;
+  margin:10px 0 5px;
+}
+
+.rest{
+  font-size:11px;
+  color:var(--muted);
+  margin:8px 0;
+}
+
 .footer{
-  text-align:center;padding:30px 15px;color:#777f70;
-  font-size:10px;letter-spacing:2px;border-top:1px solid var(--line)
+  text-align:center;
+  padding:30px 15px;
+  color:#777f70;
+  font-size:10px;
+  letter-spacing:2px;
+  border-top:1px solid var(--line);
 }
+
 @media(min-width:700px){
-  .hero{padding-top:48px;padding-bottom:35px}
-  h1{font-size:48px}
-  .content{padding-left:23px;padding-right:23px}
-  .day-header{padding:22px 23px}
+  .hero{
+    padding-top:48px;
+    padding-bottom:35px;
+  }
+
+  h1{
+    font-size:48px;
+  }
+
+  .content{
+    padding-left:23px;
+    padding-right:23px;
+  }
+
+  .day-header{
+    padding:22px 23px;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -109,6 +281,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 </section>
 
 <main>
+
 <div class="week-title">
   <h2>WEEKLY PROGRAM</h2>
   <span>MONDAY — FRIDAY</span>
@@ -123,7 +296,9 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     </div>
     <span class="tag">WEIGHTLIFTING</span>
   </div>
+
   <div class="content">
+
     <section class="section">
       <div class="section-heading"><span class="number">01</span> WARM-UP</div>
       <ul>
@@ -133,6 +308,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>Thoracic Rotation</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
       <span class="work-label">3 ROUNDS</span>
@@ -141,6 +317,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Down Ups</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">03</span> SKILL / WEIGHTLIFTING</div>
       <span class="work-label">EMOM 10'</span>
@@ -148,6 +325,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>1 Squat Clean & Jerk @ 65%</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">04</span> WOD</div>
       <span class="work-label">AMRAP 16'</span>
@@ -158,6 +336,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>12 Wall Balls</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
       <span class="work-label">3 SETS · NOT FOR TIME</span>
@@ -166,6 +345,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>8 Hip Thrusts</li>
       </ul>
     </section>
+
   </div>
 </article>
 
@@ -178,7 +358,9 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     </div>
     <span class="tag">WEIGHTLIFTING</span>
   </div>
+
   <div class="content">
+
     <section class="section">
       <div class="section-heading"><span class="number">01</span> WARM-UP</div>
       <ul>
@@ -189,6 +371,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Scapular Push-ups</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
       <span class="work-label">3 ROUNDS</span>
@@ -197,6 +380,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Gakk Squat</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div>
       <ul>
@@ -205,6 +389,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>Snatch Push Press – 4 × 4 reps</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">04</span> WOD</div>
       <span class="work-label">FOR TIME</span>
@@ -215,10 +400,12 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>DB Snatch – 30-24-18-12-6</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">05</span> RECOVERY</div>
       <ul><li>Stretching</li></ul>
     </section>
+
   </div>
 </article>
 
@@ -231,7 +418,9 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     </div>
     <span class="tag">ENGINE</span>
   </div>
+
   <div class="content">
+
     <section class="section">
       <div class="section-heading"><span class="number">01</span> WARM-UP</div>
       <ul>
@@ -242,6 +431,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Inchworms</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
       <span class="work-label">2 ROUNDS</span>
@@ -251,6 +441,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>20'' Hollow Hold</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">03</span> ENGINE</div>
       <span class="work-label">AMRAP 3' × 3 SETS</span>
@@ -267,6 +458,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
       </ul>
       <p class="rest">Rest 2 min</p>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">04</span> ACCESSORIES</div>
       <span class="work-label">12-10-8-6</span>
@@ -275,6 +467,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>Seated Row</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">05</span> CORE</div>
       <span class="work-label">TABATA</span>
@@ -283,6 +476,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>Arch Hold</li>
       </ul>
     </section>
+
   </div>
 </article>
 
@@ -295,7 +489,9 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     </div>
     <span class="tag">WEIGHTLIFTING</span>
   </div>
+
   <div class="content">
+
     <section class="section">
       <div class="section-heading"><span class="number">01</span> WARM-UP</div>
       <ul>
@@ -306,6 +502,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Muscle Cleans</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
       <span class="work-label">2 ROUNDS</span>
@@ -315,6 +512,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Empty Bar Front Squats</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div>
       <ul>
@@ -326,6 +524,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>3 × 3 reps @ 95-105% of Max C&J</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">04</span> WOD</div>
       <span class="work-label">EMOM 12'</span>
@@ -334,10 +533,12 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>2nd min: 10 Burpees Over Bar</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
       <ul><li>10' Erg Bike</li></ul>
     </section>
+
   </div>
 </article>
 
@@ -350,7 +551,9 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     </div>
     <span class="tag">STRENGTH</span>
   </div>
+
   <div class="content">
+
     <section class="section">
       <div class="section-heading"><span class="number">01</span> WARM-UP</div>
       <ul>
@@ -361,6 +564,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Hip Openers</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
       <span class="work-label">3 ROUNDS</span>
@@ -370,6 +574,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>20'' Wall Sit</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">03</span> STRENGTH</div>
       <span class="work-label">EVERY 2:00 × 5 SETS</span>
@@ -377,6 +582,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>6 Back Squats @ 75%</li>
       </ul>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">04</span> WOD</div>
       <span class="work-label">15' TIME CAP · COMPETE</span>
@@ -391,6 +597,7 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
       </ul>
       <p class="detail small">In the remaining time: Max Calories on any machine.</p>
     </section>
+
     <section class="section">
       <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
       <span class="work-label">3 SETS</span>
@@ -399,15 +606,33 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
         <li>10 Tricep Extensions</li>
       </ul>
     </section>
+
   </div>
 </article>
 
 </main>
 
-<footer>
+<footer class="footer">
   THE MOVE METHOD<br><br>
   TRAIN WITH PURPOSE · MOVE WITH INTENTION
 </footer>
+
+<script>
+document.querySelectorAll('.day-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const selectedCard = header.closest('.day-card');
+    const wasOpen = selectedCard.classList.contains('open');
+
+    document.querySelectorAll('.day-card').forEach(card => {
+      card.classList.remove('open');
+    });
+
+    if (!wasOpen) {
+      selectedCard.classList.add('open');
+    }
+  });
+});
+</script>
 
 </body>
 </html>
