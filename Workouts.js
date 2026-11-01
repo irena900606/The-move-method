@@ -25,7 +25,7 @@ const workouts = {
         <div class="section-heading"><span class="number">04</span> WOD</div>
         <span class="work-label">AMRAP 16'</span>
         <ul>
-          <li>200 m Run</li><li>6 Power Clean</li>
+          <li>300 m Run</li><li>6 Power Clean</li>
           <li>9 Chest to Bar</li><li>12 Wall Balls</li>
         </ul>
       </section>
