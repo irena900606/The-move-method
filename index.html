@@ -132,8 +132,8 @@ h1 span {
 }
 
 .week-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 15px;
 }
 
@@ -149,7 +149,6 @@ h1 span {
 .day-card.selected {
   border-color: var(--olive);
   background: var(--card-light);
-  transform: translateY(-3px);
 }
 
 .day-number {
@@ -173,10 +172,11 @@ h1 span {
 
 .workout-detail {
   display: none;
-  margin-top: 35px;
+  margin-top: 22px;
   background: var(--card);
   border: 1px solid var(--line);
-  padding: 30px;
+  padding: 25px;
+  cursor: default;
 }
 
 .workout-detail.active {
@@ -191,7 +191,7 @@ h1 span {
 
 .workout-focus {
   color: var(--muted);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   font-size: 14px;
 }
 
@@ -237,6 +237,10 @@ footer {
 
   main {
     padding: 48px 6%;
+  }
+
+  .day-card {
+    padding: 22px;
   }
 
   .workout-detail {
@@ -285,10 +289,6 @@ footer {
     </p>
 
     <div class="week-grid" id="weekGrid"></div>
-
-    <div class="workout-detail" id="workoutDetail">
-      <div id="workoutContent"></div>
-    </div>
   </section>
 
 </main>
@@ -302,26 +302,22 @@ const workouts = [
     day: "MONDAY",
     title: "CLEAN & JERK",
     focus: "Weightlifting · Conditioning",
-
     warmup: [
       "3 min easy row",
       "10 Romanian deadlifts",
       "10 alternating lunges",
       "10 thoracic rotations"
     ],
-
     activation: [
       "3 Rounds:",
       "15 Cal Row",
       "10 Down Ups"
     ],
-
     skill: [
       "Every 2:00 x 5 sets",
       "Squat Clean & Jerk",
       "Work up to 65% of 1RM"
     ],
-
     wod: [
       "AMRAP 16:",
       "200m Run",
@@ -329,7 +325,6 @@ const workouts = [
       "8 Chest-to-Bar Pull-Ups",
       "15 Wall Balls"
     ],
-
     accessories: [
       "3 x 10 Bulgarian Split Squats",
       "3 x 12 Hip Thrusts"
@@ -340,28 +335,24 @@ const workouts = [
     day: "TUESDAY",
     title: "SNATCH & GYMNASTICS",
     focus: "Weightlifting · Gymnastics",
-
     warmup: [
       "3 min easy bike",
       "10 Hip Extensions",
       "10 Air Squats",
       "10 Shoulder Circles"
     ],
-
     activation: [
       "3 Rounds:",
       "10 Scapular Pull-Ups",
       "10 PVC Pass Throughs",
       "10 Overhead Squats"
     ],
-
     skill: [
       "Muscle Snatch",
       "Snatch + Hang Snatch",
       "Snatch Push Press",
       "Focus on technique and control"
     ],
-
     wod: [
       "For Time:",
       "15 Burpee Box Jump Overs",
@@ -369,7 +360,6 @@ const workouts = [
       "30 Dumbbell Snatches",
       "15 Burpee Box Jump Overs"
     ],
-
     accessories: [
       "Core and shoulder stability",
       "Finish with stretching"
@@ -380,25 +370,21 @@ const workouts = [
     day: "WEDNESDAY",
     title: "ENGINE",
     focus: "Aerobic Conditioning",
-
     warmup: [
       "5 min easy cardio",
       "Dynamic mobility",
       "Movement preparation"
     ],
-
     activation: [
       "3 Rounds:",
       "10 Sit-Ups",
       "10 Back Extensions",
       "10 Air Squats"
     ],
-
     skill: [
       "Pacing and breathing",
       "Maintain consistent effort"
     ],
-
     wod: [
       "3 Rounds:",
       "AMRAP 3 min:",
@@ -407,7 +393,6 @@ const workouts = [
       "AMRAP 3 min:",
       "Run + Ski"
     ],
-
     accessories: [
       "Bench Press 3 x 10",
       "Seated Row 3 x 12",
@@ -420,33 +405,28 @@ const workouts = [
     day: "THURSDAY",
     title: "POWER & STRENGTH",
     focus: "Weightlifting · Strength",
-
     warmup: [
       "3 min easy row",
       "10 Empty Bar Good Mornings",
       "10 Front Squats",
       "10 Muscle Cleans"
     ],
-
     activation: [
       "3 Rounds:",
       "10 Burpees",
       "10 Empty Bar Cleans"
     ],
-
     skill: [
       "Every 2:00 x 5 sets:",
       "Power Clean + Power Clean Below Knees",
       "70–75% of Clean & Jerk 1RM",
       "Clean Pull 3 x 3 at 95–105%"
     ],
-
     wod: [
       "EMOM 12:",
       "Min 1: 8 Front Squats at 60%",
       "Min 2: 10 Burpees Over Bar"
     ],
-
     accessories: [
       "10 min easy Bike",
       "Mobility and recovery"
@@ -457,26 +437,22 @@ const workouts = [
     day: "FRIDAY",
     title: "SQUAT & MIXED WOD",
     focus: "Strength · Mixed Conditioning",
-
     warmup: [
       "3 min easy cardio",
       "10 Air Squats",
       "10 Lunges",
       "Dynamic hip mobility"
     ],
-
     activation: [
       "3 Rounds:",
       "10 Glute Bridges",
       "10 Goblet Squats"
     ],
-
     skill: [
       "Every 2:00 x 5 sets:",
       "Back Squat 75%",
       "Maintain controlled technique"
     ],
-
     wod: [
       "For Time:",
       "400m Run",
@@ -485,7 +461,6 @@ const workouts = [
       "20 Handstand Push-Ups",
       "Max Machine Calories"
     ],
-
     accessories: [
       "Biceps 3 x 12",
       "Triceps 3 x 12"
@@ -516,13 +491,23 @@ function showPage(page, button) {
   closeWorkout();
 }
 
+function makeBlock(title, items) {
+  return `
+    <div class="block">
+      <h3>${title}</h3>
+      <ul>
+        ${items.map(item => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
 function createWeek() {
   const grid = document.getElementById("weekGrid");
   grid.innerHTML = "";
 
   workouts.forEach((workout, index) => {
     const card = document.createElement("div");
-
     card.className = "day-card";
     card.dataset.index = index;
 
@@ -533,60 +518,56 @@ function createWeek() {
       <p>${workout.focus}</p>
     `;
 
-    card.addEventListener("click", () => openWorkout(index));
+    const detail = document.createElement("div");
+    detail.className = "workout-detail";
+
+    detail.innerHTML = `
+      <div class="eyebrow">${workout.day}</div>
+      <h2>${workout.title}</h2>
+      <p class="workout-focus">${workout.focus}</p>
+      ${makeBlock("WARM-UP", workout.warmup)}
+      ${makeBlock("ACTIVATION", workout.activation)}
+      ${makeBlock("SKILL / STRENGTH", workout.skill)}
+      ${makeBlock("WOD", workout.wod)}
+      ${makeBlock("ACCESSORIES", workout.accessories)}
+    `;
+
+    card.addEventListener("click", () => {
+      openWorkout(index);
+    });
 
     grid.appendChild(card);
+    grid.appendChild(detail);
   });
 }
 
 function openWorkout(index) {
-  const detail = document.getElementById("workoutDetail");
+  const cards = document.querySelectorAll(".day-card");
+  const details = document.querySelectorAll(".workout-detail");
 
   if (openedWorkoutIndex === index) {
     closeWorkout();
     return;
   }
 
-  openedWorkoutIndex = index;
-
-  const workout = workouts[index];
-  const content = document.getElementById("workoutContent");
-
-  function makeBlock(title, items) {
-    return `
-      <div class="block">
-        <h3>${title}</h3>
-        <ul>
-          ${items.map(item => `<li>${item}</li>`).join("")}
-        </ul>
-      </div>
-    `;
-  }
-
-  content.innerHTML = `
-    <div class="eyebrow">${workout.day}</div>
-    <h2>${workout.title}</h2>
-    <p class="workout-focus">${workout.focus}</p>
-
-    ${makeBlock("WARM-UP", workout.warmup)}
-    ${makeBlock("ACTIVATION", workout.activation)}
-    ${makeBlock("SKILL / STRENGTH", workout.skill)}
-    ${makeBlock("WOD", workout.wod)}
-    ${makeBlock("ACCESSORIES", workout.accessories)}
-  `;
-
-  document.querySelectorAll(".day-card").forEach(card => {
-    card.classList.toggle(
-      "selected",
-      Number(card.dataset.index) === index
-    );
+  details.forEach(detail => {
+    detail.classList.remove("active");
   });
 
-  detail.classList.add("active");
+  cards.forEach(card => {
+    card.classList.remove("selected");
+  });
+
+  openedWorkoutIndex = index;
+
+  cards[index].classList.add("selected");
+  details[index].classList.add("active");
+}
 
 function closeWorkout() {
-  document.getElementById("workoutDetail").classList.remove("active");
-  document.getElementById("workoutContent").innerHTML = "";
+  document.querySelectorAll(".workout-detail").forEach(detail => {
+    detail.classList.remove("active");
+  });
 
   document.querySelectorAll(".day-card").forEach(card => {
     card.classList.remove("selected");
