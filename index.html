@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +27,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 }
 
 header {
@@ -138,18 +140,18 @@ h1 span {
 .day-card {
   background: var(--card);
   border: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.day-heading {
   padding: 25px;
-  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .day-card:hover,
 .day-card.selected {
   border-color: var(--olive);
   background: var(--card-open);
+}
+
+.day-card-header {
+  cursor: pointer;
 }
 
 .day-number {
@@ -159,28 +161,49 @@ h1 span {
   margin-bottom: 15px;
 }
 
-.day-heading h3 {
+.day-card h3 {
   font-size: 19px;
   margin-bottom: 9px;
   letter-spacing: 1px;
 }
 
-.day-heading p {
+.day-card p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.6;
 }
 
-.workout-detail {
+.workout-content {
   display: none;
-  padding: 0 25px 25px;
 }
 
-.workout-detail.active {
+.day-card.selected .day-card-header {
+  display: none;
+}
+
+.day-card.selected .workout-content {
   display: block;
 }
 
-.workout-detail h2 {
+.workout-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.back-button {
+  background: none;
+  border: 1px solid var(--olive);
+  color: var(--olive);
+  padding: 9px 14px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.workout-content h2 {
   font-size: 27px;
   margin-bottom: 10px;
   letter-spacing: 1px;
@@ -236,12 +259,12 @@ footer {
     padding: 48px 6%;
   }
 
-  .day-heading {
-    padding: 22px;
+  .day-card {
+    padding: 20px;
   }
 
-  .workout-detail {
-    padding: 0 20px 20px;
+  .workout-content h2 {
+    font-size: 23px;
   }
 }
 </style>
@@ -251,6 +274,7 @@ footer {
 
 <header>
   <div class="logo">THE MOVE <span>METHOD</span></div>
+
   <nav>
     <button class="active" onclick="showPage('home', this)">HOME</button>
     <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
@@ -261,12 +285,15 @@ footer {
 
 <section id="home" class="page active">
   <div class="eyebrow">TRAIN WITH PURPOSE</div>
+
   <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
+
   <p class="intro">
     A training method built around strength, conditioning,
     movement quality and consistency. Every week, a new
     training challenge.
   </p>
+
   <button class="primary-button" onclick="showPage('program')">
     VIEW WEEKLY PROGRAM
   </button>
@@ -274,8 +301,13 @@ footer {
 
 <section id="program" class="page">
   <div class="eyebrow">YOUR TRAINING PLAN</div>
+
   <h2 class="section-title">WEEKLY PROGRAM</h2>
-  <p class="section-subtitle">Select a training day to view your workout.</p>
+
+  <p class="section-subtitle">
+    Select a training day to view your workout.
+  </p>
+
   <div class="week-grid" id="weekGrid"></div>
 </section>
 
@@ -318,6 +350,7 @@ const workouts = [
       "3 x 12 Hip Thrusts"
     ]
   },
+
   {
     day: "TUESDAY",
     title: "SNATCH & GYMNASTICS",
@@ -352,6 +385,7 @@ const workouts = [
       "Finish with stretching"
     ]
   },
+
   {
     day: "WEDNESDAY",
     title: "ENGINE",
@@ -386,6 +420,7 @@ const workouts = [
       "Tabata Arch Hold"
     ]
   },
+
   {
     day: "THURSDAY",
     title: "POWER & STRENGTH",
@@ -417,6 +452,7 @@ const workouts = [
       "Mobility and recovery"
     ]
   },
+
   {
     day: "FRIDAY",
     title: "SQUAT & MIXED WOD",
@@ -495,43 +531,46 @@ function createWeek() {
     const card = document.createElement("div");
     card.className = "day-card";
 
-    const heading = document.createElement("div");
-    heading.className = "day-heading";
+    card.innerHTML = `
+      <div class="day-card-header">
+        <div class="day-number">DAY 0${index + 1}</div>
+        <h3>${workout.day}</h3>
+        <p>${workout.title}</p>
+        <p>${workout.focus}</p>
+      </div>
 
-    heading.innerHTML = `
-      <div class="day-number">DAY 0${index + 1}</div>
-      <h3>${workout.day}</h3>
-      <p>${workout.title}</p>
-      <p>${workout.focus}</p>
+      <div class="workout-content">
+        <div class="workout-top">
+          <div class="day-number">${workout.day}</div>
+          <button class="back-button" type="button">BACK</button>
+        </div>
+
+        <h2>${workout.title}</h2>
+        <p class="workout-focus">${workout.focus}</p>
+
+        ${makeBlock("WARM-UP", workout.warmup)}
+        ${makeBlock("ACTIVATION", workout.activation)}
+        ${makeBlock("SKILL / STRENGTH", workout.skill)}
+        ${makeBlock("WOD", workout.wod)}
+        ${makeBlock("ACCESSORIES", workout.accessories)}
+      </div>
     `;
 
-    const detail = document.createElement("div");
-    detail.className = "workout-detail";
-
-    detail.innerHTML = `
-      <div class="eyebrow">${workout.day}</div>
-      <h2>${workout.title}</h2>
-      <p class="workout-focus">${workout.focus}</p>
-      ${makeBlock("WARM-UP", workout.warmup)}
-      ${makeBlock("ACTIVATION", workout.activation)}
-      ${makeBlock("SKILL / STRENGTH", workout.skill)}
-      ${makeBlock("WOD", workout.wod)}
-      ${makeBlock("ACCESSORIES", workout.accessories)}
-    `;
-
-    heading.addEventListener("click", () => {
+    card.querySelector(".day-card-header").addEventListener("click", () => {
       openWorkout(index);
     });
 
-    card.appendChild(heading);
-    card.appendChild(detail);
+    card.querySelector(".back-button").addEventListener("click", (event) => {
+      event.stopPropagation();
+      closeWorkout();
+    });
+
     grid.appendChild(card);
   });
 }
 
 function openWorkout(index) {
   const cards = document.querySelectorAll(".day-card");
-  const details = document.querySelectorAll(".workout-detail");
 
   if (openedWorkoutIndex === index) {
     closeWorkout();
@@ -540,18 +579,13 @@ function openWorkout(index) {
 
   closeWorkout();
 
-  openedWorkoutIndex = index;
   cards[index].classList.add("selected");
-  details[index].classList.add("active");
+  openedWorkoutIndex = index;
 }
 
 function closeWorkout() {
   document.querySelectorAll(".day-card").forEach(card => {
     card.classList.remove("selected");
-  });
-
-  document.querySelectorAll(".workout-detail").forEach(detail => {
-    detail.classList.remove("active");
   });
 
   openedWorkoutIndex = null;
