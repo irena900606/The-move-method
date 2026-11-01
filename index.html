@@ -10,7 +10,7 @@
 :root {
   --bg: #111310;
   --card: #1c1f19;
-  --card-light: #25291f;
+  --card2: #25291f;
   --olive: #a1a584;
   --text: #f2f2ed;
   --muted: #a5a69b;
@@ -31,7 +31,7 @@ body {
 }
 
 header {
-  padding: 28px 7%;
+  padding: 26px 7%;
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,7 @@ header {
 
 nav {
   display: flex;
-  gap: 28px;
+  gap: 25px;
 }
 
 nav button {
@@ -145,9 +145,10 @@ h1 span {
   transition: 0.2s;
 }
 
-.day-card:hover {
+.day-card:hover,
+.day-card.selected {
   border-color: var(--olive);
-  background: var(--card-light);
+  background: var(--card2);
   transform: translateY(-3px);
 }
 
@@ -170,11 +171,6 @@ h1 span {
   line-height: 1.6;
 }
 
-.rest-card {
-  opacity: 0.65;
-  cursor: default;
-}
-
 .workout-detail {
   display: none;
   margin-top: 35px;
@@ -185,16 +181,6 @@ h1 span {
 
 .workout-detail.active {
   display: block;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: var(--olive);
-  cursor: pointer;
-  letter-spacing: 1px;
-  margin-bottom: 25px;
-  font-size: 12px;
 }
 
 .workout-detail h2 {
@@ -221,7 +207,6 @@ h1 span {
   margin-bottom: 13px;
 }
 
-.block p,
 .block li {
   color: var(--text);
   font-size: 14px;
@@ -267,8 +252,12 @@ footer {
   <div class="logo">THE MOVE <span>METHOD</span></div>
 
   <nav>
-    <button class="active" onclick="showPage('home', this)">HOME</button>
-    <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
+    <button class="active" onclick="showPage('home', this)">
+      HOME
+    </button>
+    <button onclick="showPage('program', this)">
+      WEEKLY PROGRAM
+    </button>
   </nav>
 </header>
 
@@ -276,7 +265,12 @@ footer {
 
   <section id="home" class="page active">
     <div class="eyebrow">TRAIN WITH PURPOSE</div>
-    <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
+
+    <h1>
+      MOVE<br>
+      <span>BETTER.</span><br>
+      GET STRONGER.
+    </h1>
 
     <p class="intro">
       A training method built around strength, conditioning,
@@ -291,7 +285,9 @@ footer {
 
   <section id="program" class="page">
     <div class="eyebrow">YOUR TRAINING PLAN</div>
+
     <h2 class="section-title">WEEKLY PROGRAM</h2>
+
     <p class="section-subtitle">
       Select a training day to view your workout.
     </p>
@@ -299,39 +295,44 @@ footer {
     <div class="week-grid" id="weekGrid"></div>
 
     <div class="workout-detail" id="workoutDetail">
-      <button class="back-button" onclick="closeWorkout()">
-        ← BACK TO WEEK
-      </button>
       <div id="workoutContent"></div>
     </div>
   </section>
 
 </main>
 
-<footer>THE MOVE METHOD · TRAIN WITH PURPOSE</footer>
+<footer>
+  THE MOVE METHOD · TRAIN WITH PURPOSE
+</footer>
 
 <script>
+
 const workouts = [
+
   {
     day: "MONDAY",
     title: "CLEAN & JERK",
     focus: "Weightlifting · Conditioning",
+
     warmup: [
       "3 min easy row",
       "10 Romanian deadlifts",
       "10 alternating lunges",
       "10 thoracic rotations"
     ],
+
     activation: [
       "3 Rounds:",
       "15 Cal Row",
       "10 Down Ups"
     ],
+
     skill: [
       "Every 2:00 x 5 sets",
       "Squat Clean & Jerk",
       "Work up to 65% of 1RM"
     ],
+
     wod: [
       "AMRAP 16:",
       "200m Run",
@@ -339,33 +340,39 @@ const workouts = [
       "8 Chest-to-Bar Pull-Ups",
       "15 Wall Balls"
     ],
+
     accessories: [
       "3 x 10 Bulgarian Split Squats",
       "3 x 12 Hip Thrusts"
     ]
   },
+
   {
     day: "TUESDAY",
     title: "SNATCH & GYMNASTICS",
     focus: "Weightlifting · Gymnastics",
+
     warmup: [
       "3 min easy bike",
       "10 Hip Extensions",
       "10 Air Squats",
       "10 Shoulder Circles"
     ],
+
     activation: [
       "3 Rounds:",
       "10 Scapular Pull-Ups",
       "10 PVC Pass Throughs",
       "10 Overhead Squats"
     ],
+
     skill: [
       "Muscle Snatch",
       "Snatch + Hang Snatch",
       "Snatch Push Press",
       "Focus on technique and control"
     ],
+
     wod: [
       "For Time:",
       "15 Burpee Box Jump Overs",
@@ -373,30 +380,36 @@ const workouts = [
       "30 Dumbbell Snatches",
       "15 Burpee Box Jump Overs"
     ],
+
     accessories: [
       "Core and shoulder stability",
       "Finish with stretching"
     ]
   },
+
   {
     day: "WEDNESDAY",
     title: "ENGINE",
     focus: "Aerobic Conditioning",
+
     warmup: [
       "5 min easy cardio",
       "Dynamic mobility",
       "Movement preparation"
     ],
+
     activation: [
       "3 Rounds:",
       "10 Sit-Ups",
       "10 Back Extensions",
       "10 Air Squats"
     ],
+
     skill: [
       "Pacing and breathing",
       "Maintain consistent effort"
     ],
+
     wod: [
       "3 Rounds:",
       "AMRAP 3 min:",
@@ -405,6 +418,7 @@ const workouts = [
       "AMRAP 3 min:",
       "Run + Ski"
     ],
+
     accessories: [
       "Bench Press 3 x 10",
       "Seated Row 3 x 12",
@@ -412,57 +426,68 @@ const workouts = [
       "Tabata Arch Hold"
     ]
   },
+
   {
     day: "THURSDAY",
     title: "POWER & STRENGTH",
     focus: "Weightlifting · Strength",
+
     warmup: [
       "3 min easy row",
       "10 Empty Bar Good Mornings",
       "10 Front Squats",
       "10 Muscle Cleans"
     ],
+
     activation: [
       "3 Rounds:",
       "10 Burpees",
       "10 Empty Bar Cleans"
     ],
+
     skill: [
       "Every 2:00 x 5 sets:",
       "Power Clean + Power Clean Below Knees",
       "70–75% of Clean & Jerk 1RM",
       "Clean Pull 3 x 3 at 95–105%"
     ],
+
     wod: [
       "EMOM 12:",
       "Min 1: 8 Front Squats at 60%",
       "Min 2: 10 Burpees Over Bar"
     ],
+
     accessories: [
       "10 min easy Bike",
       "Mobility and recovery"
     ]
   },
+
   {
     day: "FRIDAY",
     title: "SQUAT & MIXED WOD",
     focus: "Strength · Mixed Conditioning",
+
     warmup: [
       "3 min easy cardio",
       "10 Air Squats",
       "10 Lunges",
       "Dynamic hip mobility"
     ],
+
     activation: [
       "3 Rounds:",
       "10 Glute Bridges",
       "10 Goblet Squats"
     ],
+
     skill: [
       "Every 2:00 x 5 sets:",
       "Back Squat 75%",
       "Maintain controlled technique"
     ],
+
     wod: [
       "For Time:",
       "400m Run",
@@ -471,42 +496,55 @@ const workouts = [
       "20 Handstand Push-Ups",
       "Max Machine Calories"
     ],
+
     accessories: [
       "Biceps 3 x 12",
       "Triceps 3 x 12"
     ]
   }
+
 ];
 
+let openedWorkoutIndex = null;
+
 function showPage(page, button) {
-  document.querySelectorAll(".page").forEach(p => {
-    p.classList.remove("active");
+
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.remove("active");
   });
 
   document.getElementById(page).classList.add("active");
 
-  document.querySelectorAll("nav button").forEach(b => {
-    b.classList.remove("active");
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.remove("active");
   });
 
   if (button) {
     button.classList.add("active");
   } else {
-    const navButton = [...document.querySelectorAll("nav button")]
-      .find(b => b.textContent.includes("WEEKLY"));
-    if (navButton) navButton.classList.add("active");
+    const programButton = [...document.querySelectorAll("nav button")]
+      .find(btn => btn.textContent.includes("WEEKLY"));
+
+    if (page === "program" && programButton) {
+      programButton.classList.add("active");
+    }
   }
 
   closeWorkout();
 }
 
 function createWeek() {
+
   const grid = document.getElementById("weekGrid");
+
   grid.innerHTML = "";
 
   workouts.forEach((workout, index) => {
+
     const card = document.createElement("div");
+
     card.className = "day-card";
+    card.dataset.index = index;
 
     card.innerHTML = `
       <div class="day-number">DAY 0${index + 1}</div>
@@ -515,35 +553,21 @@ function createWeek() {
       <p>${workout.focus}</p>
     `;
 
-    card.onclick = () => openWorkout(index);
+    card.addEventListener("click", () => {
+      openWorkout(index);
+    });
+
     grid.appendChild(card);
+
   });
 
-  const restDays = ["SATURDAY", "SUNDAY"];
-
-  restDays.forEach(day => {
-    const card = document.createElement("div");
-    card.className = "day-card rest-card";
-    card.innerHTML = `
-      <div class="day-number">RECOVERY</div>
-      <h3>${day}</h3>
-      <p>Rest & Recovery</p>
-    `;
-    grid.appendChild(card);
-  });
 }
 
 function openWorkout(index) {
 
-let openedWorkoutIndex = null;
-
-function openWorkout(index) {
   const detail = document.getElementById("workoutDetail");
 
-  if (
-    openedWorkoutIndex === index &&
-    detail.classList.contains("active")
-  ) {
+  if (openedWorkoutIndex === index) {
     closeWorkout();
     return;
   }
@@ -554,17 +578,23 @@ function openWorkout(index) {
   const content = document.getElementById("workoutContent");
 
   function makeBlock(title, items) {
+
     return `
       <div class="block">
         <h3>${title}</h3>
-        <ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>
+        <ul>
+          ${items.map(item => `<li>${item}</li>`).join("")}
+        </ul>
       </div>
     `;
+
   }
 
   content.innerHTML = `
     <div class="eyebrow">${workout.day}</div>
+
     <h2>${workout.title}</h2>
+
     <p class="workout-focus">${workout.focus}</p>
 
     ${makeBlock("WARM-UP", workout.warmup)}
@@ -574,19 +604,40 @@ function openWorkout(index) {
     ${makeBlock("ACCESSORIES", workout.accessories)}
   `;
 
+  document.querySelectorAll(".day-card").forEach(card => {
+    card.classList.toggle(
+      "selected",
+      Number(card.dataset.index) === index
+    );
+  });
+
   detail.classList.add("active");
-  detail.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  detail.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
 }
 
 function closeWorkout() {
-  document.getElementById("workoutDetail").classList.remove("active");
+
+  document.getElementById("workoutDetail")
+    .classList.remove("active");
+
+  document.getElementById("workoutContent").innerHTML = "";
+
+  document.querySelectorAll(".day-card").forEach(card => {
+    card.classList.remove("selected");
+  });
+
   openedWorkoutIndex = null;
+
 }
 
-
 createWeek();
+
 </script>
 
 </body>
 </html>
-
