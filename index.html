@@ -361,6 +361,20 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
     padding:20px 14px;
   }
 } 
+  /* TIMER SOUND BUTTON */
+
+.timer-sound{
+  display:block;
+  margin:18px auto 0;
+  padding:10px 22px;
+  background:transparent;
+  border:1px solid #687354;
+  border-radius:6px;
+  color:#c0c99c;
+  font-size:10px;
+  letter-spacing:2px;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -958,14 +972,18 @@ showWorkoutForDate(selectedDate);
 
     <div id="timerSettings"></div>
 
+    
     <div class="timer-controls">
       <button id="timerStart">START</button>
       <button id="timerPause">PAUSE</button>
       <button id="timerReset">RESET</button>
     </div>
 
-  </div>
+    <button id="timerSound" class="timer-sound">
+      SOUND ON
+    </button>
 
+  </div>
 </div>
  <script>
 (function(){
@@ -981,6 +999,7 @@ const settings = document.getElementById("timerSettings");
 const startBtn = document.getElementById("timerStart");
 const pauseBtn = document.getElementById("timerPause");
 const resetBtn = document.getElementById("timerReset");
+  const soundBtn = document.getElementById("timerSound");
 const modeButtons = document.querySelectorAll(".timer-modes button");
 
 let mode = "stopwatch";
@@ -994,7 +1013,15 @@ let totalRounds = 10;
 let phase = "WORK";
 let workTime = 20000;
 let restTime = 10000;
+soundBtn.addEventListener("click",()=>{
+  soundEnabled = !soundEnabled;
 
+  soundBtn.textContent = soundEnabled ? "SOUND ON" : "SOUND OFF";
+
+  if(soundEnabled){
+    playBeep(800,120);
+  }
+});
 function format(ms){
   let seconds = Math.ceil(ms / 1000);
   let minutes = Math.floor(seconds / 60);
@@ -1067,6 +1094,7 @@ function finish(){
   display.textContent = "00:00";
   status.textContent = "COMPLETED";
   roundDisplay.textContent = "WORKOUT COMPLETE";
+  playBeep(1400,400);
 }
 
 function reset(){
@@ -1187,6 +1215,8 @@ function start(){
 
     deadline = Date.now() + remaining;
   }
+
+  playBeep(1200,250);
 
   running = true;
   interval = setInterval(update,100);
