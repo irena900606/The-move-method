@@ -322,7 +322,7 @@ function showWorkoutForDate(date){
   }
 
   selectedDateLabel.textContent = formatted + " · WORKOUT SELECTED";
-
+window.loadWorkoutForDate(date);
   document.querySelectorAll(".day-card").forEach(card=>{
     card.classList.remove("open","selected-card");
     if(Number(card.dataset.day)===dayNumber){
