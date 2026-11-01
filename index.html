@@ -1,1 +1,576 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE MOVE METHOD</title>
+
+<style>
+:root {
+  --bg: #111310;
+  --card: #1c1f19;
+  --card-light: #25291f;
+  --olive: #a1a584;
+  --text: #f2f2ed;
+  --muted: #a5a69b;
+  --line: #34372d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  padding: 28px 7%;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.logo span {
+  color: var(--olive);
+}
+
+nav {
+  display: flex;
+  gap: 28px;
+}
+
+nav button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+nav button.active,
+nav button:hover {
+  color: var(--olive);
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 65px 7%;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.eyebrow {
+  color: var(--olive);
+  font-size: 11px;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: clamp(38px, 7vw, 68px);
+  line-height: 1.05;
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+}
+
+h1 span {
+  color: var(--olive);
+}
+
+.intro {
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 580px;
+  font-size: 15px;
+}
+
+.primary-button {
+  margin-top: 35px;
+  padding: 16px 26px;
+  background: var(--olive);
+  color: #111310;
+  border: none;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.section-title {
+  font-size: 30px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  margin-bottom: 35px;
+  line-height: 1.6;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.day-card:hover {
+  border-color: var(--olive);
+  background: var(--card-light);
+  transform: translateY(-3px);
+}
+
+.day-number {
+  color: var(--olive);
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.day-card h3 {
+  font-size: 19px;
+  margin-bottom: 9px;
+  letter-spacing: 1px;
+}
+
+.day-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.rest-card {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.workout-detail {
+  display: none;
+  margin-top: 35px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 30px;
+}
+
+.workout-detail.active {
+  display: block;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: var(--olive);
+  cursor: pointer;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  font-size: 12px;
+}
+
+.workout-detail h2 {
+  font-size: 27px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.workout-focus {
+  color: var(--muted);
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.block {
+  border-top: 1px solid var(--line);
+  padding: 22px 0;
+}
+
+.block h3 {
+  color: var(--olive);
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 13px;
+}
+
+.block p,
+.block li {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.block ul {
+  padding-left: 20px;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 22px 6%;
+  }
+
+  nav {
+    gap: 16px;
+  }
+
+  main {
+    padding: 48px 6%;
+  }
+
+  .workout-detail {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">THE MOVE <span>METHOD</span></div>
+
+  <nav>
+    <button class="active" onclick="showPage('home', this)">HOME</button>
+    <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
+  </nav>
+</header>
+
+<main>
+
+  <section id="home" class="page active">
+    <div class="eyebrow">TRAIN WITH PURPOSE</div>
+    <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
+
+    <p class="intro">
+      A training method built around strength, conditioning,
+      movement quality and consistency. Every week, a new
+      training challenge.
+    </p>
+
+    <button class="primary-button" onclick="showPage('program')">
+      VIEW WEEKLY PROGRAM
+    </button>
+  </section>
+
+  <section id="program" class="page">
+    <div class="eyebrow">YOUR TRAINING PLAN</div>
+    <h2 class="section-title">WEEKLY PROGRAM</h2>
+    <p class="section-subtitle">
+      Select a training day to view your workout.
+    </p>
+
+    <div class="week-grid" id="weekGrid"></div>
+
+    <div class="workout-detail" id="workoutDetail">
+      <button class="back-button" onclick="closeWorkout()">
+        ← BACK TO WEEK
+      </button>
+      <div id="workoutContent"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>THE MOVE METHOD · TRAIN WITH PURPOSE</footer>
+
+<script>
+const workouts = [
+  {
+    day: "MONDAY",
+    title: "CLEAN & JERK",
+    focus: "Weightlifting · Conditioning",
+    warmup: [
+      "3 min easy row",
+      "10 Romanian deadlifts",
+      "10 alternating lunges",
+      "10 thoracic rotations"
+    ],
+    activation: [
+      "3 Rounds:",
+      "15 Cal Row",
+      "10 Down Ups"
+    ],
+    skill: [
+      "Every 2:00 x 5 sets",
+      "Squat Clean & Jerk",
+      "Work up to 65% of 1RM"
+    ],
+    wod: [
+      "AMRAP 16:",
+      "200m Run",
+      "8 Power Cleans",
+      "8 Chest-to-Bar Pull-Ups",
+      "15 Wall Balls"
+    ],
+    accessories: [
+      "3 x 10 Bulgarian Split Squats",
+      "3 x 12 Hip Thrusts"
+    ]
+  },
+  {
+    day: "TUESDAY",
+    title: "SNATCH & GYMNASTICS",
+    focus: "Weightlifting · Gymnastics",
+    warmup: [
+      "3 min easy bike",
+      "10 Hip Extensions",
+      "10 Air Squats",
+      "10 Shoulder Circles"
+    ],
+    activation: [
+      "3 Rounds:",
+      "10 Scapular Pull-Ups",
+      "10 PVC Pass Throughs",
+      "10 Overhead Squats"
+    ],
+    skill: [
+      "Muscle Snatch",
+      "Snatch + Hang Snatch",
+      "Snatch Push Press",
+      "Focus on technique and control"
+    ],
+    wod: [
+      "For Time:",
+      "15 Burpee Box Jump Overs",
+      "20 Toes-to-Bar",
+      "30 Dumbbell Snatches",
+      "15 Burpee Box Jump Overs"
+    ],
+    accessories: [
+      "Core and shoulder stability",
+      "Finish with stretching"
+    ]
+  },
+  {
+    day: "WEDNESDAY",
+    title: "ENGINE",
+    focus: "Aerobic Conditioning",
+    warmup: [
+      "5 min easy cardio",
+      "Dynamic mobility",
+      "Movement preparation"
+    ],
+    activation: [
+      "3 Rounds:",
+      "10 Sit-Ups",
+      "10 Back Extensions",
+      "10 Air Squats"
+    ],
+    skill: [
+      "Pacing and breathing",
+      "Maintain consistent effort"
+    ],
+    wod: [
+      "3 Rounds:",
+      "AMRAP 3 min:",
+      "Run + Row",
+      "Rest 2 min",
+      "AMRAP 3 min:",
+      "Run + Ski"
+    ],
+    accessories: [
+      "Bench Press 3 x 10",
+      "Seated Row 3 x 12",
+      "Tabata Hollow Rocks",
+      "Tabata Arch Hold"
+    ]
+  },
+  {
+    day: "THURSDAY",
+    title: "POWER & STRENGTH",
+    focus: "Weightlifting · Strength",
+    warmup: [
+      "3 min easy row",
+      "10 Empty Bar Good Mornings",
+      "10 Front Squats",
+      "10 Muscle Cleans"
+    ],
+    activation: [
+      "3 Rounds:",
+      "10 Burpees",
+      "10 Empty Bar Cleans"
+    ],
+    skill: [
+      "Every 2:00 x 5 sets:",
+      "Power Clean + Power Clean Below Knees",
+      "70–75% of Clean & Jerk 1RM",
+      "Clean Pull 3 x 3 at 95–105%"
+    ],
+    wod: [
+      "EMOM 12:",
+      "Min 1: 8 Front Squats at 60%",
+      "Min 2: 10 Burpees Over Bar"
+    ],
+    accessories: [
+      "10 min easy Bike",
+      "Mobility and recovery"
+    ]
+  },
+  {
+    day: "FRIDAY",
+    title: "SQUAT & MIXED WOD",
+    focus: "Strength · Mixed Conditioning",
+    warmup: [
+      "3 min easy cardio",
+      "10 Air Squats",
+      "10 Lunges",
+      "Dynamic hip mobility"
+    ],
+    activation: [
+      "3 Rounds:",
+      "10 Glute Bridges",
+      "10 Goblet Squats"
+    ],
+    skill: [
+      "Every 2:00 x 5 sets:",
+      "Back Squat 75%",
+      "Maintain controlled technique"
+    ],
+    wod: [
+      "For Time:",
+      "400m Run",
+      "20 Power Snatches",
+      "10 Muscle-Ups",
+      "20 Handstand Push-Ups",
+      "Max Machine Calories"
+    ],
+    accessories: [
+      "Biceps 3 x 12",
+      "Triceps 3 x 12"
+    ]
+  }
+];
+
+function showPage(page, button) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+  });
+
+  document.getElementById(page).classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  if (button) {
+    button.classList.add("active");
+  } else {
+    const navButton = [...document.querySelectorAll("nav button")]
+      .find(b => b.textContent.includes("WEEKLY"));
+    if (navButton) navButton.classList.add("active");
+  }
+
+  closeWorkout();
+}
+
+function createWeek() {
+  const grid = document.getElementById("weekGrid");
+  grid.innerHTML = "";
+
+  workouts.forEach((workout, index) => {
+    const card = document.createElement("div");
+    card.className = "day-card";
+
+    card.innerHTML = `
+      <div class="day-number">DAY 0${index + 1}</div>
+      <h3>${workout.day}</h3>
+      <p>${workout.title}</p>
+      <p>${workout.focus}</p>
+    `;
+
+    card.onclick = () => openWorkout(index);
+    grid.appendChild(card);
+  });
+
+  const restDays = ["SATURDAY", "SUNDAY"];
+
+  restDays.forEach(day => {
+    const card = document.createElement("div");
+    card.className = "day-card rest-card";
+    card.innerHTML = `
+      <div class="day-number">RECOVERY</div>
+      <h3>${day}</h3>
+      <p>Rest & Recovery</p>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openWorkout(index) {
+  const workout = workouts[index];
+
+  const detail = document.getElementById("workoutDetail");
+  const content = document.getElementById("workoutContent");
+
+  function makeBlock(title, items) {
+    return `
+      <div class="block">
+        <h3>${title}</h3>
+        <ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>
+      </div>
+    `;
+  }
+
+  content.innerHTML = `
+    <div class="eyebrow">${workout.day}</div>
+    <h2>${workout.title}</h2>
+    <p class="workout-focus">${workout.focus}</p>
+
+    ${makeBlock("WARM-UP", workout.warmup)}
+    ${makeBlock("ACTIVATION", workout.activation)}
+    ${makeBlock("SKILL / STRENGTH", workout.skill)}
+    ${makeBlock("WOD", workout.wod)}
+    ${makeBlock("ACCESSORIES", workout.accessories)}
+  `;
+
+  detail.classList.add("active");
+  detail.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeWorkout() {
+  document.getElementById("workoutDetail").classList.remove("active");
+}
+
+createWeek();
+</script>
+
+</body>
+</html>
+
