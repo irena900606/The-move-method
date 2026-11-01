@@ -209,6 +209,158 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
   font-size:11px !important;
   letter-spacing:2px !important;
 }
+ /* TIMER MODAL */
+
+.timer-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,0.88);
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+}
+
+.timer-modal.open{
+  display:flex;
+}
+
+.timer-window{
+  width:100%;
+  max-width:480px;
+  background:#171a17;
+  border:1px solid #343a31;
+  border-radius:14px;
+  padding:25px 20px;
+  text-align:center;
+  color:#f4f5ef;
+}
+
+.timer-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#c0c99c;
+  font-size:11px;
+  letter-spacing:2px;
+}
+
+#closeTimer{
+  background:none;
+  border:none;
+  color:#a1a797;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.timer-window h2{
+  font-size:17px;
+  letter-spacing:3px;
+  margin:30px 0 22px;
+}
+
+.timer-modes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.timer-modes button{
+  background:#20241f;
+  border:1px solid #343a31;
+  color:#a1a797;
+  padding:12px 5px;
+  font-size:10px;
+  letter-spacing:1px;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+.timer-modes button.active{
+  border-color:#c0c99c;
+  color:#c0c99c;
+}
+
+#timerStatus{
+  color:#c0c99c;
+  font-size:12px;
+  letter-spacing:3px;
+  margin-top:30px;
+}
+
+#timerDisplay{
+  font-size:65px;
+  font-weight:600;
+  letter-spacing:2px;
+  margin:15px 0;
+  font-variant-numeric:tabular-nums;
+}
+
+#timerRound{
+  color:#a1a797;
+  font-size:12px;
+  min-height:20px;
+  margin-bottom:20px;
+}
+
+#timerSettings{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+#timerSettings label{
+  color:#a1a797;
+  font-size:11px;
+}
+
+#timerSettings input{
+  display:block;
+  width:75px;
+  margin-top:7px;
+  padding:9px;
+  background:#0c0e0c;
+  border:1px solid #343a31;
+  color:#f4f5ef;
+  border-radius:5px;
+  text-align:center;
+}
+
+.timer-controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+
+.timer-controls button{
+  flex:1;
+  padding:13px 5px;
+  border-radius:6px;
+  border:1px solid #687354;
+  background:#20241f;
+  color:#c0c99c;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+
+#timerStart{
+  background:#c0c99c;
+  color:#0c0e0c;
+}
+
+@media(max-width:400px){
+  #timerDisplay{
+    font-size:52px;
+  }
+  .timer-window{
+    padding:20px 14px;
+  }
+} 
 </style>
 </head>
 
