@@ -967,5 +967,287 @@ showWorkoutForDate(selectedDate);
   </div>
 
 </div>
+ <script>
+(function(){
+
+const modal = document.getElementById("timerModal");
+const openBtn = document.getElementById("openTimer");
+const closeBtn = document.getElementById("closeTimer");
+const display = document.getElementById("timerDisplay");
+const status = document.getElementById("timerStatus");
+const roundDisplay = document.getElementById("timerRound");
+const settings = document.getElementById("timerSettings");
+
+const startBtn = document.getElementById("timerStart");
+const pauseBtn = document.getElementById("timerPause");
+const resetBtn = document.getElementById("timerReset");
+const modeButtons = document.querySelectorAll(".timer-modes button");
+
+let mode = "stopwatch";
+let interval = null;
+let running = false;
+let elapsed = 0;
+let remaining = 300000;
+let deadline = 0;
+let round = 1;
+let totalRounds = 10;
+let phase = "WORK";
+let workTime = 20000;
+let restTime = 10000;
+
+function format(ms){
+  let seconds = Math.ceil(ms / 1000);
+  let minutes = Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  let hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+
+  if(hours > 0){
+    return String(hours).padStart(2,"0") + ":" +
+      String(minutes).padStart(2,"0") + ":" +
+      String(seconds).padStart(2,"0");
+  }
+
+  return String(minutes).padStart(2,"0") + ":" +
+    String(seconds).padStart(2,"0");
+}
+
+function readValue(id, fallback){
+  const el = document.getElementById(id);
+  return el ? Math.max(0, Number(el.value) || 0) : fallback;
+}
+
+function renderSettings(){
+  if(mode === "stopwatch"){
+    settings.innerHTML = "";
+  }
+
+  if(mode === "countdown"){
+    settings.innerHTML = `
+      <label>MINUTES
+        <input id="countMin" type="number" min="0" max="999" value="5">
+      </label>
+      <label>SECONDS
+        <input id="countSec" type="number" min="0" max="59" value="0">
+      </label>`;
+  }
+
+  if(mode === "emom"){
+    settings.innerHTML = `
+      <label>ROUNDS
+        <input id="emomRounds" type="number" min="1" max="99" value="10">
+      </label>`;
+  }
+
+  if(mode === "tabata"){
+    settings.innerHTML = `
+      <label>WORK (SEC)
+        <input id="tabWork" type="number" min="1" value="20">
+      </label>
+      <label>REST (SEC)
+        <input id="tabRest" type="number" min="0" value="10">
+      </label>
+      <label>ROUNDS
+        <input id="tabRounds" type="number" min="1" max="99" value="8">
+      </label>`;
+  }
+}
+
+function clearClock(){
+  if(interval !== null){
+    clearInterval(interval);
+    interval = null;
+  }
+  running = false;
+}
+
+function finish(){
+  clearClock();
+  remaining = 0;
+  display.textContent = "00:00";
+  status.textContent = "COMPLETED";
+  roundDisplay.textContent = "WORKOUT COMPLETE";
+}
+
+function reset(){
+  clearClock();
+  elapsed = 0;
+  round = 1;
+  phase = "WORK";
+
+  if(mode === "stopwatch"){
+    remaining = 0;
+    status.textContent = "STOPWATCH";
+    roundDisplay.textContent = "";
+  }
+
+  if(mode === "countdown"){
+    remaining = (
+      readValue("countMin",5) * 60 +
+      readValue("countSec",0)
+    ) * 1000;
+    status.textContent = "COUNTDOWN";
+    roundDisplay.textContent = "";
+  }
+
+  if(mode === "emom"){
+    totalRounds = Math.max(1,readValue("emomRounds",10));
+    remaining = 60000;
+    status.textContent = "EMOM";
+    roundDisplay.textContent = "ROUND 1 / " + totalRounds;
+  }
+
+  if(mode === "tabata"){
+    workTime = readValue("tabWork",20) * 1000;
+    restTime = readValue("tabRest",10) * 1000;
+    totalRounds = Math.max(1,readValue("tabRounds",8));
+    remaining = workTime;
+    status.textContent = "WORK";
+    roundDisplay.textContent = "ROUND 1 / " + totalRounds;
+  }
+
+  display.textContent = format(remaining);
+}
+
+function update(){
+  const now = Date.now();
+
+  if(mode === "stopwatch"){
+    elapsed = now - deadline;
+    display.textContent = format(elapsed);
+    return;
+  }
+
+  remaining = Math.max(0,deadline-now);
+
+  if(remaining > 0){
+    display.textContent = format(remaining);
+    return;
+  }
+
+  if(mode === "countdown"){
+    finish();
+    return;
+  }
+
+  if(mode === "emom"){
+    if(round >= totalRounds){
+      finish();
+      return;
+    }
+
+    round++;
+    remaining = 60000;
+    deadline = now + remaining;
+    roundDisplay.textContent = "ROUND " + round + " / " + totalRounds;
+    display.textContent = format(remaining);
+    return;
+  }
+
+  if(mode === "tabata"){
+    if(phase === "WORK"){
+      if(round >= totalRounds){
+        finish();
+        return;
+      }
+
+      phase = "REST";
+      remaining = restTime;
+    }else{
+      phase = "WORK";
+      round++;
+      remaining = workTime;
+    }
+
+    if(remaining === 0){
+      deadline = now;
+    }else{
+      deadline = now + remaining;
+    }
+
+    status.textContent = phase;
+    roundDisplay.textContent = "ROUND " + round + " / " + totalRounds;
+    display.textContent = format(remaining);
+  }
+}
+
+function start(){
+  if(running) return;
+
+  if(mode === "stopwatch"){
+    deadline = Date.now() - elapsed;
+  }else{
+    if(remaining <= 0){
+      reset();
+    }
+
+    if(remaining <= 0){
+      return;
+    }
+
+    deadline = Date.now() + remaining;
+  }
+
+  running = true;
+  interval = setInterval(update,100);
+}
+
+function selectMode(newMode){
+  clearClock();
+  mode = newMode;
+
+  modeButtons.forEach(button=>{
+    button.classList.toggle(
+      "active",
+      button.dataset.mode === mode
+    );
+  });
+
+  renderSettings();
+  reset();
+}
+
+openBtn.addEventListener("click",()=>{
+  modal.classList.add("open");
+  selectMode(mode);
+});
+
+closeBtn.addEventListener("click",()=>{
+  modal.classList.remove("open");
+  clearClock();
+});
+
+modal.addEventListener("click",event=>{
+  if(event.target === modal){
+    modal.classList.remove("open");
+    clearClock();
+  }
+});
+
+modeButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    selectMode(button.dataset.mode);
+  });
+});
+
+startBtn.addEventListener("click",start);
+
+pauseBtn.addEventListener("click",()=>{
+  if(!running) return;
+  update();
+  clearClock();
+});
+
+resetBtn.addEventListener("click",reset);
+
+settings.addEventListener("change",()=>{
+  if(!running) reset();
+});
+
+renderSettings();
+reset();
+
+})();
+</script> 
 </body>
 </html>
