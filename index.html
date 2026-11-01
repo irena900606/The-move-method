@@ -1,270 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE MOVE METHOD</title>
-
 <style>
 :root{
-  --bg:#0c0e0c;
-  --card:#171a17;
-  --card2:#20241f;
-  --line:#343a31;
-  --text:#f4f5ef;
-  --muted:#a1a797;
+  --bg:#0c0e0c;--card:#171a17;--card2:#20241f;
+  --line:#343a31;--text:#f4f5ef;--muted:#a1a797;
   --accent:#c0c99c;
 }
-
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{padding:27px 20px 23px;border-bottom:1px solid var(--line);background:#111410}
+.header-inner,main{max-width:900px;margin:auto}
+.logo{font-size:25px;font-weight:900;letter-spacing:3px}
+.tagline{font-size:10px;letter-spacing:3px;color:var(--accent);margin-top:8px}
+.hero{padding:35px 20px 25px}
+.eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent)}
+h1{font-size:38px;line-height:1.05;margin:13px 0}
+.hero p{color:var(--muted);font-size:14px;line-height:1.7;max-width:550px}
+main{padding:0 16px 40px}
+.week-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 18px;gap:10px}
+.week-title h2{font-size:16px;letter-spacing:2px;margin:0}
+.week-title span{font-size:10px;color:var(--muted);letter-spacing:1px}
+.calendar{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:13px;padding:17px;margin-bottom:25px;
 }
-
-header{
-  padding:27px 20px 23px;
-  border-bottom:1px solid var(--line);
-  background:#111410;
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.calendar-header h2{font-size:16px;letter-spacing:2px;margin:0}
+.month-button{
+  width:36px;height:36px;border:1px solid var(--line);
+  border-radius:8px;background:var(--card2);color:var(--accent);
+  font-size:23px;cursor:pointer;
 }
-
-.header-inner,main{
-  max-width:900px;
-  margin:auto;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.tagline{
-  font-size:10px;
-  letter-spacing:3px;
-  color:var(--accent);
-  margin-top:8px;
-}
-
-.hero{
-  padding:35px 20px 25px;
-}
-
-.eyebrow{
-  font-size:10px;
-  letter-spacing:3px;
-  color:var(--accent);
-}
-
-h1{
-  font-size:38px;
-  line-height:1.05;
-  margin:13px 0;
-}
-
-.hero p{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.7;
-  max-width:550px;
-}
-
-main{
-  padding:0 16px 40px;
-}
-
-.week-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:20px 0 18px;
-  gap:10px;
-}
-
-.week-title h2{
-  font-size:16px;
-  letter-spacing:2px;
-  margin:0;
-}
-
-.week-title span{
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:1px;
-}
-
-.day-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:13px;
-  margin-bottom:17px;
-  overflow:hidden;
-}
-
-.day-header{
-  padding:19px 18px;
-  background:var(--card2);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calendar-day-name{text-align:center;color:var(--muted);font-size:10px;font-weight:bold;padding:7px 0}
+.calendar-date{
+  min-height:39px;border:1px solid transparent;border-radius:7px;
+  background:var(--card2);color:var(--text);font-size:13px;
   cursor:pointer;
 }
-
-.day-name{
-  font-size:21px;
-  font-weight:900;
-  letter-spacing:1px;
+.calendar-date:hover:not(:disabled){border-color:var(--accent)}
+.calendar-date.selected{background:var(--accent);color:#111410;font-weight:bold}
+.calendar-date:disabled{opacity:.22;cursor:not-allowed}
+.calendar-date.empty{background:transparent;cursor:default}
+.calendar-legend{display:flex;gap:15px;flex-wrap:wrap;margin-top:15px;color:var(--muted);font-size:10px}
+.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:5px}
+.selected-date{
+  margin-top:17px;padding:13px;border-radius:8px;
+  background:#252b20;color:var(--accent);font-size:12px;
+  letter-spacing:1px;line-height:1.6;
 }
-
-.day-focus{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:6px;
-  letter-spacing:1px;
-}
-
-.tag{
-  border:1px solid #687354;
-  color:var(--accent);
-  border-radius:30px;
-  padding:7px 10px;
-  font-size:9px;
-  letter-spacing:1px;
-  white-space:nowrap;
-}
-
-.day-header::after{
-  content:"+";
-  font-size:24px;
-  color:var(--accent);
-  margin-left:auto;
-}
-
-.day-card.open .day-header::after{
-  content:"−";
-}
-
-.content{
-  display:none;
-  padding:5px 18px 16px;
-}
-
-.day-card.open .content{
-  display:block;
-}
-
-.section{
-  padding:16px 0 13px;
-  border-bottom:1px solid var(--line);
-}
-
-.section:last-child{
-  border-bottom:0;
-}
-
-.section-heading{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  color:var(--accent);
-  margin-bottom:11px;
-}
-
-.number{
-  color:#777f68;
-  font-size:10px;
-  border:1px solid #41483a;
-  border-radius:5px;
-  padding:4px 6px;
-}
-
-.work-label{
-  display:inline-block;
-  background:#30382a;
-  color:#dce5c5;
-  padding:6px 9px;
-  border-radius:5px;
-  font-size:10px;
-  letter-spacing:1px;
-  margin:2px 0 10px;
-}
-
-ul{
-  padding-left:19px;
-  margin:5px 0;
-}
-
-li{
-  font-size:14px;
-  line-height:1.8;
-  color:#e7e9e2;
-}
-
-p.detail{
-  font-size:14px;
-  line-height:1.8;
-  margin:4px 0;
-  color:#e7e9e2;
-}
-
-.small{
-  font-size:12px!important;
-  color:var(--muted)!important;
-}
-
-.subheading{
-  font-size:12px;
-  font-weight:bold;
-  color:#d5d9ca;
-  margin:10px 0 5px;
-}
-
-.rest{
-  font-size:11px;
-  color:var(--muted);
-  margin:8px 0;
-}
-
-.footer{
-  text-align:center;
-  padding:30px 15px;
-  color:#777f70;
-  font-size:10px;
-  letter-spacing:2px;
-  border-top:1px solid var(--line);
-}
-
+.day-card{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:17px;overflow:hidden}
+.day-header{padding:19px 18px;background:var(--card2);display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.day-name{font-size:21px;font-weight:900;letter-spacing:1px}
+.day-focus{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:1px}
+.tag{border:1px solid #687354;color:var(--accent);border-radius:30px;padding:7px 10px;font-size:9px;letter-spacing:1px;white-space:nowrap}
+.day-header::after{content:"+";font-size:24px;color:var(--accent);margin-left:auto}
+.day-card.open .day-header::after{content:"−"}
+.day-card.selected-card{border-color:var(--accent)}
+.content{display:none;padding:5px 18px 16px}
+.day-card.open .content{display:block}
+.section{padding:16px 0 13px;border-bottom:1px solid var(--line)}
+.section:last-child{border-bottom:0}
+.section-heading{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:1.5px;color:var(--accent);margin-bottom:11px}
+.number{color:#777f68;font-size:10px;border:1px solid #41483a;border-radius:5px;padding:4px 6px}
+.work-label{display:inline-block;background:#30382a;color:#dce5c5;padding:6px 9px;border-radius:5px;font-size:10px;letter-spacing:1px;margin:2px 0 10px}
+ul{padding-left:19px;margin:5px 0}
+li{font-size:14px;line-height:1.8;color:#e7e9e2}
+p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
+.small{font-size:12px!important;color:var(--muted)!important}
+.subheading{font-size:12px;font-weight:bold;color:#d5d9ca;margin:10px 0 5px}
+.rest{font-size:11px;color:var(--muted);margin:8px 0}
+.footer{text-align:center;padding:30px 15px;color:#777f70;font-size:10px;letter-spacing:2px;border-top:1px solid var(--line)}
 @media(min-width:700px){
-  .hero{
-    padding-top:48px;
-    padding-bottom:35px;
-  }
-
-  h1{
-    font-size:48px;
-  }
-
-  .content{
-    padding-left:23px;
-    padding-right:23px;
-  }
-
-  .day-header{
-    padding:22px 23px;
-  }
+ .hero{padding-top:48px;padding-bottom:35px}
+ h1{font-size:48px}
+ .content{padding-left:23px;padding-right:23px}
+ .day-header{padding:22px 23px}
+ .calendar{padding:23px}
+ .calendar-date{min-height:48px;font-size:15px}
 }
 </style>
 </head>
-
 <body>
-
 <header>
   <div class="header-inner">
     <div class="logo">THE MOVE METHOD</div>
@@ -281,370 +103,269 @@ p.detail{
 </section>
 
 <main>
-
 <div class="week-title">
-  <h2>WEEKLY PROGRAM</h2>
-  <span>MONDAY — FRIDAY</span>
+  <h2>TRAINING CALENDAR</h2>
+  <span>MONTHLY VIEW</span>
 </div>
+
 <div class="calendar">
   <div class="calendar-header">
-    <button id="prevMonth">‹</button>
+    <button class="month-button" id="prevMonth" aria-label="Previous month">‹</button>
     <h2 id="monthTitle"></h2>
-    <button id="nextMonth">›</button>
+    <button class="month-button" id="nextMonth" aria-label="Next month">›</button>
   </div>
-
   <div class="calendar-grid" id="calendarGrid"></div>
-
-  <div class="selected-date" id="selectedDate">
-    SELECT A DATE
+  <div class="calendar-legend">
+    <span><i class="legend-dot"></i>Selected date</span>
+    <span>Unavailable dates are locked</span>
   </div>
+  <div class="selected-date" id="selectedDate">SELECT A DATE</div>
 </div>
+
+<div class="week-title">
+  <h2>DAILY WORKOUT</h2>
+  <span>MONDAY — FRIDAY</span>
+</div>
+
 <!-- MONDAY -->
-<article class="day-card">
-  <div class="day-header">
-    <div>
-      <div class="day-name">MONDAY</div>
-      <div class="day-focus">CLEAN & JERK · CONDITIONING</div>
-    </div>
-    <span class="tag">WEIGHTLIFTING</span>
-  </div>
-
+<article class="day-card" data-day="1">
+  <div class="day-header"><div>
+    <div class="day-name">MONDAY</div>
+    <div class="day-focus">CLEAN & JERK · CONDITIONING</div>
+  </div><span class="tag">WEIGHTLIFTING</span></div>
   <div class="content">
-
-    <section class="section">
-      <div class="section-heading"><span class="number">01</span> WARM-UP</div>
-      <ul>
-        <li>Barbell Pass Throughs</li>
-        <li>Good Mornings</li>
-        <li>Hinge Lunge</li>
-        <li>Thoracic Rotation</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
-      <span class="work-label">3 ROUNDS</span>
-      <ul>
-        <li>15 Cal Row</li>
-        <li>10 Down Ups</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">03</span> SKILL / WEIGHTLIFTING</div>
-      <span class="work-label">EMOM 10'</span>
-      <ul>
-        <li>1 Squat Clean & Jerk @ 65%</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">04</span> WOD</div>
-      <span class="work-label">AMRAP 16'</span>
-      <ul>
-        <li>200 m Run</li>
-        <li>6 Power Clean</li>
-        <li>9 Chest to Bar</li>
-        <li>12 Wall Balls</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
-      <span class="work-label">3 SETS · NOT FOR TIME</span>
-      <ul>
-        <li>8 Bulgarian Squats</li>
-        <li>8 Hip Thrusts</li>
-      </ul>
-    </section>
-
+    <section class="section"><div class="section-heading"><span class="number">01</span> WARM-UP</div><ul>
+      <li>Barbell Pass Throughs</li><li>Good Mornings</li><li>Hinge Lunge</li><li>Thoracic Rotation</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">02</span> ACTIVATION</div><span class="work-label">3 ROUNDS</span><ul><li>15 Cal Row</li><li>10 Down Ups</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">03</span> SKILL / WEIGHTLIFTING</div><span class="work-label">EMOM 10'</span><ul><li>1 Squat Clean & Jerk @ 65%</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">04</span> WOD</div><span class="work-label">AMRAP 16'</span><ul><li>200 m Run</li><li>6 Power Clean</li><li>9 Chest to Bar</li><li>12 Wall Balls</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">05</span> ACCESSORIES</div><span class="work-label">3 SETS · NOT FOR TIME</span><ul><li>8 Bulgarian Squats</li><li>8 Hip Thrusts</li></ul></section>
   </div>
 </article>
 
 <!-- TUESDAY -->
-<article class="day-card">
-  <div class="day-header">
-    <div>
-      <div class="day-name">TUESDAY</div>
-      <div class="day-focus">SNATCH · GYMNASTICS · CONDITIONING</div>
-    </div>
-    <span class="tag">WEIGHTLIFTING</span>
-  </div>
-
+<article class="day-card" data-day="2">
+  <div class="day-header"><div>
+    <div class="day-name">TUESDAY</div>
+    <div class="day-focus">SNATCH · GYMNASTICS · CONDITIONING</div>
+  </div><span class="tag">WEIGHTLIFTING</span></div>
   <div class="content">
-
-    <section class="section">
-      <div class="section-heading"><span class="number">01</span> WARM-UP</div>
-      <ul>
-        <li>3' Easy Bike</li>
-        <li>10 PVC Pass Throughs</li>
-        <li>10 Overhead Squats with PVC</li>
-        <li>10 Hip Openers</li>
-        <li>10 Scapular Push-ups</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
-      <span class="work-label">3 ROUNDS</span>
-      <ul>
-        <li>15 Hyperextensions</li>
-        <li>10 Gakk Squat</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div>
-      <ul>
-        <li>Muscle Snatch – 4 × 6 reps (medium weight)</li>
-        <li>Power Snatch + Hip Snatch – 1 + 3 reps</li>
-        <li>Snatch Push Press – 4 × 4 reps</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">04</span> WOD</div>
-      <span class="work-label">FOR TIME</span>
-      <p class="detail small">Descending repetitions</p>
-      <ul>
-        <li>Burpees Box Jump Over – 10-8-6-4-2</li>
-        <li>Toes to Bar – 20-16-12-8-4</li>
-        <li>DB Snatch – 30-24-18-12-6</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">05</span> RECOVERY</div>
-      <ul><li>Stretching</li></ul>
-    </section>
-
+    <section class="section"><div class="section-heading"><span class="number">01</span> WARM-UP</div><ul>
+      <li>3' Easy Bike</li><li>10 PVC Pass Throughs</li><li>10 Overhead Squats with PVC</li><li>10 Hip Openers</li><li>10 Scapular Push-ups</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">02</span> ACTIVATION</div><span class="work-label">3 ROUNDS</span><ul><li>15 Hyperextensions</li><li>10 Gakk Squat</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div><ul>
+      <li>Muscle Snatch – 4 × 6 reps (medium weight)</li><li>Power Snatch + Hip Snatch – 1 + 3 reps</li><li>Snatch Push Press – 4 × 4 reps</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">04</span> WOD</div><span class="work-label">FOR TIME</span><p class="detail small">Descending repetitions</p><ul>
+      <li>Burpees Box Jump Over – 10-8-6-4-2</li><li>Toes to Bar – 20-16-12-8-4</li><li>DB Snatch – 30-24-18-12-6</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">05</span> RECOVERY</div><ul><li>Stretching</li></ul></section>
   </div>
 </article>
 
 <!-- WEDNESDAY -->
-<article class="day-card">
-  <div class="day-header">
-    <div>
-      <div class="day-name">WEDNESDAY</div>
-      <div class="day-focus">ENDURANCE · UPPER BODY · CORE</div>
-    </div>
-    <span class="tag">ENGINE</span>
-  </div>
-
+<article class="day-card" data-day="3">
+  <div class="day-header"><div>
+    <div class="day-name">WEDNESDAY</div>
+    <div class="day-focus">ENDURANCE · UPPER BODY · CORE</div>
+  </div><span class="tag">ENGINE</span></div>
   <div class="content">
-
-    <section class="section">
-      <div class="section-heading"><span class="number">01</span> WARM-UP</div>
-      <ul>
-        <li>3' Easy Row</li>
-        <li>10 Air Squats</li>
-        <li>10 Reverse Lunges</li>
-        <li>10 Arm Circles</li>
-        <li>10 Inchworms</li>
-      </ul>
+    <section class="section"><div class="section-heading"><span class="number">01</span> WARM-UP</div><ul>
+      <li>3' Easy Row</li><li>10 Air Squats</li><li>10 Reverse Lunges</li><li>10 Arm Circles</li><li>10 Inchworms</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">02</span> ACTIVATION</div><span class="work-label">2 ROUNDS</span><ul>
+      <li>10 Glute Bridges</li><li>10 Bird Dogs (5/side)</li><li>20'' Hollow Hold</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">03</span> ENGINE</div><span class="work-label">AMRAP 3' × 3 SETS</span>
+      <div class="subheading">A</div><ul><li>400 m Run</li><li>Max Row</li></ul><p class="rest">Rest 2 min</p>
+      <div class="subheading">B</div><ul><li>400 m Run</li><li>Max Ski</li></ul><p class="rest">Rest 2 min</p>
     </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
-      <span class="work-label">2 ROUNDS</span>
-      <ul>
-        <li>10 Glute Bridges</li>
-        <li>10 Bird Dogs (5/side)</li>
-        <li>20'' Hollow Hold</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">03</span> ENGINE</div>
-      <span class="work-label">AMRAP 3' × 3 SETS</span>
-      <div class="subheading">A</div>
-      <ul>
-        <li>400 m Run</li>
-        <li>Max Row</li>
-      </ul>
-      <p class="rest">Rest 2 min</p>
-      <div class="subheading">B</div>
-      <ul>
-        <li>400 m Run</li>
-        <li>Max Ski</li>
-      </ul>
-      <p class="rest">Rest 2 min</p>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">04</span> ACCESSORIES</div>
-      <span class="work-label">12-10-8-6</span>
-      <ul>
-        <li>Bench Press</li>
-        <li>Seated Row</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">05</span> CORE</div>
-      <span class="work-label">TABATA</span>
-      <ul>
-        <li>Hollow Rocks</li>
-        <li>Arch Hold</li>
-      </ul>
-    </section>
-
+    <section class="section"><div class="section-heading"><span class="number">04</span> ACCESSORIES</div><span class="work-label">12-10-8-6</span><ul><li>Bench Press</li><li>Seated Row</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">05</span> CORE</div><span class="work-label">TABATA</span><ul><li>Hollow Rocks</li><li>Arch Hold</li></ul></section>
   </div>
 </article>
 
 <!-- THURSDAY -->
-<article class="day-card">
-  <div class="day-header">
-    <div>
-      <div class="day-name">THURSDAY</div>
-      <div class="day-focus">CLEAN · STRENGTH · CONDITIONING</div>
-    </div>
-    <span class="tag">WEIGHTLIFTING</span>
-  </div>
-
+<article class="day-card" data-day="4">
+  <div class="day-header"><div>
+    <div class="day-name">THURSDAY</div>
+    <div class="day-focus">CLEAN · STRENGTH · CONDITIONING</div>
+  </div><span class="tag">WEIGHTLIFTING</span></div>
   <div class="content">
-
-    <section class="section">
-      <div class="section-heading"><span class="number">01</span> WARM-UP</div>
-      <ul>
-        <li>3' Easy Bike</li>
-        <li>10 Front Rack Mobilizations</li>
-        <li>10 Ankle Rocks</li>
-        <li>10 Empty Bar Good Mornings</li>
-        <li>10 Muscle Cleans</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
-      <span class="work-label">2 ROUNDS</span>
-      <ul>
-        <li>10 Banded Pull Aparts</li>
-        <li>10 Scapular Pull-ups</li>
-        <li>10 Empty Bar Front Squats</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div>
-      <ul>
-        <li>Power Clean + Power Clean Below Knees</li>
-        <li>3 × 1+1 reps @ 70-75% of Max C&J</li>
-      </ul>
-      <div class="subheading">CLEAN PULL</div>
-      <ul>
-        <li>3 × 3 reps @ 95-105% of Max C&J</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">04</span> WOD</div>
-      <span class="work-label">EMOM 12'</span>
-      <ul>
-        <li>1st min: 6 Front Squats @ 60%</li>
-        <li>2nd min: 10 Burpees Over Bar</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
-      <ul><li>10' Erg Bike</li></ul>
-    </section>
-
+    <section class="section"><div class="section-heading"><span class="number">01</span> WARM-UP</div><ul>
+      <li>3' Easy Bike</li><li>10 Front Rack Mobilizations</li><li>10 Ankle Rocks</li><li>10 Empty Bar Good Mornings</li><li>10 Muscle Cleans</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">02</span> ACTIVATION</div><span class="work-label">2 ROUNDS</span><ul>
+      <li>10 Banded Pull Aparts</li><li>10 Scapular Pull-ups</li><li>10 Empty Bar Front Squats</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">03</span> WEIGHTLIFTING</div><ul>
+      <li>Power Clean + Power Clean Below Knees</li><li>3 × 1+1 reps @ 70-75% of Max C&J</li>
+    </ul><div class="subheading">CLEAN PULL</div><ul><li>3 × 3 reps @ 95-105% of Max C&J</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">04</span> WOD</div><span class="work-label">EMOM 12'</span><ul>
+      <li>1st min: 6 Front Squats @ 60%</li><li>2nd min: 10 Burpees Over Bar</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">05</span> ACCESSORIES</div><ul><li>10' Erg Bike</li></ul></section>
   </div>
 </article>
 
 <!-- FRIDAY -->
-<article class="day-card">
-  <div class="day-header">
-    <div>
-      <div class="day-name">FRIDAY</div>
-      <div class="day-focus">BACK SQUAT · GYMNASTICS · CONDITIONING</div>
-    </div>
-    <span class="tag">STRENGTH</span>
-  </div>
-
+<article class="day-card" data-day="5">
+  <div class="day-header"><div>
+    <div class="day-name">FRIDAY</div>
+    <div class="day-focus">BACK SQUAT · GYMNASTICS · CONDITIONING</div>
+  </div><span class="tag">STRENGTH</span></div>
   <div class="content">
-
-    <section class="section">
-      <div class="section-heading"><span class="number">01</span> WARM-UP</div>
-      <ul>
-        <li>3' Easy Row</li>
-        <li>10 Air Squats</li>
-        <li>10 Walking Lunges</li>
-        <li>10 Leg Swings</li>
-        <li>10 Hip Openers</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">02</span> ACTIVATION</div>
-      <span class="work-label">3 ROUNDS</span>
-      <ul>
-        <li>12 Glute Bridges</li>
-        <li>10 Banded Lateral Walks</li>
-        <li>20'' Wall Sit</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">03</span> STRENGTH</div>
-      <span class="work-label">EVERY 2:00 × 5 SETS</span>
-      <ul>
-        <li>6 Back Squats @ 75%</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">04</span> WOD</div>
-      <span class="work-label">15' TIME CAP · COMPETE</span>
-      <ul>
-        <li>600 m Run</li>
-      </ul>
-      <div class="subheading">THEN 5 ROUNDS</div>
-      <ul>
-        <li>6 Power Snatch</li>
-        <li>6 Muscle-ups</li>
-        <li>12 HSPU</li>
-      </ul>
+    <section class="section"><div class="section-heading"><span class="number">01</span> WARM-UP</div><ul>
+      <li>3' Easy Row</li><li>10 Air Squats</li><li>10 Walking Lunges</li><li>10 Leg Swings</li><li>10 Hip Openers</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">02</span> ACTIVATION</div><span class="work-label">3 ROUNDS</span><ul>
+      <li>12 Glute Bridges</li><li>10 Banded Lateral Walks</li><li>20'' Wall Sit</li>
+    </ul></section>
+    <section class="section"><div class="section-heading"><span class="number">03</span> STRENGTH</div><span class="work-label">EVERY 2:00 × 5 SETS</span><ul><li>6 Back Squats @ 75%</li></ul></section>
+    <section class="section"><div class="section-heading"><span class="number">04</span> WOD</div><span class="work-label">15' TIME CAP · COMPETE</span><ul><li>600 m Run</li></ul>
+      <div class="subheading">THEN 5 ROUNDS</div><ul><li>6 Power Snatch</li><li>6 Muscle-ups</li><li>12 HSPU</li></ul>
       <p class="detail small">In the remaining time: Max Calories on any machine.</p>
     </section>
-
-    <section class="section">
-      <div class="section-heading"><span class="number">05</span> ACCESSORIES</div>
-      <span class="work-label">3 SETS</span>
-      <ul>
-        <li>10 Bicep Curls</li>
-        <li>10 Tricep Extensions</li>
-      </ul>
-    </section>
-
+    <section class="section"><div class="section-heading"><span class="number">05</span> ACCESSORIES</div><span class="work-label">3 SETS</span><ul><li>10 Bicep Curls</li><li>10 Tricep Extensions</li></ul></section>
   </div>
 </article>
-
 </main>
 
-<footer class="footer">
-  THE MOVE METHOD<br><br>
-  TRAIN WITH PURPOSE · MOVE WITH INTENTION
-</footer>
+<footer class="footer">THE MOVE METHOD<br><br>TRAIN WITH PURPOSE · MOVE WITH INTENTION</footer>
 
 <script>
-document.querySelectorAll('.day-header').forEach(header => {
-  header.addEventListener('click', () => {
-    const selectedCard = header.closest('.day-card');
-    const wasOpen = selectedCard.classList.contains('open');
+// Demo membership start date. This is NOT connected to real payments.
+const MEMBERSHIP_START = new Date(2026, 9, 26);
+let displayedMonth = new Date(2026, 9, 1);
+let selectedDate = new Date(2026, 9, 26);
 
-    document.querySelectorAll('.day-card').forEach(card => {
-      card.classList.remove('open');
+const monthTitle = document.getElementById("monthTitle");
+const calendarGrid = document.getElementById("calendarGrid");
+const selectedDateLabel = document.getElementById("selectedDate");
+
+const monthNames = [
+  "JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE",
+  "JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"
+];
+const weekdays = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+
+function sameDate(a,b){
+  return a.getFullYear()===b.getFullYear() &&
+    a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+}
+
+function renderCalendar(){
+  monthTitle.textContent =
+    monthNames[displayedMonth.getMonth()] + " " + displayedMonth.getFullYear();
+
+  calendarGrid.innerHTML = "";
+
+  weekdays.forEach(day=>{
+    const label = document.createElement("div");
+    label.className = "calendar-day-name";
+    label.textContent = day;
+    calendarGrid.appendChild(label);
+  });
+
+  const firstDay = new Date(
+    displayedMonth.getFullYear(), displayedMonth.getMonth(), 1
+  );
+  const offset = (firstDay.getDay()+6)%7;
+  const daysInMonth = new Date(
+    displayedMonth.getFullYear(), displayedMonth.getMonth()+1, 0
+  ).getDate();
+
+  for(let i=0;i<offset;i++){
+    const blank = document.createElement("div");
+    blank.className = "calendar-date empty";
+    calendarGrid.appendChild(blank);
+  }
+
+  for(let day=1;day<=daysInMonth;day++){
+    const date = new Date(
+      displayedMonth.getFullYear(), displayedMonth.getMonth(), day
+    );
+    const button = document.createElement("button");
+    button.className = "calendar-date";
+    button.textContent = day;
+
+    const locked = date < MEMBERSHIP_START;
+    button.disabled = locked;
+
+    if(sameDate(date,selectedDate)){
+      button.classList.add("selected");
+    }
+
+    button.addEventListener("click",()=>{
+      if(locked) return;
+      selectedDate = date;
+      renderCalendar();
+      showWorkoutForDate(date);
     });
 
-    if (!wasOpen) {
-      selectedCard.classList.add('open');
+    calendarGrid.appendChild(button);
+  }
+}
+
+function showWorkoutForDate(date){
+  const dayNumber = date.getDay(); // Sunday 0, Monday 1...
+  const formatted = date.toLocaleDateString("en-GB",{
+    weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"
+  }).toUpperCase();
+
+  if(dayNumber===0 || dayNumber===6){
+    selectedDateLabel.textContent =
+      formatted + " · NO WORKOUT SCHEDULED";
+    document.querySelectorAll(".day-card").forEach(card=>{
+      card.classList.remove("open","selected-card");
+    });
+    return;
+  }
+
+  selectedDateLabel.textContent = formatted + " · WORKOUT SELECTED";
+
+  document.querySelectorAll(".day-card").forEach(card=>{
+    card.classList.remove("open","selected-card");
+    if(Number(card.dataset.day)===dayNumber){
+      card.classList.add("open","selected-card");
+      card.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+  });
+}
+
+document.getElementById("prevMonth").addEventListener("click",()=>{
+  displayedMonth = new Date(
+    displayedMonth.getFullYear(),displayedMonth.getMonth()-1,1
+  );
+  renderCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click",()=>{
+  displayedMonth = new Date(
+    displayedMonth.getFullYear(),displayedMonth.getMonth()+1,1
+  );
+  renderCalendar();
+});
+
+document.querySelectorAll(".day-header").forEach(header=>{
+  header.addEventListener("click",()=>{
+    const selectedCard = header.closest(".day-card");
+    const wasOpen = selectedCard.classList.contains("open");
+
+    document.querySelectorAll(".day-card").forEach(card=>{
+      card.classList.remove("open","selected-card");
+    });
+
+    if(!wasOpen){
+      selectedCard.classList.add("open","selected-card");
     }
   });
 });
-</script>
 
+renderCalendar();
+showWorkoutForDate(selectedDate);
+</script>
 </body>
 </html>
