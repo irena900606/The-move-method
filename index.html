@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
 :root {
   --bg: #111310;
   --card: #1c1f19;
-  --card-light: #25291f;
+  --card-open: #25291f;
   --olive: #a1a584;
   --text: #f2f2ed;
   --muted: #a5a69b;
@@ -27,7 +26,6 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
 }
 
 header {
@@ -52,7 +50,7 @@ header {
 
 nav {
   display: flex;
-  gap: 28px;
+  gap: 25px;
 }
 
 nav button {
@@ -134,21 +132,24 @@ h1 span {
 .week-grid {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
 }
 
 .day-card {
   background: var(--card);
   border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.day-heading {
   padding: 25px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .day-card:hover,
 .day-card.selected {
   border-color: var(--olive);
-  background: var(--card-light);
+  background: var(--card-open);
 }
 
 .day-number {
@@ -158,13 +159,13 @@ h1 span {
   margin-bottom: 15px;
 }
 
-.day-card h3 {
+.day-heading h3 {
   font-size: 19px;
   margin-bottom: 9px;
   letter-spacing: 1px;
 }
 
-.day-card p {
+.day-heading p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.6;
@@ -172,11 +173,7 @@ h1 span {
 
 .workout-detail {
   display: none;
-  margin-top: 22px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 25px;
-  cursor: default;
+  padding: 0 25px 25px;
 }
 
 .workout-detail.active {
@@ -207,14 +204,14 @@ h1 span {
   margin-bottom: 13px;
 }
 
+.block ul {
+  padding-left: 20px;
+}
+
 .block li {
   color: var(--text);
   font-size: 14px;
   line-height: 1.9;
-}
-
-.block ul {
-  padding-left: 20px;
 }
 
 footer {
@@ -239,12 +236,12 @@ footer {
     padding: 48px 6%;
   }
 
-  .day-card {
+  .day-heading {
     padding: 22px;
   }
 
   .workout-detail {
-    padding: 20px;
+    padding: 0 20px 20px;
   }
 }
 </style>
@@ -254,7 +251,6 @@ footer {
 
 <header>
   <div class="logo">THE MOVE <span>METHOD</span></div>
-
   <nav>
     <button class="active" onclick="showPage('home', this)">HOME</button>
     <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
@@ -263,33 +259,25 @@ footer {
 
 <main>
 
-  <section id="home" class="page active">
-    <div class="eyebrow">TRAIN WITH PURPOSE</div>
+<section id="home" class="page active">
+  <div class="eyebrow">TRAIN WITH PURPOSE</div>
+  <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
+  <p class="intro">
+    A training method built around strength, conditioning,
+    movement quality and consistency. Every week, a new
+    training challenge.
+  </p>
+  <button class="primary-button" onclick="showPage('program')">
+    VIEW WEEKLY PROGRAM
+  </button>
+</section>
 
-    <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
-
-    <p class="intro">
-      A training method built around strength, conditioning,
-      movement quality and consistency. Every week, a new
-      training challenge.
-    </p>
-
-    <button class="primary-button" onclick="showPage('program')">
-      VIEW WEEKLY PROGRAM
-    </button>
-  </section>
-
-  <section id="program" class="page">
-    <div class="eyebrow">YOUR TRAINING PLAN</div>
-
-    <h2 class="section-title">WEEKLY PROGRAM</h2>
-
-    <p class="section-subtitle">
-      Select a training day to view your workout.
-    </p>
-
-    <div class="week-grid" id="weekGrid"></div>
-  </section>
+<section id="program" class="page">
+  <div class="eyebrow">YOUR TRAINING PLAN</div>
+  <h2 class="section-title">WEEKLY PROGRAM</h2>
+  <p class="section-subtitle">Select a training day to view your workout.</p>
+  <div class="week-grid" id="weekGrid"></div>
+</section>
 
 </main>
 
@@ -330,7 +318,6 @@ const workouts = [
       "3 x 12 Hip Thrusts"
     ]
   },
-
   {
     day: "TUESDAY",
     title: "SNATCH & GYMNASTICS",
@@ -365,7 +352,6 @@ const workouts = [
       "Finish with stretching"
     ]
   },
-
   {
     day: "WEDNESDAY",
     title: "ENGINE",
@@ -400,7 +386,6 @@ const workouts = [
       "Tabata Arch Hold"
     ]
   },
-
   {
     day: "THURSDAY",
     title: "POWER & STRENGTH",
@@ -432,7 +417,6 @@ const workouts = [
       "Mobility and recovery"
     ]
   },
-
   {
     day: "FRIDAY",
     title: "SQUAT & MIXED WOD",
@@ -484,8 +468,9 @@ function showPage(page, button) {
   if (button) {
     button.classList.add("active");
   } else {
-    const buttons = document.querySelectorAll("nav button");
-    buttons[page === "home" ? 0 : 1].classList.add("active");
+    document.querySelectorAll("nav button")[
+      page === "home" ? 0 : 1
+    ].classList.add("active");
   }
 
   closeWorkout();
@@ -509,9 +494,11 @@ function createWeek() {
   workouts.forEach((workout, index) => {
     const card = document.createElement("div");
     card.className = "day-card";
-    card.dataset.index = index;
 
-    card.innerHTML = `
+    const heading = document.createElement("div");
+    heading.className = "day-heading";
+
+    heading.innerHTML = `
       <div class="day-number">DAY 0${index + 1}</div>
       <h3>${workout.day}</h3>
       <p>${workout.title}</p>
@@ -532,12 +519,13 @@ function createWeek() {
       ${makeBlock("ACCESSORIES", workout.accessories)}
     `;
 
-    card.addEventListener("click", () => {
+    heading.addEventListener("click", () => {
       openWorkout(index);
     });
 
+    card.appendChild(heading);
+    card.appendChild(detail);
     grid.appendChild(card);
-    grid.appendChild(detail);
   });
 }
 
@@ -550,27 +538,20 @@ function openWorkout(index) {
     return;
   }
 
-  details.forEach(detail => {
-    detail.classList.remove("active");
-  });
-
-  cards.forEach(card => {
-    card.classList.remove("selected");
-  });
+  closeWorkout();
 
   openedWorkoutIndex = index;
-
   cards[index].classList.add("selected");
   details[index].classList.add("active");
 }
 
 function closeWorkout() {
-  document.querySelectorAll(".workout-detail").forEach(detail => {
-    detail.classList.remove("active");
-  });
-
   document.querySelectorAll(".day-card").forEach(card => {
     card.classList.remove("selected");
+  });
+
+  document.querySelectorAll(".workout-detail").forEach(detail => {
+    detail.classList.remove("active");
   });
 
   openedWorkoutIndex = null;
