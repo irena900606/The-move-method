@@ -10,7 +10,7 @@
 :root {
   --bg: #111310;
   --card: #1c1f19;
-  --card2: #25291f;
+  --card-light: #25291f;
   --olive: #a1a584;
   --text: #f2f2ed;
   --muted: #a5a69b;
@@ -31,7 +31,7 @@ body {
 }
 
 header {
-  padding: 26px 7%;
+  padding: 28px 7%;
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -52,7 +52,7 @@ header {
 
 nav {
   display: flex;
-  gap: 25px;
+  gap: 28px;
 }
 
 nav button {
@@ -148,7 +148,7 @@ h1 span {
 .day-card:hover,
 .day-card.selected {
   border-color: var(--olive);
-  background: var(--card2);
+  background: var(--card-light);
   transform: translateY(-3px);
 }
 
@@ -252,12 +252,8 @@ footer {
   <div class="logo">THE MOVE <span>METHOD</span></div>
 
   <nav>
-    <button class="active" onclick="showPage('home', this)">
-      HOME
-    </button>
-    <button onclick="showPage('program', this)">
-      WEEKLY PROGRAM
-    </button>
+    <button class="active" onclick="showPage('home', this)">HOME</button>
+    <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
   </nav>
 </header>
 
@@ -266,11 +262,7 @@ footer {
   <section id="home" class="page active">
     <div class="eyebrow">TRAIN WITH PURPOSE</div>
 
-    <h1>
-      MOVE<br>
-      <span>BETTER.</span><br>
-      GET STRONGER.
-    </h1>
+    <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
 
     <p class="intro">
       A training method built around strength, conditioning,
@@ -301,14 +293,11 @@ footer {
 
 </main>
 
-<footer>
-  THE MOVE METHOD · TRAIN WITH PURPOSE
-</footer>
+<footer>THE MOVE METHOD · TRAIN WITH PURPOSE</footer>
 
 <script>
 
 const workouts = [
-
   {
     day: "MONDAY",
     title: "CLEAN & JERK",
@@ -502,13 +491,11 @@ const workouts = [
       "Triceps 3 x 12"
     ]
   }
-
 ];
 
 let openedWorkoutIndex = null;
 
 function showPage(page, button) {
-
   document.querySelectorAll(".page").forEach(section => {
     section.classList.remove("active");
   });
@@ -522,25 +509,18 @@ function showPage(page, button) {
   if (button) {
     button.classList.add("active");
   } else {
-    const programButton = [...document.querySelectorAll("nav button")]
-      .find(btn => btn.textContent.includes("WEEKLY"));
-
-    if (page === "program" && programButton) {
-      programButton.classList.add("active");
-    }
+    const buttons = document.querySelectorAll("nav button");
+    buttons[page === "home" ? 0 : 1].classList.add("active");
   }
 
   closeWorkout();
 }
 
 function createWeek() {
-
   const grid = document.getElementById("weekGrid");
-
   grid.innerHTML = "";
 
   workouts.forEach((workout, index) => {
-
     const card = document.createElement("div");
 
     card.className = "day-card";
@@ -553,18 +533,13 @@ function createWeek() {
       <p>${workout.focus}</p>
     `;
 
-    card.addEventListener("click", () => {
-      openWorkout(index);
-    });
+    card.addEventListener("click", () => openWorkout(index));
 
     grid.appendChild(card);
-
   });
-
 }
 
 function openWorkout(index) {
-
   const detail = document.getElementById("workoutDetail");
 
   if (openedWorkoutIndex === index) {
@@ -578,7 +553,6 @@ function openWorkout(index) {
   const content = document.getElementById("workoutContent");
 
   function makeBlock(title, items) {
-
     return `
       <div class="block">
         <h3>${title}</h3>
@@ -587,14 +561,11 @@ function openWorkout(index) {
         </ul>
       </div>
     `;
-
   }
 
   content.innerHTML = `
     <div class="eyebrow">${workout.day}</div>
-
     <h2>${workout.title}</h2>
-
     <p class="workout-focus">${workout.focus}</p>
 
     ${makeBlock("WARM-UP", workout.warmup)}
@@ -617,14 +588,10 @@ function openWorkout(index) {
     behavior: "smooth",
     block: "start"
   });
-
 }
 
 function closeWorkout() {
-
-  document.getElementById("workoutDetail")
-    .classList.remove("active");
-
+  document.getElementById("workoutDetail").classList.remove("active");
   document.getElementById("workoutContent").innerHTML = "";
 
   document.querySelectorAll(".day-card").forEach(card => {
@@ -632,7 +599,6 @@ function closeWorkout() {
   });
 
   openedWorkoutIndex = null;
-
 }
 
 createWeek();
