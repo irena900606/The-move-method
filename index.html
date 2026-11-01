@@ -780,6 +780,40 @@ document.querySelectorAll(".day-header").forEach(header=>{
 renderCalendar();
 showWorkoutForDate(selectedDate);
 </script>
+<div id="timerModal" class="timer-modal">
 
+  <div class="timer-window">
+
+    <div class="timer-header">
+      <span>THE MOVE METHOD</span>
+      <button id="closeTimer">✕</button>
+    </div>
+
+    <h2>TRAINING TIMER</h2>
+
+    <div class="timer-modes">
+      <button data-mode="stopwatch">STOPWATCH</button>
+      <button data-mode="countdown">COUNTDOWN</button>
+      <button data-mode="emom">EMOM</button>
+      <button data-mode="tabata">TABATA</button>
+    </div>
+
+    <div id="timerStatus">STOPWATCH</div>
+
+    <div id="timerDisplay">00:00</div>
+
+    <div id="timerRound"></div>
+
+    <div id="timerSettings"></div>
+
+    <div class="timer-controls">
+      <button id="timerStart">START</button>
+      <button id="timerPause">PAUSE</button>
+      <button id="timerReset">RESET</button>
+    </div>
+
+  </div>
+
+</div>
 </body>
 </html>
