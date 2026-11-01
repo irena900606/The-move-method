@@ -584,12 +584,6 @@ function openWorkout(index) {
 
   detail.classList.add("active");
 
-  detail.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
 function closeWorkout() {
   document.getElementById("workoutDetail").classList.remove("active");
   document.getElementById("workoutContent").innerHTML = "";
