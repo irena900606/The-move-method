@@ -1175,7 +1175,6 @@ function reset(){
 
   display.textContent = format(remaining);
 }
-
 function update(){
   const now = Date.now();
 
@@ -1189,6 +1188,14 @@ function update(){
 
   if(remaining > 0){
     display.textContent = format(remaining);
+
+    const secondsLeft = Math.ceil(remaining / 1000);
+
+    if(secondsLeft <= 3 && secondsLeft > 0 && secondsLeft !== lastBeepSecond){
+      playBeep(750,120);
+      lastBeepSecond = secondsLeft;
+    }
+
     return;
   }
 
@@ -1202,6 +1209,9 @@ function update(){
       finish();
       return;
     }
+
+    playBeep(1200,250);
+    lastBeepSecond = null;
 
     round++;
     remaining = 60000;
@@ -1225,6 +1235,9 @@ function update(){
       round++;
       remaining = workTime;
     }
+
+    playBeep(1200,250);
+    lastBeepSecond = null;
 
     if(remaining === 0){
       deadline = now;
