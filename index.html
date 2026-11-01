@@ -5,595 +5,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THE MOVE METHOD</title>
-
 <style>
-:root {
-  --bg: #111310;
-  --card: #1c1f19;
-  --card-open: #25291f;
-  --olive: #a1a584;
-  --text: #f2f2ed;
-  --muted: #a5a69b;
-  --line: #34372d;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
-}
-
-header {
-  padding: 28px 7%;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.logo {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
-
-.logo span {
-  color: var(--olive);
-}
-
-nav {
-  display: flex;
-  gap: 25px;
-}
-
-nav button {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-}
-
-nav button.active,
-nav button:hover {
-  color: var(--olive);
-}
-
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 65px 7%;
-}
-
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
-
-.eyebrow {
-  color: var(--olive);
-  font-size: 11px;
-  letter-spacing: 3px;
-  margin-bottom: 18px;
-}
-
-h1 {
-  font-size: clamp(38px, 7vw, 68px);
-  line-height: 1.05;
-  letter-spacing: 2px;
-  margin-bottom: 22px;
-}
-
-h1 span {
-  color: var(--olive);
-}
-
-.intro {
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 580px;
-  font-size: 15px;
-}
-
-.primary-button {
-  margin-top: 35px;
-  padding: 16px 26px;
-  background: var(--olive);
-  color: #111310;
-  border: none;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-}
-
-.section-title {
-  font-size: 30px;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-}
-
-.section-subtitle {
-  color: var(--muted);
-  margin-bottom: 35px;
-  line-height: 1.6;
-}
-
-.week-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.day-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 25px;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.day-card:hover,
-.day-card.selected {
-  border-color: var(--olive);
-  background: var(--card-open);
-}
-
-.day-card-header {
-  cursor: pointer;
-}
-
-.day-number {
-  color: var(--olive);
-  font-size: 11px;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-}
-
-.day-card h3 {
-  font-size: 19px;
-  margin-bottom: 9px;
-  letter-spacing: 1px;
-}
-
-.day-card p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.workout-content {
-  display: none;
-}
-
-.day-card.selected .day-card-header {
-  display: none;
-}
-
-.day-card.selected .workout-content {
-  display: block;
-}
-
-.workout-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.back-button {
-  background: none;
-  border: 1px solid var(--olive);
-  color: var(--olive);
-  padding: 9px 14px;
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-.workout-content h2 {
-  font-size: 27px;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.workout-focus {
-  color: var(--muted);
-  margin-bottom: 25px;
-  font-size: 14px;
-}
-
-.block {
-  border-top: 1px solid var(--line);
-  padding: 22px 0;
-}
-
-.block h3 {
-  color: var(--olive);
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 13px;
-}
-
-.block ul {
-  padding-left: 20px;
-}
-
-.block li {
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.9;
-}
-
-footer {
-  border-top: 1px solid var(--line);
-  padding: 25px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 3px;
-}
-
-@media (max-width: 600px) {
-  header {
-    padding: 22px 6%;
-  }
-
-  nav {
-    gap: 16px;
-  }
-
-  main {
-    padding: 48px 6%;
-  }
-
-  .day-card {
-    padding: 20px;
-  }
-
-  .workout-content h2 {
-    font-size: 23px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#10110f;color:#f4f4ef;font-family:Arial,sans-serif}
+header{padding:28px 20px;border-bottom:1px solid #343630}
+.brand{font-size:24px;font-weight:900;letter-spacing:3px}
+.tagline{color:#a6a99c;font-size:11px;letter-spacing:3px;margin-top:8px}
+main{max-width:850px;margin:auto;padding:28px 18px}
+h1{font-size:34px;line-height:1.1;margin:15px 0}
+.intro{color:#aaa;font-size:14px;line-height:1.6}
+.section-title{font-size:13px;letter-spacing:2px;color:#b8c19a;margin:32px 0 15px}
+.day{background:#1b1d19;border:1px solid #35382f;border-radius:12px;padding:19px;margin-bottom:14px}
+.day-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.day h2{font-size:19px;margin:0}
+.tag{font-size:10px;letter-spacing:1px;color:#d0d6b7;border:1px solid #596047;padding:6px 9px;border-radius:20px}
+.focus{color:#aeb19f;font-size:12px;margin:9px 0 18px}
+.block{border-top:1px solid #34362f;padding:13px 0}
+.block h3{font-size:11px;letter-spacing:1.5px;color:#c5cda7;margin:0 0 8px}
+.block p{font-size:14px;line-height:1.7;margin:0;color:#eee}
+.note{font-size:12px!important;color:#a8aa9e!important;margin-top:7px!important}
+footer{text-align:center;padding:35px 15px;color:#777;font-size:11px;letter-spacing:2px}
 </style>
 </head>
-
 <body>
-
 <header>
-  <div class="logo">THE MOVE <span>METHOD</span></div>
-
-  <nav>
-    <button class="active" onclick="showPage('home', this)">HOME</button>
-    <button onclick="showPage('program', this)">WEEKLY PROGRAM</button>
-  </nav>
+  <div class="brand">THE MOVE METHOD</div>
+  <div class="tagline">TRAIN WITH PURPOSE</div>
 </header>
-
 <main>
+  <p class="section-title">YOUR TRAINING STARTS HERE</p>
+  <h1>MOVE BETTER.<br>GET STRONGER.</h1>
+  <p class="intro">A structured training method combining weightlifting, strength, gymnastics and conditioning. Train with purpose. Progress with consistency.</p>
 
-<section id="home" class="page active">
-  <div class="eyebrow">TRAIN WITH PURPOSE</div>
+  <p class="section-title">WEEKLY PROGRAM</p>
 
-  <h1>MOVE<br><span>BETTER.</span><br>GET STRONGER.</h1>
+  <article class="day">
+    <div class="day-top"><h2>MONDAY</h2><span class="tag">WEIGHTLIFTING</span></div>
+    <p class="focus">Clean & Jerk · Strength · Conditioning</p>
+    <div class="block"><h3>WARM-UP</h3><p>5 min easy cardio<br>Dynamic mobility<br>Barbell preparation</p></div>
+    <div class="block"><h3>SKILL / STRENGTH</h3><p>Clean & Jerk – 5 × 2<br>Front Squat – 3 × 5</p></div>
+    <div class="block"><h3>WOD – 12 MIN AMRAP</h3><p>10 Wall Balls<br>8 Hang Power Cleans<br>6 Burpees Over Bar</p></div>
+    <div class="block"><h3>ACCESSORIES</h3><p>Face Pulls – 3 × 15<br>Plank – 3 × 40 sec</p></div>
+  </article>
 
-  <p class="intro">
-    A training method built around strength, conditioning,
-    movement quality and consistency. Every week, a new
-    training challenge.
-  </p>
+  <article class="day">
+    <div class="day-top"><h2>TUESDAY</h2><span class="tag">GYMNASTICS</span></div>
+    <p class="focus">Snatch · Gymnastics · Dumbbells</p>
+    <div class="block"><h3>WARM-UP</h3><p>5 min cardio<br>Shoulder and hip mobility</p></div>
+    <div class="block"><h3>SKILL / STRENGTH</h3><p>Snatch – 5 × 2<br>Overhead Squat – 3 × 5</p></div>
+    <div class="block"><h3>WOD – 4 ROUNDS</h3><p>10 Dumbbell Push Press<br>8 Pull-ups<br>10 Box Jump Overs</p></div>
+    <div class="block"><h3>ACCESSORIES</h3><p>Hollow Hold – 3 × 30 sec<br>Scapular Pull-ups – 3 × 10</p></div>
+  </article>
 
-  <button class="primary-button" onclick="showPage('program')">
-    VIEW WEEKLY PROGRAM
-  </button>
-</section>
+  <article class="day">
+    <div class="day-top"><h2>WEDNESDAY</h2><span class="tag">ENGINE</span></div>
+    <p class="focus">Aerobic Capacity · Endurance</p>
+    <div class="block"><h3>MAIN SESSION</h3><p>20–30 min continuous work<br>Choose Row, Bike, Ski or Run.</p></div>
+    <div class="block"><h3>INTENSITY</h3><p>Moderate and controlled pace. Maintain a steady effort throughout the session.</p></div>
+  </article>
 
-<section id="program" class="page">
-  <div class="eyebrow">YOUR TRAINING PLAN</div>
+  <article class="day">
+    <div class="day-top"><h2>THURSDAY</h2><span class="tag">GYMNASTICS</span></div>
+    <p class="focus">Jerk · Pulling Strength · Conditioning</p>
+    <div class="block"><h3>WARM-UP</h3><p>General warm-up<br>Shoulder and wrist mobility</p></div>
+    <div class="block"><h3>SKILL / STRENGTH</h3><p>Push Jerk – 5 × 3<br>Strict Pull-ups – 3 × 6</p></div>
+    <div class="block"><h3>WOD – 10 MIN AMRAP</h3><p>12 Kettlebell Swings<br>10 Hand Release Push-ups<br>8 Box Jumps</p></div>
+    <div class="block"><h3>ACCESSORIES</h3><p>Side Plank – 3 × 30 sec each side</p></div>
+  </article>
 
-  <h2 class="section-title">WEEKLY PROGRAM</h2>
+  <article class="day">
+    <div class="day-top"><h2>FRIDAY</h2><span class="tag">STRENGTH</span></div>
+    <p class="focus">Squats · Strength · Mixed Conditioning</p>
+    <div class="block"><h3>WARM-UP</h3><p>5 min easy cardio<br>Lower-body mobility<br>Squat preparation</p></div>
+    <div class="block"><h3>SKILL / STRENGTH</h3><p>Back Squat – 5 × 5<br>Bulgarian Split Squat – 3 × 8 each leg</p></div>
+    <div class="block"><h3>WOD – FOR TIME</h3><p>400 m Run<br>20 Deadlifts<br>15 Burpees</p></div>
+    <div class="block"><h3>ACCESSORIES</h3><p>Core Stability – 3 sets</p></div>
+  </article>
 
-  <p class="section-subtitle">
-    Select a training day to view your workout.
-  </p>
-
-  <div class="week-grid" id="weekGrid"></div>
-</section>
-
+  <p class="section-title">TRAIN SMART. MOVE BETTER. PROGRESS.</p>
+  <p class="intro">Scale movements and loads according to your ability. Prioritize technique, consistency and recovery.</p>
 </main>
-
 <footer>THE MOVE METHOD · TRAIN WITH PURPOSE</footer>
-
-<script>
-
-const workouts = [
-  {
-    day: "MONDAY",
-    title: "CLEAN & JERK",
-    focus: "Weightlifting · Conditioning",
-    warmup: [
-      "3 min easy row",
-      "10 Romanian deadlifts",
-      "10 alternating lunges",
-      "10 thoracic rotations"
-    ],
-    activation: [
-      "3 Rounds:",
-      "15 Cal Row",
-      "10 Down Ups"
-    ],
-    skill: [
-      "Every 2:00 x 5 sets",
-      "Squat Clean & Jerk",
-      "Work up to 65% of 1RM"
-    ],
-    wod: [
-      "AMRAP 16:",
-      "200m Run",
-      "8 Power Cleans",
-      "8 Chest-to-Bar Pull-Ups",
-      "15 Wall Balls"
-    ],
-    accessories: [
-      "3 x 10 Bulgarian Split Squats",
-      "3 x 12 Hip Thrusts"
-    ]
-  },
-
-  {
-    day: "TUESDAY",
-    title: "SNATCH & GYMNASTICS",
-    focus: "Weightlifting · Gymnastics",
-    warmup: [
-      "3 min easy bike",
-      "10 Hip Extensions",
-      "10 Air Squats",
-      "10 Shoulder Circles"
-    ],
-    activation: [
-      "3 Rounds:",
-      "10 Scapular Pull-Ups",
-      "10 PVC Pass Throughs",
-      "10 Overhead Squats"
-    ],
-    skill: [
-      "Muscle Snatch",
-      "Snatch + Hang Snatch",
-      "Snatch Push Press",
-      "Focus on technique and control"
-    ],
-    wod: [
-      "For Time:",
-      "15 Burpee Box Jump Overs",
-      "20 Toes-to-Bar",
-      "30 Dumbbell Snatches",
-      "15 Burpee Box Jump Overs"
-    ],
-    accessories: [
-      "Core and shoulder stability",
-      "Finish with stretching"
-    ]
-  },
-
-  {
-    day: "WEDNESDAY",
-    title: "ENGINE",
-    focus: "Aerobic Conditioning",
-    warmup: [
-      "5 min easy cardio",
-      "Dynamic mobility",
-      "Movement preparation"
-    ],
-    activation: [
-      "3 Rounds:",
-      "10 Sit-Ups",
-      "10 Back Extensions",
-      "10 Air Squats"
-    ],
-    skill: [
-      "Pacing and breathing",
-      "Maintain consistent effort"
-    ],
-    wod: [
-      "3 Rounds:",
-      "AMRAP 3 min:",
-      "Run + Row",
-      "Rest 2 min",
-      "AMRAP 3 min:",
-      "Run + Ski"
-    ],
-    accessories: [
-      "Bench Press 3 x 10",
-      "Seated Row 3 x 12",
-      "Tabata Hollow Rocks",
-      "Tabata Arch Hold"
-    ]
-  },
-
-  {
-    day: "THURSDAY",
-    title: "POWER & STRENGTH",
-    focus: "Weightlifting · Strength",
-    warmup: [
-      "3 min easy row",
-      "10 Empty Bar Good Mornings",
-      "10 Front Squats",
-      "10 Muscle Cleans"
-    ],
-    activation: [
-      "3 Rounds:",
-      "10 Burpees",
-      "10 Empty Bar Cleans"
-    ],
-    skill: [
-      "Every 2:00 x 5 sets:",
-      "Power Clean + Power Clean Below Knees",
-      "70–75% of Clean & Jerk 1RM",
-      "Clean Pull 3 x 3 at 95–105%"
-    ],
-    wod: [
-      "EMOM 12:",
-      "Min 1: 8 Front Squats at 60%",
-      "Min 2: 10 Burpees Over Bar"
-    ],
-    accessories: [
-      "10 min easy Bike",
-      "Mobility and recovery"
-    ]
-  },
-
-  {
-    day: "FRIDAY",
-    title: "SQUAT & MIXED WOD",
-    focus: "Strength · Mixed Conditioning",
-    warmup: [
-      "3 min easy cardio",
-      "10 Air Squats",
-      "10 Lunges",
-      "Dynamic hip mobility"
-    ],
-    activation: [
-      "3 Rounds:",
-      "10 Glute Bridges",
-      "10 Goblet Squats"
-    ],
-    skill: [
-      "Every 2:00 x 5 sets:",
-      "Back Squat 75%",
-      "Maintain controlled technique"
-    ],
-    wod: [
-      "For Time:",
-      "400m Run",
-      "20 Power Snatches",
-      "10 Muscle-Ups",
-      "20 Handstand Push-Ups",
-      "Max Machine Calories"
-    ],
-    accessories: [
-      "Biceps 3 x 12",
-      "Triceps 3 x 12"
-    ]
-  }
-];
-
-let openedWorkoutIndex = null;
-
-function showPage(page, button) {
-  document.querySelectorAll(".page").forEach(section => {
-    section.classList.remove("active");
-  });
-
-  document.getElementById(page).classList.add("active");
-
-  document.querySelectorAll("nav button").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  if (button) {
-    button.classList.add("active");
-  } else {
-    document.querySelectorAll("nav button")[
-      page === "home" ? 0 : 1
-    ].classList.add("active");
-  }
-
-  closeWorkout();
-}
-
-function makeBlock(title, items) {
-  return `
-    <div class="block">
-      <h3>${title}</h3>
-      <ul>
-        ${items.map(item => `<li>${item}</li>`).join("")}
-      </ul>
-    </div>
-  `;
-}
-
-function createWeek() {
-  const grid = document.getElementById("weekGrid");
-  grid.innerHTML = "";
-
-  workouts.forEach((workout, index) => {
-    const card = document.createElement("div");
-    card.className = "day-card";
-
-    card.innerHTML = `
-      <div class="day-card-header">
-        <div class="day-number">DAY 0${index + 1}</div>
-        <h3>${workout.day}</h3>
-        <p>${workout.title}</p>
-        <p>${workout.focus}</p>
-      </div>
-
-      <div class="workout-content">
-        <div class="workout-top">
-          <div class="day-number">${workout.day}</div>
-          <button class="back-button" type="button">BACK</button>
-        </div>
-
-        <h2>${workout.title}</h2>
-        <p class="workout-focus">${workout.focus}</p>
-
-        ${makeBlock("WARM-UP", workout.warmup)}
-        ${makeBlock("ACTIVATION", workout.activation)}
-        ${makeBlock("SKILL / STRENGTH", workout.skill)}
-        ${makeBlock("WOD", workout.wod)}
-        ${makeBlock("ACCESSORIES", workout.accessories)}
-      </div>
-    `;
-
-    card.querySelector(".day-card-header").addEventListener("click", () => {
-      openWorkout(index);
-    });
-
-    card.querySelector(".back-button").addEventListener("click", (event) => {
-      event.stopPropagation();
-      closeWorkout();
-    });
-
-    grid.appendChild(card);
-  });
-}
-
-function openWorkout(index) {
-  const cards = document.querySelectorAll(".day-card");
-
-  if (openedWorkoutIndex === index) {
-    closeWorkout();
-    return;
-  }
-
-  closeWorkout();
-
-  cards[index].classList.add("selected");
-  openedWorkoutIndex = index;
-}
-
-function closeWorkout() {
-  document.querySelectorAll(".day-card").forEach(card => {
-    card.classList.remove("selected");
-  });
-
-  openedWorkoutIndex = null;
-}
-
-createWeek();
-
-</script>
-
 </body>
 </html>
