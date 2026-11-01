@@ -642,8 +642,15 @@ function showWorkoutForDate(date){
   );
 
   if(selectedCard){
-    selectedCard.classList.add("open","selected-card");
-  }
+  selectedCard.classList.add("open","selected-card");
+
+  setTimeout(()=>{
+    selectedCard.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+  }, 100);
+}
 }
 
 document.getElementById("prevMonth").addEventListener("click",()=>{
