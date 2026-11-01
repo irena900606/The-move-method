@@ -534,9 +534,23 @@ function createWeek() {
 }
 
 function openWorkout(index) {
-  const workout = workouts[index];
 
+let openedWorkoutIndex = null;
+
+function openWorkout(index) {
   const detail = document.getElementById("workoutDetail");
+
+  if (
+    openedWorkoutIndex === index &&
+    detail.classList.contains("active")
+  ) {
+    closeWorkout();
+    return;
+  }
+
+  openedWorkoutIndex = index;
+
+  const workout = workouts[index];
   const content = document.getElementById("workoutContent");
 
   function makeBlock(title, items) {
@@ -566,7 +580,9 @@ function openWorkout(index) {
 
 function closeWorkout() {
   document.getElementById("workoutDetail").classList.remove("active");
+  openedWorkoutIndex = null;
 }
+
 
 createWeek();
 </script>
