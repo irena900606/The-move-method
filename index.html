@@ -1193,9 +1193,9 @@ function update(){
     const secondsLeft = Math.ceil(remaining / 1000);
 
     if(secondsLeft <= 3 && secondsLeft > 0 && secondsLeft !== lastBeepSecond){
-      playBeep(750,120);
-      lastBeepSecond = secondsLeft;
-    }
+  playBeep(750,300);
+  lastBeepSecond = secondsLeft;
+}
 
     return;
   }
