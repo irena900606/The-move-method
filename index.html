@@ -1012,6 +1012,7 @@ let remaining = 300000;
 let deadline = 0;
 let round = 1;
 let totalRounds = 10;
+let emomRoundTime = 60000;
 let phase = "WORK";
 let countSets = 3;
 let countWorkTime = 180000;
@@ -1108,12 +1109,15 @@ function renderSettings(){
     </label>`;
 }
 
-  if(mode === "emom"){
-    settings.innerHTML = `
-      <label>ROUNDS
-        <input id="emomRounds" type="number" min="1" max="99" value="10">
-      </label>`;
-  }
+ if(mode === "emom"){
+  settings.innerHTML = `
+    <label>ROUNDS
+      <input id="emomRounds" type="number" min="1" max="99" value="10">
+    </label>
+    <label>MINUTES PER ROUND
+      <input id="emomMinutes" type="number" min="1" max="60" value="1">
+    </label>`;
+}
 
   if(mode === "tabata"){
     settings.innerHTML = `
@@ -1173,11 +1177,12 @@ function reset(){
 }
 
   if(mode === "emom"){
-    totalRounds = Math.max(1,readValue("emomRounds",10));
-    remaining = 60000;
-    status.textContent = "EMOM";
-    roundDisplay.textContent = "ROUND 1 / " + totalRounds;
-  }
+  totalRounds = Math.max(1,readValue("emomRounds",10));
+  emomRoundTime = Math.max(1,readValue("emomMinutes",1)) * 60000;
+  remaining = emomRoundTime;
+  status.textContent = "EMOM";
+  roundDisplay.textContent = "ROUND 1 / " + totalRounds;
+}
 
   if(mode === "tabata"){
     workTime = readValue("tabWork",20) * 1000;
@@ -1284,7 +1289,7 @@ function update(){
     lastBeepSecond = null;
 
     round++;
-    remaining = 60000;
+    remaining = emomRoundTime;
     deadline = now + remaining;
     roundDisplay.textContent = "ROUND " + round + " / " + totalRounds;
     display.textContent = format(remaining);
