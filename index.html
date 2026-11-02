@@ -1005,6 +1005,8 @@ const modeButtons = document.querySelectorAll(".timer-modes button");
 let mode = "stopwatch";
 let interval = null;
 let running = false;
+let preparing = false;
+let startDeadline = 0;
 let elapsed = 0;
 let remaining = 300000;
 let deadline = 0;
@@ -1139,6 +1141,9 @@ function finish(){
 
 function reset(){
   clearClock();
+    preparing = false;
+  startDeadline = 0;
+  lastBeepSecond = null;
   elapsed = 0;
   round = 1;
   phase = "WORK";
@@ -1178,6 +1183,29 @@ function reset(){
 }
 function update(){
   const now = Date.now();
+    if(preparing){
+    const secondsLeft = Math.max(0,Math.ceil((startDeadline-now)/1000));
+
+    display.textContent = "00:" + String(secondsLeft).padStart(2,"0");
+
+    if(secondsLeft <= 3 && secondsLeft > 0 && secondsLeft !== lastBeepSecond){
+      playBeep(750,300);
+      lastBeepSecond = secondsLeft;
+    }
+
+    if(secondsLeft === 0){
+      preparing = false;
+      playBeep(1200,400);
+
+      if(mode === "stopwatch"){
+        deadline = Date.now() - elapsed;
+      }else{
+        deadline = Date.now() + remaining;
+      }
+    }
+
+    return;
+  }
 
   if(mode === "stopwatch"){
     elapsed = now - deadline;
@@ -1255,19 +1283,9 @@ function update(){
 function start(){
   if(running) return;
 
-  if(mode === "stopwatch"){
-    deadline = Date.now() - elapsed;
-  }else{
-    if(remaining <= 0){
-      reset();
-    }
-
-    if(remaining <= 0){
-      return;
-    }
-
-    deadline = Date.now() + remaining;
-  }
+  preparing = true;
+  startDeadline = Date.now() + 10000;
+  lastBeepSecond = null;
 
   running = true;
   interval = setInterval(update,100);
