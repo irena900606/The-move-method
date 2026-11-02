@@ -888,7 +888,7 @@ const MEMBERSHIP_START = new Date(2026, 9, 26);
 
 let displayedMonth = new Date(2026, 10, 1);
 let selectedDate = new Date(2026, 10, 2);
-
+window.moveSelectedDate = selectedDate;
 const monthTitle = document.getElementById("monthTitle");
 const calendarGrid = document.getElementById("calendarGrid");
 const selectedDateLabel = document.getElementById("selectedDate");
@@ -961,8 +961,11 @@ function renderCalendar(){
       if(locked) return;
 
       selectedDate = date;
-      renderCalendar();
-      showWorkoutForDate(date);
+window.moveSelectedDate = date;
+renderCalendar();
+showWorkoutForDate(date);
+
+window.dispatchEvent(new Event("moveWeekChanged"));
     });
 
     calendarGrid.appendChild(button);
@@ -1505,29 +1508,29 @@ reset();
   const percentDisplay = document.getElementById("progressPercent");
   const progressFill = document.getElementById("progressFill");
 
-  const today = new Date();
+  function getWeekKey(date){
 
-const dayOfWeek = (today.getDay() + 6) % 7;
+    const monday = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
 
-const monday = new Date(
-  today.getFullYear(),
-  today.getMonth(),
-  today.getDate() - dayOfWeek
-);
+    const day = (monday.getDay() + 6) % 7;
+    monday.setDate(monday.getDate() - day);
 
-const weekKey =
-  monday.getFullYear() + "-" +
-  String(monday.getMonth() + 1).padStart(2,"0") + "-" +
-  String(monday.getDate()).padStart(2,"0");
+    return monday.getFullYear() + "-" +
+      String(monday.getMonth() + 1).padStart(2,"0") + "-" +
+      String(monday.getDate()).padStart(2,"0");
+  }
 
-const savedWeek = localStorage.getItem("moveWeek");
+  let activeWeekKey = getWeekKey(
+    window.moveSelectedDate || new Date()
+  );
 
-if(savedWeek !== weekKey){
-  localStorage.setItem("moveWeek",weekKey);
-  localStorage.setItem("moveCompleted","[]");
-}
-
-let completed = JSON.parse(localStorage.getItem("moveCompleted") || "[]");
+  let completed = JSON.parse(
+    localStorage.getItem("moveCompleted_" + activeWeekKey) || "[]"
+  );
 
   function updateProgress(){
 
@@ -1536,7 +1539,9 @@ let completed = JSON.parse(localStorage.getItem("moveCompleted") || "[]");
       const isCompleted = completed.includes(day);
 
       button.classList.toggle("completed",isCompleted);
-      button.textContent = isCompleted ? "WORKOUT COMPLETED ✓" : "COMPLETE WORKOUT";
+      button.textContent = isCompleted
+        ? "WORKOUT COMPLETED ✓"
+        : "COMPLETE WORKOUT";
     });
 
     const count = completed.length;
@@ -1546,8 +1551,23 @@ let completed = JSON.parse(localStorage.getItem("moveCompleted") || "[]");
     percentDisplay.textContent = percent + "%";
     progressFill.style.width = percent + "%";
 
-    localStorage.setItem("moveCompleted",JSON.stringify(completed));
+    localStorage.setItem(
+      "moveCompleted_" + activeWeekKey,
+      JSON.stringify(completed)
+    );
   }
+
+  window.addEventListener("moveWeekChanged",()=>{
+
+    activeWeekKey = getWeekKey(window.moveSelectedDate);
+
+    completed = JSON.parse(
+      localStorage.getItem("moveCompleted_" + activeWeekKey) || "[]"
+    );
+
+    updateProgress();
+
+  });
 
   buttons.forEach(button=>{
     button.addEventListener("click",()=>{
