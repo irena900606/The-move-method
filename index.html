@@ -375,6 +375,50 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
   letter-spacing:2px;
   cursor:pointer;
 }
+  .weekly-progress{
+  margin: 35px 0;
+  padding: 20px;
+  background: #171918;
+  border: 1px solid #343a35;
+  border-radius: 12px;
+}
+
+.weekly-progress .section-heading{
+  color: #c0c99c;
+  margin-bottom: 18px;
+}
+
+.progress-info{
+  display: flex;
+  justify-content: space-between;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.progress-track{
+  width: 100%;
+  height: 8px;
+  background: #343a35;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill{
+  width: 0%;
+  height: 100%;
+  background: #c0c99c;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.progress-message{
+  margin-top: 12px;
+  color: #999f96;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
 </style>
 </head>
 
@@ -745,12 +789,28 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 <li>10 Tricep Extensions</li>
 </ul>
 </section>
-
 </div>
 </article>
  
 
 </main>
+
+<section class="weekly-progress">
+  <div class="section-heading">WEEKLY PROGRESS</div>
+
+  <div class="progress-info">
+    <span id="completedCount">0 / 5 COMPLETED</span>
+    <span id="progressPercent">0%</span>
+  </div>
+
+  <div class="progress-track">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+
+  <div class="progress-message">
+    CONSISTENCY IS EVERYTHING.
+  </div>
+</section>
 
 <footer class="footer">
 
