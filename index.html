@@ -1013,6 +1013,10 @@ let deadline = 0;
 let round = 1;
 let totalRounds = 10;
 let phase = "WORK";
+let countSets = 3;
+let countWorkTime = 180000;
+let countRestTime = 90000;
+let countCurrentSet = 1;
 let workTime = 20000;
 let restTime = 10000;
 
@@ -1092,14 +1096,17 @@ function renderSettings(){
   }
 
   if(mode === "countdown"){
-    settings.innerHTML = `
-      <label>MINUTES
-        <input id="countMin" type="number" min="0" max="999" value="5">
-      </label>
-      <label>SECONDS
-        <input id="countSec" type="number" min="0" max="59" value="0">
-      </label>`;
-  }
+  settings.innerHTML = `
+    <label>SETS
+      <input id="countSets" type="number" min="1" max="99" value="3">
+    </label>
+    <label>WORK (MIN)
+      <input id="countWork" type="number" min="1" max="999" value="3">
+    </label>
+    <label>REST (SEC)
+      <input id="countRest" type="number" min="0" max="999" value="90">
+    </label>`;
+}
 
   if(mode === "emom"){
     settings.innerHTML = `
@@ -1155,13 +1162,15 @@ function reset(){
   }
 
   if(mode === "countdown"){
-    remaining = (
-      readValue("countMin",5) * 60 +
-      readValue("countSec",0)
-    ) * 1000;
-    status.textContent = "COUNTDOWN";
-    roundDisplay.textContent = "";
-  }
+  countSets = Math.max(1,readValue("countSets",3));
+  countWorkTime = Math.max(1,readValue("countWork",3)) * 60000;
+  countRestTime = Math.max(0,readValue("countRest",90)) * 1000;
+  countCurrentSet = 1;
+  remaining = countWorkTime;
+  phase = "WORK";
+  status.textContent = "WORK";
+  roundDisplay.textContent = "SET 1 / " + countSets;
+}
 
   if(mode === "emom"){
     totalRounds = Math.max(1,readValue("emomRounds",10));
@@ -1229,9 +1238,41 @@ function update(){
   }
 
   if(mode === "countdown"){
-    finish();
-    return;
+
+  if(phase === "WORK"){
+
+    if(countCurrentSet >= countSets){
+      finish();
+      return;
+    }
+
+    if(countRestTime > 0){
+      phase = "REST";
+      remaining = countRestTime;
+    }else{
+      countCurrentSet++;
+      phase = "WORK";
+      remaining = countWorkTime;
+    }
+
+  }else{
+
+    countCurrentSet++;
+    phase = "WORK";
+    remaining = countWorkTime;
+
   }
+
+  playBeep(1200,250);
+  lastBeepSecond = null;
+  deadline = now + remaining;
+
+  status.textContent = phase;
+  roundDisplay.textContent = "SET " + countCurrentSet + " / " + countSets;
+  display.textContent = format(remaining);
+
+  return;
+}
 
   if(mode === "emom"){
     if(round >= totalRounds){
