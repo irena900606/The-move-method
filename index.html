@@ -419,6 +419,24 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
   font-size: 10px;
   letter-spacing: 1px;
 }
+  .complete-workout{
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid #c0c99c;
+  border-radius: 8px;
+  color: #c0c99c;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.complete-workout.completed{
+  background: #c0c99c;
+  color: #171918;
+}
 </style>
 </head>
 
@@ -529,6 +547,11 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 </section>
 
 </div>
+
+<button class="complete-workout" data-complete="1">
+  COMPLETE WORKOUT
+</button>
+
 </article>
 
 <!-- TUESDAY -->
@@ -1453,6 +1476,57 @@ renderSettings();
 reset();
 
 })();
-</script> 
+</script>
+
+<script>
+(function(){
+
+  const buttons = document.querySelectorAll(".complete-workout");
+  const countDisplay = document.getElementById("completedCount");
+  const percentDisplay = document.getElementById("progressPercent");
+  const progressFill = document.getElementById("progressFill");
+
+  let completed = JSON.parse(localStorage.getItem("moveCompleted") || "[]");
+
+  function updateProgress(){
+
+    buttons.forEach(button=>{
+      const day = button.dataset.complete;
+      const isCompleted = completed.includes(day);
+
+      button.classList.toggle("completed",isCompleted);
+      button.textContent = isCompleted ? "WORKOUT COMPLETED ✓" : "COMPLETE WORKOUT";
+    });
+
+    const count = completed.length;
+    const percent = Math.round((count / 5) * 100);
+
+    countDisplay.textContent = count + " / 5 COMPLETED";
+    percentDisplay.textContent = percent + "%";
+    progressFill.style.width = percent + "%";
+
+    localStorage.setItem("moveCompleted",JSON.stringify(completed));
+  }
+
+  buttons.forEach(button=>{
+    button.addEventListener("click",()=>{
+
+      const day = button.dataset.complete;
+
+      if(completed.includes(day)){
+        completed = completed.filter(item=>item !== day);
+      }else{
+        completed.push(day);
+      }
+
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+
+})();
+</script>
+
 </body>
 </html>
