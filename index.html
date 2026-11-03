@@ -1664,10 +1664,13 @@ function renderPRs(){
       <details style="margin-top:14px; color:#c0c99c;">
         <summary style="cursor:pointer; font-size:12px; color:#aeb69a;">PR HISTORY (${entries.length})</summary>
         <div style="margin-top:10px; color:#ffffff;">
-          ${sortedEntries.length
-            ? sortedEntries.map(entry =>
-                `<p style="margin:6px 0;">${entry.weight} kg — ${entry.date}</p>`
-              ).join("")
+          sortedEntries.map(entry =>
+  `<p style="display:flex; justify-content:space-between; align-items:center; margin:5px 0; font-size:13px;">
+    <span>${entry.weight} kg — ${entry.date}</span>
+    <button onclick="deletePR('${exercise}', ${entries.indexOf(entry)})"
+      style="background:none; border:0; color:#777; font-size:13px; padding:3px 6px;">🗑</button>
+  </p>`
+).join("")
             : "<p>No records yet.</p>"
           }
         </div>
@@ -1700,6 +1703,17 @@ function addPR(exercise){
     String(now.getDate()).padStart(2, "0");
 
   history[exercise].push({ weight, date });
+
+  localStorage.setItem("movePRHistory", JSON.stringify(history));
+
+  renderPRs();
+}
+function deletePR(exercise, index){
+  if (!confirm("Delete this record?")) return;
+
+  const history = getPRHistory();
+
+  history[exercise].splice(index, 1);
 
   localStorage.setItem("movePRHistory", JSON.stringify(history));
 
