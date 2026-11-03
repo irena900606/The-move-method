@@ -1601,12 +1601,109 @@ reset();
 
 </div>
   <script>
+const prExerciseList = [
+  "Back Squat",
+  "Front Squat",
+  "Deadlift",
+  "Clean",
+  "Power Clean",
+  "Clean & Jerk",
+  "Snatch",
+  "Power Snatch",
+  "Bench Press",
+  "Strict Press"
+];
+
+function getPRHistory(){
+  return JSON.parse(localStorage.getItem("movePRHistory") || "{}");
+}
+
 function openPRs(){
   document.getElementById("prsScreen").style.display = "block";
+  renderPRs();
 }
 
 function closePRs(){
   document.getElementById("prsScreen").style.display = "none";
+}
+
+function renderPRs(){
+  const history = getPRHistory();
+  const container = document.getElementById("prExercises");
+
+  container.innerHTML = "";
+
+  prExerciseList.forEach(exercise => {
+    const entries = history[exercise] || [];
+    const best = entries.length
+      ? Math.max(...entries.map(entry => Number(entry.weight)))
+      : null;
+
+    const sortedEntries = [...entries].reverse();
+
+    const card = document.createElement("div");
+    card.style.cssText = "background:#1b201d; padding:16px; margin-top:14px; border-radius:10px;";
+
+    card.innerHTML = `
+      <h3 style="margin:0 0 10px; color:#ffffff;">${exercise}</h3>
+
+      <div style="color:#c0c99c; font-size:22px; font-weight:bold; margin-bottom:14px;">
+        ${best === null ? "—" : best + " kg"}
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <input id="prInput${prExerciseList.indexOf(exercise)}"
+          type="number" min="0" step="0.5" placeholder="Weight (kg)"
+          style="flex:1; min-width:0; padding:12px; background:#101211; color:white; border:1px solid #555; border-radius:6px;">
+        <button onclick="addPR('${exercise}')"
+          style="padding:10px; background:#c0c99c; color:#171918; border:0; border-radius:6px; font-weight:bold;">
+          ADD
+        </button>
+      </div>
+
+      <details style="margin-top:14px; color:#c0c99c;">
+        <summary style="cursor:pointer;">PR HISTORY (${entries.length})</summary>
+        <div style="margin-top:10px; color:#ffffff;">
+          ${sortedEntries.length
+            ? sortedEntries.map(entry =>
+                `<p style="margin:6px 0;">${entry.weight} kg — ${entry.date}</p>`
+              ).join("")
+            : "<p>No records yet.</p>"
+          }
+        </div>
+      </details>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function addPR(exercise){
+  const index = prExerciseList.indexOf(exercise);
+  const input = document.getElementById("prInput" + index);
+  const weight = Number(input.value);
+
+  if (!input.value || !Number.isFinite(weight) || weight <= 0){
+    alert("Please enter a valid weight.");
+    return;
+  }
+
+  const history = getPRHistory();
+
+  if (!history[exercise]){
+    history[exercise] = [];
+  }
+
+  const now = new Date();
+  const date = now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+    String(now.getDate()).padStart(2, "0");
+
+  history[exercise].push({ weight, date });
+
+  localStorage.setItem("movePRHistory", JSON.stringify(history));
+
+  renderPRs();
 }
 </script>
 </body>
