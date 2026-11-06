@@ -62,6 +62,31 @@ main{padding:0 16px 40px}
   display:flex;justify-content:space-between;align-items:center;
   margin:20px 0 18px;gap:10px
 }
+  .week-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+}
+
+.tools-button{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#171a17;
+  border:1px solid #777c53;
+  border-radius:12px;
+  cursor:pointer;
+  padding:8px;
+  flex-shrink:0;
+}
+
+.tools-button svg{
+  width:32px;
+  height:32px;
+}
 .week-title h2{
   font-size:16px;
   letter-spacing:2px;
@@ -516,6 +541,18 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 
 <div class="week-title">
   <h2>DAILY WORKOUT</h2>
+
+  <button class="tools-button" id="openTools" aria-label="Training Tools">
+    <svg viewBox="0 0 48 48" width="30" height="30">
+      <g transform="rotate(-35 24 24)" fill="#d6b94a">
+        <rect x="8" y="15" width="5" height="18" rx="1.5"/>
+        <rect x="14" y="18" width="4" height="12" rx="1"/>
+        <rect x="18" y="22" width="12" height="4" rx="1"/>
+        <rect x="30" y="18" width="4" height="12" rx="1"/>
+        <rect x="35" y="15" width="5" height="18" rx="1.5"/>
+      </g>
+    </svg>
+  </button>
 </div>
 
 <!-- MONDAY -->
