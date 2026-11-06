@@ -1124,10 +1124,13 @@ showWorkoutForDate(selectedDate);
 
 const openToolsButton = document.getElementById("openTools");
 const toolsPage = document.getElementById("toolsPage");
-const mainPage = document.querySelector("main");
 
 openToolsButton.addEventListener("click", () => {
-  mainPage.style.display = "none";
+  document.querySelector("header").style.display = "none";
+  document.querySelector(".hero").style.display = "none";
+  document.querySelector("main").style.display = "none";
+  document.querySelector(".footer").style.display = "none";
+
   toolsPage.style.display = "block";
   window.scrollTo(0, 0);
 });
