@@ -921,7 +921,13 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 
 </main>
 <section id="toolsPage" class="tools-page" style="display:none;">
+
+  <button id="backToWorkout" class="back-button">
+    ← BACK TO WORKOUT
+  </button>
+
   <h2>TRAINING TOOLS</h2>
+
 </section>
 
 
@@ -1134,7 +1140,17 @@ openToolsButton.addEventListener("click", () => {
   toolsPage.style.display = "block";
   window.scrollTo(0, 0);
 });
+const backToWorkoutButton = document.getElementById("backToWorkout");
 
+backToWorkoutButton.addEventListener("click", () => {
+  document.querySelector("header").style.display = "";
+  document.querySelector(".hero").style.display = "";
+  document.querySelector("main").style.display = "";
+  document.querySelector(".footer").style.display = "";
+
+  toolsPage.style.display = "none";
+  window.scrollTo(0, 0);
+});
 </script>
 <div id="timerModal" class="timer-modal">
 
