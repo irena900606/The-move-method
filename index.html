@@ -113,13 +113,29 @@ main{padding:0 16px 40px}
   font-weight:bold;padding:7px 0
 }
   .calendar-date{
-  min-height:30px;border:1px solid transparent;border-radius:5px;
-  background:var(--card2);color:var(--text);font-size:11px;cursor:pointer
+  min-height:30px;
+  border:1px solid transparent;
+  border-radius:5px;
+  background:linear-gradient(
+    135deg,
+    var(--card2) 50%,
+    #c7ed65 50%
+  );
+  color:#ffffff;
+  font-size:11px;
+  cursor:pointer;
 }
 .calendar-date:hover:not(:disabled){
 border-color:var(--accent)}
 .calendar-date.selected{
-  background:var(--accent);color:#111410;font-weight:bold
+  background:linear-gradient(
+    135deg,
+    var(--card2) 50%,
+    #c7ed65 50%
+  );
+  color:#ffffff;
+  border-color:#c7ed65;
+  font-weight:bold;
 }
 .calendar-date:disabled{opacity:.22;cursor:not-allowed}
 .calendar-date.empty{background:transparent;cursor:default}
