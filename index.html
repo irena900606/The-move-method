@@ -136,13 +136,14 @@ main{padding:0 16px 40px}
 }
   .calendar-date{
   min-height:30px;
-  border:1px solid transparent;
+  border:1px solid #d6b94a;
   border-radius:5px;
-  background:linear-gradient(
-  135deg,
-  var(--card2) 65%,
-#ffffff 65%
-);
+  background:#0c0e0c;
+  color:#ffffff;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
   color:#ffffff;
 font-size:11px;
 font-weight:900;
@@ -152,11 +153,11 @@ text-shadow:0 0 3px rgba(255,255,255,0.45);
 .calendar-date:hover:not(:disabled){
 border-color:var(--accent)}
 .calendar-date.selected{
-  background:linear-gradient(
-  135deg,
-  var(--card2) 65%,
-#ffffff 65%
-);
+  background:#d6b94a;
+  border:1px solid #d6b94a;
+  color:#0c0e0c;
+  font-weight:900;
+}
   color:#ffffff;
   border-color:#c7ed65;
   font-weight:bold;
