@@ -1153,12 +1153,6 @@ function renderCalendar(){
     displayedMonth.getMonth()+1,0
   ).getDate();
 
-  for(let i=0;i<offset;i++){
-    const blank = document.createElement("div");
-    blank.className = "calendar-date empty";
-    calendarGrid.appendChild(blank);
-  }
-
   for(let day=1;day<=daysInMonth;day++){
 
     const date = new Date(
