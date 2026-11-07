@@ -152,8 +152,13 @@ border-color:var(--accent)}
 .calendar-date:disabled{opacity:.22;cursor:not-allowed}
 .calendar-date.empty{background:transparent;cursor:default}
 .calendar-legend{
-  display:flex;gap:15px;flex-wrap:wrap;margin-top:15px;
-  color:var(--muted);font-size:10px
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:15px;
+  color:#ffffff;
+  font-size:10px;
+  font-weight:700;
 }
 .legend-dot{
   display:inline-block;width:8px;height:8px;border-radius:50%;
@@ -630,10 +635,9 @@ color: #ffffff;
 
   <div class="calendar-grid" id="calendarGrid"></div>
 
-  <div class="calendar-legend">
-    <span><i class="legend-dot"></i>Selected date</span>
-    <span>Unavailable dates are locked</span>
-  </div>
+<div class="calendar-legend">
+  <span><i class="legend-dot"></i>Selected date</span>
+</div>
 <div class="selected-date" id="selectedDate">SELECT A DATE</div>
   </div>
 
