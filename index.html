@@ -1215,25 +1215,18 @@ function showWorkoutForDate(date){
   const selectedCard = document.querySelector(
     '.day-card[data-day="' + dayNumber + '"]'
   );
-  
-if(selectedCard){
 
-  if(selectedCard.classList.contains("open")){
+  if(selectedCard){
 
-    selectedCard.classList.remove("open","selected-card");
+    selectedCard.classList.add("open","selected-card");
 
-    return;
+    setTimeout(()=>{
+      selectedCard.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    }, 100);
   }
-
-  selectedCard.classList.add("open","selected-card");
-
-  setTimeout(()=>{
-    selectedCard.scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-    });
-  }, 100);
-}
 }
 document.getElementById("prevMonth").addEventListener("click",()=>{
   displayedMonth = new Date(
