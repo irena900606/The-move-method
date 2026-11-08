@@ -605,23 +605,28 @@ color: #ffffff;
   padding-top:10px;
 }
   /* TRAINING TOOLS LAYOUT */
-
-  .tools-timer{
+  
+.tools-timer{
   width:100%;
   min-height:180px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:#171a17;
-  border:1px solid #c0c99c;
+  border:1px solid #d6b94a;
   border-radius:12px;
-  color:#e5d65a;
+  color:#ffffff;
   font-size:22px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:5px;
   cursor:pointer;
+  transition:0.2s ease;
 }
 
+.tools-timer:active{
+  background:#20241f;
+  border-color:#e5d65a;
+}
 .tools-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
