@@ -163,7 +163,12 @@ border-color:var(--accent)}
   font-weight:bold;
 }
 .calendar-date:disabled{opacity:.22;cursor:not-allowed}
-.calendar-date.empty{background:transparent;cursor:default}
+.calendar-date.empty{
+  visibility:hidden;
+  border:none;
+  background:transparent;
+  cursor:default;
+}
 .calendar-legend{
   display:flex;
   gap:15px;
