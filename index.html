@@ -604,55 +604,80 @@ color: #ffffff;
   margin:0 auto 25px;
   padding-top:10px;
 }
-  /* TRAINING TOOLS LAYOUT */
-  
-.tools-timer{
-  width:100%;
-  min-height:180px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#171a17;
-  border:1px solid #d6b94a;
-  border-radius:12px;
-  color:#ffffff;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:5px;
-  cursor:pointer;
-  transition:0.2s ease;
-}
+    /* TRAINING TOOLS LAYOUT */
 
-.tools-timer:active{
-  background:#20241f;
-  border-color:#e5d65a;
-}
-.tools-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:15px;
-}
-
+.tools-timer,
 .tools-card{
-  min-height:120px;
+  width:100%;
+  min-height:82px;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:center;
-  justify-content:center;
-  gap:12px;
+  justify-content:flex-start;
+  gap:16px;
+  padding:12px 16px;
   background:#171a17;
-  border:1px solid #343a31;
-  border-radius:12px;
-  color:#e5d65a;
-  font-size:13px;
+  border:none;
+  border-bottom:1px solid #343a31;
+  border-radius:0;
+  color:#ffffff;
+  font-size:14px;
+  font-weight:800;
   letter-spacing:2px;
   cursor:pointer;
+  text-align:left;
+}
+
+.tools-grid{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin-top:0;
 }
 
 .tools-card .tool-icon{
-  font-size:30px;
+  font-size:26px;
+  width:42px;
+  text-align:center;
 }
+/* TRAINING TOOLS DETAILS */
+
+.tool-icon{
+  color:#d6b94a;
+  font-size:26px;
+  width:42px;
+  min-width:42px;
+  text-align:center;
+}
+
+.tool-info{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  flex:1;
+}
+
+.tool-title{
+  color:#ffffff;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+.tool-description{
+  color:#a1a797;
+  font-size:10px;
+  font-weight:400;
+  letter-spacing:0.5px;
+}
+
+.tool-arrow{
+  color:#d6b94a;
+  font-size:25px;
+  font-weight:300;
+  margin-left:auto;
+}  
 </style>
 </head>
 
@@ -1067,21 +1092,35 @@ color: #ffffff;
   <h2>TRAINING TOOLS</h2>
 
   <button id="toolsTimerButton" class="tools-timer">
-  <span>TIMER</span>
+  <span class="tool-icon">⏱</span>
+  <span class="tool-info">
+    <span class="tool-title">TIMER</span>
+    <span class="tool-description">Stopwatch · Countdown · Intervals</span>
+  </span>
+  <span class="tool-arrow">›</span>
 </button>
 
-  <div class="tools-grid">
-    <button id="toolsPRsButton" class="tools-card">
-      <span class="tool-icon">🏆</span>
-      <span>MY PRs</span>
-    </button>
+<div class="tools-grid">
 
-    <button id="toolsProgressButton" class="tools-card">
-      <span class="tool-icon">📈</span>
-      <span>PROGRESS</span>
-    </button>
-  </div>
+  <button id="toolsPRsButton" class="tools-card">
+    <span class="tool-icon">🏆</span>
+    <span class="tool-info">
+      <span class="tool-title">MY PRs</span>
+      <span class="tool-description">Your personal records</span>
+    </span>
+    <span class="tool-arrow">›</span>
+  </button>
 
+  <button id="toolsProgressButton" class="tools-card">
+    <span class="tool-icon">📈</span>
+    <span class="tool-info">
+      <span class="tool-title">PROGRESS</span>
+      <span class="tool-description">Track your development</span>
+    </span>
+    <span class="tool-arrow">›</span>
+  </button>
+
+</div>
   <div class="tools-bottom">
     <button id="backToWorkout" class="back-button">
       ← BACK TO WORKOUT
