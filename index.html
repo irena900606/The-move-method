@@ -1217,7 +1217,6 @@ function showWorkoutForDate(date){
   );
 
   if(selectedCard){
-
     selectedCard.classList.add("open","selected-card");
 
     setTimeout(()=>{
@@ -1296,7 +1295,7 @@ document.addEventListener("click", (event) => {
   const card = event.target.closest(".day-card");
 
   if (!card) return;
-const wasOpen = card.classList.contains("open");
+
   const dayNumber = Number(card.dataset.day);
 
   if (dayNumber < 1 || dayNumber > 5) return;
@@ -1322,11 +1321,8 @@ const wasOpen = card.classList.contains("open");
 
   renderCalendar();
   showWorkoutForDate(newDate);
-if (wasOpen) {
-  card.classList.remove("open", "selected-card");
-}
-});
 
+});
 </script>
 <div id="timerModal" class="timer-modal">
 
