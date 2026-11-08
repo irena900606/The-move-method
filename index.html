@@ -1147,7 +1147,11 @@ function renderCalendar(){
   );
 
   const offset = (firstDay.getDay()+6)%7;
-
+for(let i=0; i<offset; i++){
+  const blank = document.createElement("div");
+  blank.className = "calendar-date empty";
+  calendarGrid.appendChild(blank);
+}
   const daysInMonth = new Date(
     displayedMonth.getFullYear(),
     displayedMonth.getMonth()+1,0
