@@ -1303,7 +1303,7 @@ document.addEventListener("click", (event) => {
   const card = event.target.closest(".day-card");
 
   if (!card) return;
-
+const wasOpen = card.classList.contains("open");
   const dayNumber = Number(card.dataset.day);
 
   if (dayNumber < 1 || dayNumber > 5) return;
@@ -1329,7 +1329,9 @@ document.addEventListener("click", (event) => {
 
   renderCalendar();
   showWorkoutForDate(newDate);
-
+if (wasOpen) {
+  card.classList.remove("open", "selected-card");
+}
 });
 
 </script>
