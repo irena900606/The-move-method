@@ -370,10 +370,10 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 .timer-modal.open{
   display:flex;
 }
-
 .timer-window{
   width:100%;
   max-width:480px;
+  position:relative;
   background:#171a17;
   border:none;
   border-radius:14px;
@@ -381,7 +381,6 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
   text-align:center;
   color:#f4f5ef;
 }
-
 .timer-header{
   display:flex;
   justify-content:space-between;
@@ -393,9 +392,12 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 }
 
 #closeTimer{
+  position:absolute;
+  top:12px;
+  right:15px;
   background:none;
   border:none;
-  color:#a1a797;
+  color:#d6b94a;
   font-size:22px;
   cursor:pointer;
 }
