@@ -1288,41 +1288,6 @@ backToWorkoutButton.addEventListener("click", () => {
   window.scrollTo(0, 0);
 });
 
-// SYNC WORKOUT CARDS WITH CALENDAR
-
-document.addEventListener("click", (event) => {
-
-  const card = event.target.closest(".day-card");
-
-  if (!card) return;
-
-  const dayNumber = Number(card.dataset.day);
-
-  if (dayNumber < 1 || dayNumber > 5) return;
-
-  const monday = new Date(selectedDate);
-
-  monday.setDate(
-    monday.getDate() - ((monday.getDay() + 6) % 7)
-  );
-
-  const newDate = new Date(monday);
-
-  newDate.setDate(monday.getDate() + dayNumber - 1);
-
-  selectedDate = newDate;
-  displayedMonth = new Date(
-    newDate.getFullYear(),
-    newDate.getMonth(),
-    1
-  );
-
-  window.moveSelectedDate = newDate;
-
-  renderCalendar();
-  showWorkoutForDate(newDate);
-
-});
 </script>
 <div id="timerModal" class="timer-modal">
 
