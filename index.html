@@ -1217,6 +1217,16 @@ function showWorkoutForDate(date){
   );
 
   if(selectedCard){
+  
+if(selectedCard){
+
+  if(selectedCard.classList.contains("open")){
+
+    selectedCard.classList.remove("open","selected-card");
+
+    return;
+  }
+
   selectedCard.classList.add("open","selected-card");
 
   setTimeout(()=>{
@@ -1227,7 +1237,6 @@ function showWorkoutForDate(date){
   }, 100);
 }
 }
-
 document.getElementById("prevMonth").addEventListener("click",()=>{
   displayedMonth = new Date(
     displayedMonth.getFullYear(),
