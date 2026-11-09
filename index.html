@@ -218,6 +218,19 @@ border-color:var(--accent)}
 .section:last-of-type{
   border-bottom:0;
 }
+ /* CLOSED WORKOUT CARDS */
+
+.day-card:not(.open) .day-header{
+  background:#d6b94a;
+}
+
+.day-card:not(.open) .day-name{
+  color:#000000;
+}
+
+.day-card:not(.open) .day-header::after{
+  color:#000000;
+} 
 .section-heading{
   display:flex;
   align-items:center;
