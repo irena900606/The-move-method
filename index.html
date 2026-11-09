@@ -545,15 +545,18 @@ p.detail{font-size:14px;line-height:1.8;margin:4px 0;color:#e7e9e2}
 
 .timer-sound{
   display:block;
-  margin:18px auto 0;
-  padding:10px 22px;
+  margin:12px auto 0;
+  padding:8px;
   background:transparent;
-  border:1px solid #687354;
-  border-radius:6px;
-  color:#c0c99c;
-  font-size:10px;
-  letter-spacing:2px;
+  border:none;
+  color:#000000;
   cursor:pointer;
+}
+
+.timer-sound svg{
+  width:38px;
+  height:38px;
+  display:block;
 }
  .weekly-progress{
   margin: 60px 0 10px;
@@ -1422,9 +1425,16 @@ backToWorkoutButton.addEventListener("click", () => {
       <button id="timerReset">RESET</button>
     </div>
 
-    <button id="timerSound" class="timer-sound">
-      SOUND ON
-    </button>
+    <button id="timerSound" class="timer-sound" aria-label="Sound on">
+  <svg viewBox="0 0 24 24" width="32" height="32"
+       fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round"
+       stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+  </svg>
+</button>
 
   </div>
 </div>
