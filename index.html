@@ -2026,7 +2026,7 @@ function renderPRs(){
         <div style="margin-top:10px; color:#ffffff;">
   ${sortedEntries.length ? sortedEntries.map(entry =>
     '<p style="display:flex; justify-content:space-between; align-items:center; margin:5px 0; font-size:13px;">' +
-    '<span>' + entry.weight + ' kg — ' + entry.date + '</span>' +
+    '<span style="color:#c0c99c;">' + entry.weight + ' kg — ' + entry.date + '</span>' +
     '<button onclick="deletePR(\'' + exercise + '\', ' + entries.indexOf(entry) + ')" style="background:none; border:0; color:#777; font-size:13px; padding:3px 6px;">🗑</button>' +
     '</p>'
   ).join("") : "<p>No records yet.</p>"}
