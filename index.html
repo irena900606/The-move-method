@@ -1978,6 +1978,35 @@ progressFill.style.backgroundColor =
 </div>
 
 </div>
+  
+<div id="progressScreen" style="display:none; position:fixed; inset:0; z-index:9999; background:#101211; color:white; padding:25px; overflow-y:auto;">
+
+  <h2 style="color:#d6b94a; font-weight:900; letter-spacing:1.5px; text-align:center;">
+    MY PROGRESS
+  </h2>
+
+  <p style="color:#ffffff; font-size:10px; font-weight:600; letter-spacing:1.5px; text-align:right; margin-top:-8px;">
+    TRACK YOUR DEVELOPMENT
+  </p>
+
+  <div style="margin-top:40px;">
+    <h3 style="color:#ffffff;">PERFORMANCE OVER TIME</h3>
+    <div id="progressGraph"></div>
+  </div>
+
+  <div style="margin-top:35px;">
+    <h3 style="color:#ffffff;">TRAINING HISTORY</h3>
+    <div id="progressEntries"></div>
+  </div>
+
+  <div style="display:flex; justify-content:flex-end; width:100%; margin-top:40px;">
+    <button onclick="closeProgress()" style="padding:10px 0 10px 15px; background:transparent; color:#d6b94a; border:none; font-size:12px; font-weight:900; letter-spacing:1.5px; cursor:pointer;">
+      ← BACK TO PROGRAM
+    </button>
+  </div>
+
+</div>
+
   <script>
 const prExerciseList = [
   "Back Squat",
@@ -2004,7 +2033,14 @@ function openPRs(){
 function closePRs(){
   document.getElementById("prsScreen").style.display = "none";
 }
+function openProgress(){
+  document.getElementById("progressScreen").style.display = "block";
+  renderProgress();
+}
 
+function closeProgress(){
+  document.getElementById("progressScreen").style.display = "none";
+}
 function renderPRs(){
   const history = getPRHistory();
   const container = document.getElementById("prExercises");
