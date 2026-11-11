@@ -2041,6 +2041,7 @@ function openProgress(){
 function closeProgress(){
   document.getElementById("progressScreen").style.display = "none";
 }
+    document.getElementById("toolsProgressButton").addEventListener("click", openProgress);
 function renderPRs(){
   const history = getPRHistory();
   const container = document.getElementById("prExercises");
