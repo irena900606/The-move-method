@@ -1416,7 +1416,29 @@ backToWorkoutButton.addEventListener("click", () => {
     toolsPage.style.display = "none";
   window.scrollTo(0, 0);
 });
+  toolsPage.style.display = "none";
+  window.scrollTo(0, 0);
+});
 
+// ΕΔΩ ΠΡΟΣΘΕΤΟΥΜΕ ΤΟΝ ΝΕΟ ΚΩΔΙΚΑ
+
+const toolsProgressButton = document.getElementById("toolsProgressButton");
+const progressScreen = document.getElementById("progressScreen");
+const backFromProgress = document.getElementById("backFromProgress");
+
+toolsProgressButton.addEventListener("click", () => {
+  toolsPage.style.display = "none";
+  progressScreen.style.display = "block";
+  window.scrollTo(0, 0);
+});
+
+backFromProgress.addEventListener("click", () => {
+  progressScreen.style.display = "none";
+  toolsPage.style.display = "block";
+  window.scrollTo(0, 0);
+});
+
+</script>
 </script>
 <div id="timerModal" class="timer-modal">
 
