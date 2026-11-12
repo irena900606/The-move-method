@@ -1991,10 +1991,42 @@ progressFill.style.backgroundColor =
     TRACK YOUR DEVELOPMENT
   </p>
 <div id="progressWeekly" style="margin-top:35px;"></div>
-  <div style="margin-top:40px;">
-    <h3 style="color:#ffffff;">PERFORMANCE OVER TIME</h3>
-    <div id="progressGraph"></div>
+  
+<div style="margin-top:40px; background:#171a17; border:1px solid #343a31; border-radius:12px; padding:16px;">
+
+  <h3 style="color:#ffffff; font-size:16px; font-weight:900; letter-spacing:1.2px; margin:0 0 16px;">
+    PERFORMANCE OVERVIEW
+  </h3>
+
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px;">
+
+    <div style="background:#20241f; border-radius:9px; padding:14px 5px; text-align:center;">
+      <div style="color:#ffffff; font-size:25px; font-weight:900;">—</div>
+      <div style="color:#c0c99c; font-size:9px; font-weight:800; letter-spacing:0.5px; margin-top:8px;">
+        WORKOUTS<br>IN MONTH
+      </div>
+    </div>
+
+    <div style="background:#20241f; border-radius:9px; padding:14px 5px; text-align:center;">
+      <div style="color:#ffffff; font-size:25px; font-weight:900;">—</div>
+      <div style="color:#c0c99c; font-size:9px; font-weight:800; letter-spacing:0.5px; margin-top:8px;">
+        % TOTAL<br>PROGRESS
+      </div>
+    </div>
+
+    <div style="background:#20241f; border-radius:9px; padding:14px 5px; text-align:center;">
+      <div style="color:#d6b94a; font-size:25px; font-weight:900;">—</div>
+      <div style="color:#c0c99c; font-size:9px; font-weight:800; letter-spacing:0.5px; margin-top:8px;">
+        NEW PRs<br>THIS MONTH
+      </div>
+    </div>
+
   </div>
+
+  <div id="progressGraph"></div>
+
+</div>
+
 
   <div style="margin-top:35px;">
     <h3 style="color:#ffffff;">TRAINING HISTORY</h3>
