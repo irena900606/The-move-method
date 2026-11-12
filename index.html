@@ -2183,6 +2183,60 @@ function deletePR(exercise, index){
     </p>
   `;
 }
+      const historyContainer = document.getElementById("progressEntries");
+
+  const historyHTML = [];
+
+  for (let i = 0; i < 12; i++) {
+    const weekDate = new Date();
+    weekDate.setDate(weekDate.getDate() - (i * 7));
+
+    const monday = new Date(
+      weekDate.getFullYear(),
+      weekDate.getMonth(),
+      weekDate.getDate()
+    );
+
+    monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+
+    const weekKey = monday.getFullYear() + "-" +
+      String(monday.getMonth() + 1).padStart(2,"0") + "-" +
+      String(monday.getDate()).padStart(2,"0");
+
+    const completedDays = JSON.parse(
+      localStorage.getItem("moveCompleted_" + weekKey) || "[]"
+    );
+
+    completedDays.forEach(day => {
+      historyHTML.push({
+        day: day,
+        date: new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() +
+          ["Monday","Tuesday","Wednesday","Thursday","Friday"].indexOf(day))
+      });
+    });
+  }
+
+  historyHTML.sort((a,b) => b.date - a.date);
+
+  historyContainer.innerHTML = historyHTML.length
+    ? historyHTML.map(item => `
+        <div style="padding:14px 0; border-bottom:1px solid #343a31;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:#ffffff; font-size:13px;">
+              ${item.day.toUpperCase()}
+            </strong>
+            <span style="color:#c0c99c; font-size:10px; font-weight:bold;">
+              COMPLETED ✓
+            </span>
+          </div>
+          <div style="color:#a1a797; font-size:10px; margin-top:6px;">
+            ${item.date.toLocaleDateString("en-GB", {
+              day:"2-digit", month:"short", year:"numeric"
+            }).toUpperCase()}
+          </div>
+        </div>
+      `).join("")
+    : '<p style="color:#a1a797; font-size:12px;">NO COMPLETED WORKOUTS YET.</p>';
 </script>
 </body>
 </html>
