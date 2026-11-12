@@ -2131,8 +2131,55 @@ function deletePR(exercise, index){
   renderPRs();
 }
     function renderProgress(){
+
   document.getElementById("progressGraph").innerHTML = "";
   document.getElementById("progressEntries").innerHTML = "";
+
+  const date = window.moveSelectedDate || new Date();
+
+  const monday = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+
+  const day = (monday.getDay() + 6) % 7;
+  monday.setDate(monday.getDate() - day);
+
+  const weekKey = monday.getFullYear() + "-" +
+    String(monday.getMonth() + 1).padStart(2,"0") + "-" +
+    String(monday.getDate()).padStart(2,"0");
+
+  const completed = JSON.parse(
+    localStorage.getItem("moveCompleted_" + weekKey) || "[]"
+  );
+
+  const count = completed.length;
+  const percent = Math.round((count / 5) * 100);
+
+  document.getElementById("progressWeekly").innerHTML = `
+    <h3 style="color:#ffffff; margin-bottom:20px;">
+      WEEKLY PROGRESS
+    </h3>
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="color:#ffffff; font-size:12px; font-weight:bold;">
+        ${count} / 5 COMPLETED
+      </span>
+      <span style="color:#d6b94a; font-size:18px; font-weight:900;">
+        ${percent}%
+      </span>
+    </div>
+
+    <div style="height:9px; background:#30342e; border-radius:20px; margin-top:12px; overflow:hidden;">
+      <div style="width:${percent}%; height:100%; background:#d6b94a; border-radius:20px; transition:width 0.4s;">
+      </div>
+    </div>
+
+    <p style="color:#999f96; font-size:9px; text-align:center; margin-top:12px; letter-spacing:0.5px;">
+      CONSISTENCY IS EVERYTHING.
+    </p>
+  `;
 }
 </script>
 </body>
