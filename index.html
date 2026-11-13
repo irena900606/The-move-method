@@ -2066,11 +2066,38 @@ progressFill.style.backgroundColor =
     TRACK YOUR STRENGTH DEVELOPMENT
   </p>
 
-  <div style="height:180px; display:flex; align-items:center; justify-content:center;">
-    <span style="color:#687354; font-size:11px; letter-spacing:1px;">
-      PROGRESS CHART
-    </span>
-  </div>
+  <div style="height:180px; background:#000000; border-radius:8px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+
+  <svg viewBox="0 0 320 180" width="100%" height="100%" preserveAspectRatio="none">
+
+    <g stroke="#292929" stroke-width="1">
+      <line x1="0" y1="35" x2="320" y2="35"/>
+      <line x1="0" y1="75" x2="320" y2="75"/>
+      <line x1="0" y1="115" x2="320" y2="115"/>
+      <line x1="0" y1="155" x2="320" y2="155"/>
+    </g>
+
+    <polyline
+      points="10,135 65,110 120,120 175,75 230,90 285,35 310,45"
+      fill="none"
+      stroke="#d6b94a"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <g fill="#d6b94a">
+      <circle cx="10" cy="135" r="4"/>
+      <circle cx="65" cy="110" r="4"/>
+      <circle cx="120" cy="120" r="4"/>
+      <circle cx="175" cy="75" r="4"/>
+      <circle cx="230" cy="90" r="4"/>
+      <circle cx="285" cy="35" r="4"/>
+      <circle cx="310" cy="45" r="4"/>
+    </g>
+
+  </svg>
+</div>
 
 </div>
 
