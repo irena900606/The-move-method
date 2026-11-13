@@ -1995,10 +1995,25 @@ progressFill.style.backgroundColor =
 })();
 </script>
 <div id="prsScreen" style="display:none; position:fixed; inset:0; z-index:9999; background:#101211; color:white; padding:25px; overflow-y:auto;">
+<div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
 
-  <h2 style="color:#d6b94a; font-weight:900; letter-spacing:1.5px; text-align:center;">MY PERSONAL RECORDS</h2>
-  <p style="color:#ffffff; font-size:10px; font-weight:600; letter-spacing:1.5px; text-align:right; margin-top:-8px;">TRACK YOUR STRENGTH</p>
+  <svg viewBox="0 0 64 52" width="43" height="36" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+    <path d="M4 29 L17 5 L32 20" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M32 20 L47 5 L60 29" fill="none" stroke="#e5c84b" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"/>
+    <line x1="9" y1="37" x2="55" y2="37" stroke="#ffffff" stroke-width="2"/>
+    <line x1="9" y1="44" x2="55" y2="44" stroke="#e5c84b" stroke-width="2"/>
+  </svg>
 
+  <h2 style="margin:0; font-weight:900; letter-spacing:1.5px; font-size:22px;">
+    <span style="color:#ffffff;">MY</span>
+    <span style="color:#d6b94a;"> RECORDS</span>
+  </h2>
+
+</div>
+
+<p style="color:#ffffff; font-size:10px; font-weight:600; letter-spacing:1.5px; text-align:left; margin-top:-8px;">
+  TRACK YOUR STRENGTH
+</p>
   <div id="prExercises" style="margin-top:40px;"></div>
 
   <div style="display:flex; justify-content:flex-end; width:100%; margin-top:40px;">
