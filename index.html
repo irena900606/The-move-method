@@ -1430,16 +1430,18 @@ function showWorkoutForDate(date){
     card.classList.remove("open","selected-card");
   });
 
-  if(dayNumber===0 || dayNumber===6){
-
+  if(dayNumber===6){
+    selectedDateLabel.textContent =
+    formatted + " · ACTIVE RECOVERY";
+  }
+  else if(dayNumber===0){
     selectedDateLabel.textContent =
     formatted + " · REST DAY";
-
-    return;
   }
-
-  selectedDateLabel.textContent =
-  formatted + " · WORKOUT SELECTED";
+  else{
+    selectedDateLabel.textContent =
+    formatted + " · WORKOUT SELECTED";
+  }
 
   const selectedCard = document.querySelector(
     '.day-card[data-day="' + dayNumber + '"]'
@@ -1456,6 +1458,7 @@ function showWorkoutForDate(date){
     }, 100);
   }
 }
+
 document.getElementById("prevMonth").addEventListener("click",()=>{
   displayedMonth = new Date(
     displayedMonth.getFullYear(),
