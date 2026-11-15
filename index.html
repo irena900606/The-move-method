@@ -2497,10 +2497,11 @@ function getPRHistory(){
 }
 
 function openPRs(){
-  document.getElementById("prsScreen").style.display = "block";
+  const screen = document.getElementById("prsScreen");
+  screen.style.display = "block";
+  screen.scrollTop = 0;
   renderPRs();
 }
-
 function closePRs(){
   document.getElementById("prsScreen").style.display = "none";
 }
