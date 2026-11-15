@@ -1687,7 +1687,6 @@ backToWorkoutButton.addEventListener("click", () => {
 (function(){
 
 const modal = document.getElementById("timerModal");
-const toolsOpenBtn = document.getElementById("toolsTimerButton");
 const closeBtn = document.getElementById("closeTimer");
 const display = document.getElementById("timerDisplay");
 const status = document.getElementById("timerStatus");
@@ -2060,6 +2059,12 @@ if(toolsOpenBtn){
     selectMode(mode);
   });
 }
+  document.addEventListener("click", event => {
+  if(event.target.closest("#toolsTimerButton")){
+    modal.classList.add("open");
+    selectMode(mode);
+  }
+});
 closeBtn.addEventListener("click",()=>{
   modal.classList.remove("open");
   clearClock();
