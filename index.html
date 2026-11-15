@@ -2060,7 +2060,8 @@ const toolsOpenBtn = document.getElementById("toolsTimerButton");
 
 if(toolsOpenBtn){
   toolsOpenBtn.addEventListener("click",()=>{
-    openBtn.click();
+    modal.classList.add("open");
+    selectMode(mode);
   });
 }
 closeBtn.addEventListener("click",()=>{
