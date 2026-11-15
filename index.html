@@ -2076,7 +2076,13 @@ openBtn.addEventListener("click",()=>{
   modal.classList.add("open");
   selectMode(mode);
 });
+const toolsOpenBtn = document.getElementById("toolsTimerButton");
 
+if(toolsOpenBtn){
+  toolsOpenBtn.addEventListener("click",()=>{
+    openBtn.click();
+  });
+}
 closeBtn.addEventListener("click",()=>{
   modal.classList.remove("open");
   clearClock();
