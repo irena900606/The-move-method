@@ -2713,6 +2713,7 @@ function deletePR(exercise, index){
 
   historyHTML.push({
     day: dayName,
+    weekKey: weekKey,
     date: new Date(
       monday.getFullYear(),
       monday.getMonth(),
@@ -2725,26 +2726,100 @@ function deletePR(exercise, index){
 
   historyHTML.sort((a,b) => b.date - a.date);
 
-  historyContainer.innerHTML = historyHTML.length
-    ? historyHTML.map(item => `
-        <div style="padding:14px 0; border-bottom:1px solid #343a31;">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong style="color:#ffffff; font-size:13px;">
-              ${item.day.toUpperCase()}
+  
+const groupedWeeks = {};
+
+historyHTML.forEach(item => {
+  if (!groupedWeeks[item.weekKey]) {
+    groupedWeeks[item.weekKey] = [];
+  }
+  groupedWeeks[item.weekKey].push(item);
+});
+
+const weekKeys = Object.keys(groupedWeeks).sort().reverse();
+
+historyContainer.innerHTML = weekKeys.length
+  ? weekKeys.map(weekKey => {
+
+      const days = groupedWeeks[weekKey];
+      const monday = new Date(weekKey + "T00:00:00");
+      const sunday = new Date(monday);
+      sunday.setDate(sunday.getDate() + 6);
+
+      const completedDays = days.map(item => item.day);
+
+      const completedCount = completedDays.length;
+
+      return `
+        <div style="
+          background:#171a17;
+          border:1px solid #343a31;
+          border-radius:12px;
+          padding:16px;
+          margin-bottom:12px;
+        ">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:18px;
+          ">
+            <strong style="color:#ffffff; font-size:12px;">
+              WEEK ${monday.toLocaleDateString("en-GB", {
+                day:"2-digit", month:"short"
+              }).toUpperCase()}
+              – ${sunday.toLocaleDateString("en-GB", {
+                day:"2-digit", month:"short"
+              }).toUpperCase()}
             </strong>
-            <span style="color:#c0c99c; font-size:10px; font-weight:bold;">
-              COMPLETED ✓
+
+            <span style="
+              color:#d6b94a;
+              font-size:10px;
+              font-weight:bold;
+            ">
+              ${completedCount} / 5 COMPLETED
             </span>
           </div>
-          <div style="color:#a1a797; font-size:10px; margin-top:6px;">
-            ${item.date.toLocaleDateString("en-GB", {
-              day:"2-digit", month:"short", year:"numeric"
-            }).toUpperCase()}
+
+          <div style="
+            display:grid;
+            grid-template-columns:repeat(5,1fr);
+            gap:6px;
+          ">
+            ${["MON","TUE","WED","THU","FRI"].map((day,index) => {
+              const isCompleted = completedDays.includes(
+                ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"][index]
+              );
+
+              return `
+                <div style="
+                  display:flex;
+                  flex-direction:column;
+                  align-items:center;
+                  gap:8px;
+                ">
+                  <span style="color:#a1a797;font-size:9px;">
+                    ${day}
+                  </span>
+
+                  <span style="
+                    color:${isCompleted ? "#d6b94a" : "#555b52"};
+                    font-size:19px;
+                  ">
+                    ${isCompleted ? "✓" : "○"}
+                  </span>
+                </div>
+              `;
+            }).join("")}
           </div>
+
         </div>
-      `).join("")
-    : '<p style="color:#a1a797; font-size:12px;">NO COMPLETED WORKOUTS YET.</p>'
-    }
+      `;
+    }).join("")
+  : '<p style="color:#a1a797; font-size:12px;">NO COMPLETED WORKOUTS YET.</p>';
+
 </script>
 </body>
 </html>
