@@ -2581,6 +2581,58 @@ function deletePR(exercise, index){
 
   renderPRs();
 }
+    
+function getMonthlyWorkoutStats(){
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  let completedCount = 0;
+  let scheduledCount = 0;
+
+  for(let day = 1; day <= today.getDate(); day++){
+
+    const date = new Date(year, month, day);
+    const weekday = date.getDay();
+
+    // Υπολογίζουμε μόνο Δευτέρα έως Παρασκευή
+    if(weekday === 0 || weekday === 6) continue;
+
+    scheduledCount++;
+
+    const monday = new Date(date);
+    monday.setDate(
+      monday.getDate() - ((weekday + 6) % 7)
+    );
+
+    const weekKey =
+      monday.getFullYear() + "-" +
+      String(monday.getMonth() + 1).padStart(2,"0") + "-" +
+      String(monday.getDate()).padStart(2,"0");
+
+    const completed = JSON.parse(
+      localStorage.getItem("moveCompleted_" + weekKey) || "[]"
+    );
+
+    const dayNumber = (weekday + 6) % 7 + 1;
+
+    if(completed.map(String).includes(String(dayNumber))){
+      completedCount++;
+    }
+  }
+
+  const percent = scheduledCount
+    ? Math.round((completedCount / scheduledCount) * 100)
+    : 0;
+
+  return {
+    completedCount,
+    scheduledCount,
+    percent
+  };
+}
+
     function renderProgress(){
 
   document.getElementById("progressGraph").innerHTML = "";
@@ -2754,8 +2806,39 @@ historyContainer.innerHTML = weekKeys.length
         </div>
       `;
     }).join("")
+  
   : '<p style="color:#a1a797; font-size:12px;">NO COMPLETED WORKOUTS YET.</p>';
-    }
+
+  // MONTHLY WORKOUT STATISTICS
+  const monthlyStats = getMonthlyWorkoutStats();
+
+  document.getElementById("workoutsInMonth").textContent =
+    monthlyStats.completedCount;
+
+  document.getElementById("totalProgress").textContent =
+    monthlyStats.percent + "%";
+
+  // NEW PR RECORDS THIS MONTH
+  const prHistory = getPRHistory();
+
+  const currentMonth =
+    new Date().getFullYear() + "-" +
+    String(new Date().getMonth() + 1).padStart(2,"0");
+
+  let newPRCount = 0;
+
+  Object.values(prHistory).forEach(records => {
+    records.forEach(record => {
+      if(record.date && record.date.startsWith(currentMonth)){
+        newPRCount++;
+      }
+    });
+  });
+
+  document.getElementById("newPRsThisMonth").textContent =
+    newPRCount;
+}
+
 </script>
 </body>
 </html>
