@@ -2135,66 +2135,84 @@ reset();
     localStorage.getItem("moveCompleted_" + activeWeekKey) || "[]"
   );
 
-  function updateProgress(){
-
-    buttons.forEach(button=>{
-      const day = button.dataset.complete;
-      const isCompleted = completed.includes(day);
-
-      button.classList.toggle("completed",isCompleted);
-      button.textContent = isCompleted
-        ? "WORKOUT COMPLETED ✓"
-        : "COMPLETE WORKOUT";
-    });
-
-    const count = completed.length;
-    const percent = Math.round((count / 5) * 100);
-
-    countDisplay.textContent = count + " / 5 COMPLETED";
-    percentDisplay.textContent = percent + "%";
-    progressFill.style.width = percent + "%";
-    const green = Math.round(48 + (207 * percent / 100));
-const blue = Math.round(48 - (48 * percent / 100));
-
-progressFill.style.backgroundColor =
-  `rgb(255, ${green}, ${blue})`;
-
-    localStorage.setItem(
-      "moveCompleted_" + activeWeekKey,
-      JSON.stringify(completed)
-    );
-  }
-
-  window.addEventListener("moveWeekChanged",()=>{
-
-    activeWeekKey = getWeekKey(window.moveSelectedDate);
-
-    completed = JSON.parse(
-      localStorage.getItem("moveCompleted_" + activeWeekKey) || "[]"
-    );
-
-    updateProgress();
-
-  });
+ 
+function updateProgress(){
 
   buttons.forEach(button=>{
-    button.addEventListener("click",()=>{
+    const day = button.dataset.complete;
+    const isCompleted = completed.includes(day);
 
-      const day = button.dataset.complete;
-
-      if(completed.includes(day)){
-        completed = completed.filter(item=>item !== day);
-      }else{
-        completed.push(day);
-      }
-
-      updateProgress();
-    });
+    button.classList.toggle("completed",isCompleted);
+    button.textContent = isCompleted
+      ? "WORKOUT COMPLETED ✓"
+      : "COMPLETE WORKOUT";
   });
+
+  // Αποθήκευση ολοκληρωμένων προπονήσεων
+  localStorage.setItem(
+    "moveCompleted_" + activeWeekKey,
+    JSON.stringify(completed)
+  );
+
+  // Υπολογισμός εβδομαδιαίας προόδου
+  const count = completed.length;
+  const percent = Math.round((count / 5) * 100);
+
+  if(countDisplay){
+    countDisplay.textContent = count + " / 5 COMPLETED";
+  }
+
+  if(percentDisplay){
+    percentDisplay.textContent = percent + "%";
+  }
+
+  if(progressFill){
+    progressFill.style.width = percent + "%";
+
+    const green = Math.round(48 + (207 * percent / 100));
+    const blue = Math.round(48 - (48 * percent / 100));
+
+    progressFill.style.backgroundColor =
+      `rgb(255, ${green}, ${blue})`;
+  }
+
+  // Ανανέωση MY PROGRESS
+  if(typeof renderProgress === "function"){
+    renderProgress();
+  }
+}
+
+window.addEventListener("moveWeekChanged",()=>{
+
+  activeWeekKey = getWeekKey(window.moveSelectedDate);
+
+  completed = JSON.parse(
+    localStorage.getItem("moveCompleted_" + activeWeekKey) || "[]"
+  );
 
   updateProgress();
 
+});
+
+buttons.forEach(button=>{
+  button.addEventListener("click",()=>{
+
+    const day = button.dataset.complete;
+
+    if(completed.includes(day)){
+      completed = completed.filter(item=>item !== day);
+    }else{
+      completed.push(day);
+    }
+
+    updateProgress();
+  });
+});
+
+updateProgress();
+
 })();
+
 </script>
 <div id="prsScreen" style="display:none; position:fixed; inset:0; z-index:9999; background:#101211; color:white; padding:25px; overflow-y:auto;">
 <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
