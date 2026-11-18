@@ -2729,52 +2729,64 @@ function getMonthlyWorkoutStats(){
 
   const historyHTML = [];
 
-  for (let i = 0; i < 12; i++) {
-    const weekDate = new Date();
-    weekDate.setDate(weekDate.getDate() - (i * 7));
+const today = new Date();
+const currentMonday = new Date(
+  today.getFullYear(),
+  today.getMonth(),
+  today.getDate()
+);
 
-    const monday = new Date(
-      weekDate.getFullYear(),
-      weekDate.getMonth(),
-      weekDate.getDate()
-    );
+currentMonday.setDate(
+  currentMonday.getDate() - ((currentMonday.getDay() + 6) % 7)
+);
 
-    monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+const currentWeekKey =
+  currentMonday.getFullYear() + "-" +
+  String(currentMonday.getMonth() + 1).padStart(2,"0") + "-" +
+  String(currentMonday.getDate()).padStart(2,"0");
 
-    const weekKey = monday.getFullYear() + "-" +
-      String(monday.getMonth() + 1).padStart(2,"0") + "-" +
-      String(monday.getDate()).padStart(2,"0");
+const storedWeekKeys = Object.keys(localStorage)
+  .filter(key => key.startsWith("moveCompleted_"))
+  .map(key => key.replace("moveCompleted_", ""));
 
-    const completedDays = JSON.parse(
-      localStorage.getItem("moveCompleted_" + weekKey) || "[]"
-    );
+const allWeekKeys = [
+  ...new Set([...storedWeekKeys, currentWeekKey])
+];
 
-    completedDays.forEach(day => {
+allWeekKeys.forEach(weekKey => {
 
-  const dayNames = {
-    "1": "MONDAY",
-    "2": "TUESDAY",
-    "3": "WEDNESDAY",
-    "4": "THURSDAY",
-    "5": "FRIDAY"
-  };
+  const monday = new Date(weekKey + "T00:00:00");
 
-  const dayName = dayNames[String(day)];
+  const completedDays = JSON.parse(
+    localStorage.getItem("moveCompleted_" + weekKey) || "[]"
+  );
 
-  if (!dayName) return;
+  completedDays.forEach(day => {
 
-  historyHTML.push({
-    day: dayName,
-    weekKey: weekKey,
-    date: new Date(
-      monday.getFullYear(),
-      monday.getMonth(),
-      monday.getDate() + (Number(day) - 1)
-    )
+    const dayNames = {
+      "1": "MONDAY",
+      "2": "TUESDAY",
+      "3": "WEDNESDAY",
+      "4": "THURSDAY",
+      "5": "FRIDAY"
+    };
+
+    const dayName = dayNames[String(day)];
+
+    if (!dayName) return;
+
+    historyHTML.push({
+      day: dayName,
+      weekKey: weekKey,
+      date: new Date(
+        monday.getFullYear(),
+        monday.getMonth(),
+        monday.getDate() + (Number(day) - 1)
+      )
+    });
+
   });
-
 });
-  }
 
   historyHTML.sort((a,b) => b.date - a.date);
 
@@ -2787,11 +2799,18 @@ historyHTML.forEach(item => {
   }
   groupedWeeks[item.weekKey].push(item);
 });
-
+groupedWeeks[currentWeekKey] = groupedWeeks[currentWeekKey] || [];
 const weekKeys = Object.keys(groupedWeeks).sort().reverse();
 
+window.trainingHistoryExpanded =
+  window.trainingHistoryExpanded === true;
+
+const visibleWeekKeys = window.trainingHistoryExpanded
+  ? weekKeys
+  : weekKeys.slice(0, 1);
+
 historyContainer.innerHTML = weekKeys.length
-  ? weekKeys.map(weekKey => {
+  ? visibleWeekKeys.map(weekKey => {
 
       const days = groupedWeeks[weekKey];
       const monday = new Date(weekKey + "T00:00:00");
@@ -2869,10 +2888,34 @@ historyContainer.innerHTML = weekKeys.length
 
         </div>
       `;
-    }).join("")
+        }).join("") +
+    (weekKeys.length > 1 ? `
+      <button id="toggleTrainingHistory" type="button" style="
+        display:block;
+        margin:12px auto 0;
+        padding:10px 16px;
+        background:transparent;
+        border:1px solid #d6b94a;
+        border-radius:8px;
+        color:#d6b94a;
+        font-size:10px;
+        font-weight:bold;
+        letter-spacing:1px;
+        cursor:pointer;
+      ">
+        ${window.trainingHistoryExpanded ? "SHOW LESS ↑" : "VIEW FULL HISTORY ↓"}
+      </button>
+    ` : "")
   
   : '<p style="color:#a1a797; font-size:12px;">NO COMPLETED WORKOUTS YET.</p>';
+const historyToggle = document.getElementById("toggleTrainingHistory");
 
+if (historyToggle) {
+  historyToggle.addEventListener("click", () => {
+    window.trainingHistoryExpanded = !window.trainingHistoryExpanded;
+    renderProgress();
+  });
+}
   // MONTHLY WORKOUT STATISTICS
   const monthlyStats = getMonthlyWorkoutStats();
 
