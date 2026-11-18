@@ -2800,7 +2800,10 @@ historyHTML.forEach(item => {
   groupedWeeks[item.weekKey].push(item);
 });
 groupedWeeks[currentWeekKey] = groupedWeeks[currentWeekKey] || [];
-const weekKeys = Object.keys(groupedWeeks).sort().reverse();
+const weekKeys = Object.keys(groupedWeeks)
+  .filter(weekKey => weekKey <= currentWeekKey)
+  .sort()
+  .reverse();
 
 window.trainingHistoryExpanded =
   window.trainingHistoryExpanded === true;
