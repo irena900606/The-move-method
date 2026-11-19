@@ -2117,24 +2117,16 @@ const toolsOpenBtn = document.getElementById("toolsTimerButton");
 if(toolsOpenBtn){
   toolsOpenBtn.addEventListener("click",()=>{
     modal.classList.add("open");
-    selectMode(mode);
   });
 }
-  document.addEventListener("click", event => {
-  if(event.target.closest("#toolsTimerButton")){
-    modal.classList.add("open");
-    selectMode(mode);
-  }
-});
+
 closeBtn.addEventListener("click",()=>{
   modal.classList.remove("open");
-  clearClock();
 });
 
 modal.addEventListener("click",event=>{
   if(event.target === modal){
     modal.classList.remove("open");
-    clearClock();
   }
 });
 
