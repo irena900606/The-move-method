@@ -2454,15 +2454,16 @@ text-align-last:center;
 box-shadow:none; 
 ">
   <option value="BENCH PRESS">BENCH PRESS</option>
-  <option value="BACK SQUAT">BACK SQUAT</option>
-  <option value="FRONT SQUAT">FRONT SQUAT</option>
-  <option value="DEADLIFT">DEADLIFT</option>
-  <option value="STRICT PRESS">STRICT PRESS</option>
-  <option value="CLEAN">CLEAN</option>
-  <option value="POWER CLEAN">POWER CLEAN</option>
-  <option value="CLEAN & JERK">CLEAN & JERK</option>
-  <option value="SNATCH">SNATCH</option>
-  <option value="POWER SNATCH">POWER SNATCH</option>
+  <option value="Bench Press">BENCH PRESS</option>
+<option value="Back Squat">BACK SQUAT</option>
+<option value="Front Squat">FRONT SQUAT</option>
+<option value="Deadlift">DEADLIFT</option>
+<option value="Strict Press">STRICT PRESS</option>
+<option value="Clean">CLEAN</option>
+<option value="Power Clean">POWER CLEAN</option>
+<option value="Clean & Jerk">CLEAN & JERK</option>
+<option value="Snatch">SNATCH</option>
+<option value="Power Snatch">POWER SNATCH</option>
 </select>
 </div>
 
@@ -2482,69 +2483,14 @@ box-shadow:none;
 
 </div>
 
-  <svg viewBox="0 0 340 225" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <svg id="performanceChart" viewBox="0 0 340 225" width="100%" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <linearGradient id="progressGoldGradient" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0%" stop-color="#d6b94a" stop-opacity="0.38"/>
     <stop offset="100%" stop-color="#d6b94a" stop-opacity="0.02"/>
   </linearGradient>
 </defs>
-    <g stroke="#292929" stroke-width="1">
-      <line x1="45" y1="25" x2="325" y2="25"/>
-      <line x1="45" y1="55" x2="325" y2="55"/>
-      <line x1="45" y1="85" x2="325" y2="85"/>
-      <line x1="45" y1="115" x2="325" y2="115"/>
-      <line x1="45" y1="145" x2="325" y2="145"/>
-      <line x1="45" y1="175" x2="325" y2="175"/>
-    </g>
-
-    <g fill="#ffffff" font-size="10" text-anchor="end">
-      <text x="37" y="29">100</text>
-      <text x="37" y="59">90</text>
-      <text x="37" y="89">80</text>
-      <text x="37" y="119">70</text>
-      <text x="37" y="149">60</text>
-      <text x="37" y="179">50</text>
-    </g>
-
-    <g stroke="#777777" stroke-width="1">
-      <line x1="45" y1="15" x2="45" y2="175"/>
-      <line x1="45" y1="175" x2="325" y2="175"/>
-    </g>
-    <path
-  d="M55 145 L105 130 L155 115 L205 100 L255 70 L315 55 L315 175 L55 175 Z"
-  fill="url(#progressGoldGradient)"
-/>
-    <polyline
-      points="55,145 105,130 155,115 205,100 255,70 315,55"
-      fill="none"
-      stroke="#d6b94a"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-
-    <g fill="#d6b94a">
-      <circle cx="55" cy="145" r="4"/>
-      <circle cx="105" cy="130" r="4"/>
-      <circle cx="155" cy="115" r="4"/>
-      <circle cx="205" cy="100" r="4"/>
-      <circle cx="255" cy="70" r="4"/>
-      <circle cx="315" cy="55" r="4"/>
-    </g>
-
-    <g fill="#ffffff" font-size="10" text-anchor="middle">
-      <text x="55" y="194">OCT</text>
-      <text x="105" y="194">NOV</text>
-      <text x="155" y="194">DEC</text>
-      <text x="205" y="194">JAN</text>
-      <text x="255" y="194">FEB</text>
-      <text x="315" y="194">MAR</text>
-    </g>
-
-    <text x="185" y="218" fill="#d6b94a" font-size="9" text-anchor="middle" letter-spacing="1">MONTHS</text>
-    <text x="10" y="12" fill="#d6b94a" font-size="9">KG</text>
-
+    <g id="performanceChartContent"></g>
   </svg>
 </div>
   
@@ -2999,6 +2945,249 @@ if (historyToggle) {
   document.getElementById("newPRsThisMonth").textContent =
     newPRCount;
 }
+
+function updatePerformanceChart() {
+
+  const chartContent = document.getElementById("performanceChartContent");
+  const exerciseSelect = document.getElementById("performanceExercise");
+
+  if (!chartContent || !exerciseSelect) return;
+
+  const exercise = exerciseSelect.value;
+  const range = window.performanceRange || "3M";
+
+  const months = Number(range.replace("M", ""));
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setMonth(startDate.getMonth() - months);
+
+  const history = getPRHistory();
+  const entries = (history[exercise] || [])
+    .filter(record => {
+      if (!record.date || !Number.isFinite(Number(record.weight))) return false;
+
+      const recordDate = new Date(record.date + "T00:00:00");
+
+      return recordDate >= startDate &&
+             recordDate <= today;
+    })
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const NS = "http://www.w3.org/2000/svg";
+
+  function addSVG(tag, attributes, parent = chartContent) {
+    const element = document.createElementNS(NS, tag);
+
+    Object.entries(attributes).forEach(([key, value]) => {
+      element.setAttribute(key, value);
+    });
+
+    parent.appendChild(element);
+    return element;
+  }
+
+  chartContent.innerHTML = "";
+
+  const left = 45;
+  const right = 325;
+  const top = 25;
+  const bottom = 175;
+
+  // GRID
+  for (let i = 0; i <= 5; i++) {
+    const y = top + i * 30;
+
+    addSVG("line", {
+      x1: left, y1: y,
+      x2: right, y2: y,
+      stroke: "#292929",
+      "stroke-width": 1
+    });
+  }
+
+  // AXES
+  addSVG("line", {
+    x1: left, y1: 15,
+    x2: left, y2: bottom,
+    stroke: "#777777"
+  });
+
+  addSVG("line", {
+    x1: left, y1: bottom,
+    x2: right, y2: bottom,
+    stroke: "#777777"
+  });
+
+  addSVG("text", {
+    x: 10, y: 12,
+    fill: "#d6b94a",
+    "font-size": 9
+  }).textContent = "KG";
+
+  if (!entries.length) {
+    addSVG("text", {
+      x: 185, y: 105,
+      fill: "#a1a797",
+      "font-size": 11,
+      "text-anchor": "middle"
+    }).textContent = "NO RECORDS FOR THIS PERIOD";
+
+    return;
+  }
+
+  // WEIGHT SCALE
+  const weights = entries.map(record => Number(record.weight));
+  let minWeight = Math.min(...weights);
+  let maxWeight = Math.max(...weights);
+
+  if (minWeight === maxWeight) {
+    minWeight -= 5;
+    maxWeight += 5;
+  }
+
+  const padding = (maxWeight - minWeight) * 0.15;
+  minWeight = Math.max(0, minWeight - padding);
+  maxWeight += padding;
+
+  const axisMin = Math.floor(minWeight / 5) * 5;
+  const axisMax = Math.ceil(maxWeight / 5) * 5 || 5;
+
+  for (let i = 0; i <= 5; i++) {
+    const value = axisMax - (axisMax - axisMin) * i / 5;
+    const y = top + i * 30;
+
+    addSVG("text", {
+      x: 37, y: y + 4,
+      fill: "#ffffff",
+      "font-size": 10,
+      "text-anchor": "end"
+    }).textContent = Math.round(value);
+  }
+
+  // POINTS
+  const firstDate = new Date(entries[0].date + "T00:00:00");
+  const lastDate = new Date(entries[entries.length - 1].date + "T00:00:00");
+  const dateSpan = lastDate - firstDate;
+
+  const points = entries.map((record, index) => {
+    const date = new Date(record.date + "T00:00:00");
+
+    const x = dateSpan === 0
+      ? left + (entries.length === 1 ? 140 : index / (entries.length - 1) * 280)
+      : left + ((date - firstDate) / dateSpan) * 280;
+
+    const y = bottom -
+      ((Number(record.weight) - axisMin) / (axisMax - axisMin)) * 150;
+
+    return { x, y, date, weight: Number(record.weight) };
+  });
+
+  const linePoints = points.map(point =>
+    `${point.x},${point.y}`
+  ).join(" ");
+
+  const areaPath =
+    `M${points[0].x} ${points[0].y} ` +
+    points.slice(1).map(point =>
+      `L${point.x} ${point.y}`
+    ).join(" ") +
+    ` L${points[points.length - 1].x} ${bottom}` +
+    ` L${points[0].x} ${bottom} Z`;
+
+  // GOLD GRADIENT AREA
+  addSVG("path", {
+    d: areaPath,
+    fill: "url(#progressGoldGradient)"
+  });
+
+  // GOLD LINE
+  addSVG("polyline", {
+    points: linePoints,
+    fill: "none",
+    stroke: "#d6b94a",
+    "stroke-width": 3,
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round"
+  });
+
+  // GOLD POINTS
+  points.forEach(point => {
+    addSVG("circle", {
+      cx: point.x,
+      cy: point.y,
+      r: 4,
+      fill: "#d6b94a"
+    });
+  });
+
+  // DATE LABELS
+  const labelIndexes = [...new Set([
+    0,
+    Math.floor((points.length - 1) / 2),
+    points.length - 1
+  ])];
+
+  labelIndexes.forEach(index => {
+    const point = points[index];
+
+    const label = point.date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short"
+    }).toUpperCase();
+
+    addSVG("text", {
+      x: point.x,
+      y: 194,
+      fill: "#ffffff",
+      "font-size": 9,
+      "text-anchor": "middle"
+    }).textContent = label;
+  });
+
+  addSVG("text", {
+    x: 185, y: 218,
+    fill: "#d6b94a",
+    "font-size": 9,
+    "text-anchor": "middle",
+    "letter-spacing": 1
+  }).textContent = "DATE";
+}
+
+window.performanceRange = "3M";
+
+document.querySelectorAll("[data-range]").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    window.performanceRange = button.dataset.range;
+
+    document.querySelectorAll("[data-range]").forEach(item => {
+      item.style.background =
+        item.dataset.range === window.performanceRange
+          ? "#d6b94a"
+          : "transparent";
+
+      item.style.color =
+        item.dataset.range === window.performanceRange
+          ? "#111111"
+          : "#d6b94a";
+    });
+
+    updatePerformanceChart();
+  });
+
+});
+
+const performanceExerciseSelect =
+  document.getElementById("performanceExercise");
+
+if (performanceExerciseSelect) {
+  performanceExerciseSelect.addEventListener("change", () => {
+    updatePerformanceChart();
+  });
+}
+
+updatePerformanceChart();
 
 </script>
 </body>
