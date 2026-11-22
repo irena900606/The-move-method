@@ -856,11 +856,165 @@ color: #ffffff;
   box-shadow: none !important;
 }
 
+/* THE MOVE METHOD - LANDING PAGE */
+
+.landing-container{
+  display:block;
+  min-height:100vh;
+  background:#090a09;
+  color:#f4f5ef;
+  font-family:Arial,Helvetica,sans-serif;
+}
+#appContainer{
+  display:none;
+}
+.landing-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px 5%;
+  border-bottom:1px solid #d6b94a;
+  gap:15px;
+}
+
+.landing-brand{
+  font-size:clamp(18px,3vw,30px);
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.landing-brand span{
+  color:#d6b94a;
+}
+
+.landing-tagline{
+  margin-top:6px;
+  color:#b9b9b2;
+  font-size:11px;
+  letter-spacing:3px;
+}
+
+.landing-login{
+  color:#d6b94a;
+  border:1px solid #d6b94a;
+  border-radius:8px;
+  padding:12px 20px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.landing-hero{
+  min-height:650px;
+  padding:80px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.78)),
+    #171a17;
+}
+
+.landing-hero h1{
+  font-size:clamp(36px,7vw,72px);
+  line-height:1.08;
+  margin:0 0 22px;
+  font-weight:900;
+}
+
+.landing-hero h1 span{
+  color:#d6b94a;
+}
+
+.landing-hero p{
+  color:#c5c5bd;
+  font-size:clamp(16px,2.5vw,22px);
+  max-width:600px;
+  line-height:1.5;
+}
+
+.landing-member{
+  display:inline-block;
+  margin-top:25px;
+  padding:18px 38px;
+  border-radius:9px;
+  background:#d6b94a;
+  color:#111;
+  text-decoration:none;
+  font-weight:900;
+  font-size:17px;
+}
+
+.landing-categories{
+  padding:22px 12px;
+  text-align:center;
+  color:#d6b94a;
+  letter-spacing:2px;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  .landing-top{
+    padding:18px 15px;
+  }
+
+  .landing-tagline{
+    letter-spacing:1.5px;
+  }
+
+  .landing-hero{
+    min-height:570px;
+    padding:55px 18px;
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="landing-container" id="landingPage">
+
+  <div class="landing-top">
+    <div>
+      <div class="landing-brand">
+        THE <span>MOVE</span> METHOD
+      </div>
+      <div class="landing-tagline">
+        TRAIN WITH PURPOSE
+      </div>
+    </div>
+
+    <button class="landing-login" id="landingLogin">
+      LOG IN
+    </button>
+  </div>
+
+  <section class="landing-hero">
+    <h1>
+      MOVE BETTER.<br>
+      <span>GET STRONGER.</span>
+    </h1>
+
+    <p>
+      Structured training. Purposeful movement.
+      Real progress.
+    </p>
+
+    <button class="landing-member" id="landingMember">
+      BECOME A MEMBER
+    </button>
+  </section>
+
+  <div class="landing-categories">
+    WEIGHTLIFTING &nbsp; • &nbsp; STRENGTH
+    &nbsp; • &nbsp; GYMNASTICS
+    &nbsp; • &nbsp; CONDITIONING
+  </div>
+
+</div>
+<div id="appContainer">
 
 <header>
   <div class="header-inner" style="display:flex; align-items:center; gap:12px;">
@@ -2517,7 +2671,8 @@ style="position:absolute; top:20px; right:15px; z-index:10000; background:transp
 </button>
 
 </div>
-
+</div>
+</div>
   <script>
 const prExerciseList = [
   "Back Squat",
