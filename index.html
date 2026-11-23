@@ -8,7 +8,6 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800&display=swap');
   :root{
   --bg:#0c0e0c;
   --card:#171a17;
@@ -1124,18 +1123,7 @@ color: #ffffff;
   letter-spacing:1px;
   white-space:nowrap;
 }
-
-.landing-option small{
-  color:#dddddd;
-  font-size:clamp(10px,2.2vw,15px);
-  white-space:nowrap;
-}
-
-.landing-option-gold{
-  color:#d6b94a;
-}
-
-.landing-option-divider{
+  .landing-option-divider{
   width:1px;
   background:#d6b94a;
   flex-shrink:0;
@@ -1154,37 +1142,34 @@ color: #ffffff;
   padding:8px 5px;
   box-shadow:none;
 }
-  .landing-hero-brand,
+
+/* LANDING PAGE TYPOGRAPHY */
+
+.landing-hero-brand,
 .landing-hero h1,
 .landing-journey-title{
-  font-family:'Barlow Condensed', sans-serif;
+  font-family:'Barlow Condensed',sans-serif;
   font-style:italic;
-  font-weight:900;
   text-transform:uppercase;
 }
 
 .landing-hero-brand{
-  letter-spacing:1.5px;
+  font-weight:900;
+  letter-spacing:1px;
 }
 
 .landing-hero h1{
+  font-weight:900;
   letter-spacing:1px;
+  line-height:0.95;
+  margin-bottom:18px;
 }
 
 .landing-journey-title{
   font-size:14px;
-  letter-spacing:2.5px;
-  margin-bottom:18px;
-}
-  .landing-hero h1{
-  margin-bottom:12px;
-}
-  .landing-journey-title{
-  font-family:'Montserrat', sans-serif;
-  font-size:13px;
-  font-weight:800;
-  font-style:italic;
+  font-weight:700;
   letter-spacing:2px;
+  margin-bottom:32px;
 }
 </style>
 </head>
