@@ -1142,35 +1142,365 @@ color: #ffffff;
   padding:8px 5px;
   box-shadow:none;
 }
+  /* LANDING HERO */
 
-/* LANDING PAGE TYPOGRAPHY */
-
-.landing-hero-brand,
-.landing-hero h1,
-.landing-journey-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-style:italic;
-  text-transform:uppercase;
+.landing-hero{
+  min-height:570px;
+  padding:40px 18px 35px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:center;
+  background:
+    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
+    url('landing.gym.png') center center / 100% 100% no-repeat;
 }
+
+/* BRAND */
 
 .landing-hero-brand{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(25px,6vw,44px);
+  font-style:italic;
   font-weight:900;
-  letter-spacing:1px;
+  letter-spacing:0;
+  color:#ffffff;
+  margin:0 0 48px;
+  text-shadow:2px 3px 8px rgba(0,0,0,.65);
 }
 
+.landing-hero-brand span{
+  color:#d6b94a;
+}
+
+/* MAIN HEADLINE */
+
 .landing-hero h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(42px,10vw,78px);
+  line-height:.88;
+  margin:0 0 20px;
   font-weight:900;
-  letter-spacing:1px;
-  line-height:0.95;
-  margin-bottom:18px;
+  font-style:italic;
+  letter-spacing:-.5px;
+  text-transform:uppercase;
+  color:#ffffff;
+  text-shadow:2px 3px 8px rgba(0,0,0,.65);
+}
+
+.landing-hero h1 span{
+  color:#d6b94a;
+}
+
+/* START YOUR JOURNEY */
+
+.landing-journey{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  width:100%;
+  max-width:900px;
+  margin-top:0;
 }
 
 .landing-journey-title{
-  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  color:#ffffff;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(17px,4vw,25px);
   font-weight:700;
+  font-style:italic;
   letter-spacing:2px;
   margin-bottom:32px;
+  white-space:nowrap;
 }
+
+.landing-journey-title span{
+  height:2px;
+  flex:1;
+  background:#d6b94a;
+}
+
+/* MEMBER OPTIONS */
+
+.landing-journey-options{
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  justify-content:center;
+  width:100%;
+}
+
+.landing-option{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:8px 5px;
+  background:transparent;
+  border:0;
+  color:#ffffff;
+  font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  position:static;
+  transform:none;
+}
+
+.landing-option svg{
+  width:42px;
+  height:42px;
+}
+
+.landing-option strong{
+  font-size:clamp(12px,2.8vw,21px);
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+
+.landing-option small{
+  color:#dddddd;
+  font-size:clamp(10px,2.2vw,15px);
+  white-space:nowrap;
+}
+
+.landing-option-gold{
+  color:#d6b94a;
+}
+
+.landing-option-divider{
+  width:1px;
+  background:#d6b94a;
+  flex-shrink:0;
+}
+
+/* OLD BUTTON RESET */
+
+.landing-login,
+.landing-member{
+  position:static;
+  top:auto;
+  transform:none;
+  margin:0;
+  width:auto;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:8px 5px;
+  box-shadow:none;
+}
+
+/* CATEGORIES */
+
+.landing-categories{
+  padding:22px 12px;
+  text-align:center;
+  color:#d6b94a;
+  letter-spacing:2px;
+  font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+  .landing-top{
+    padding:18px 15px;
+  }
+
+  .landing-tagline{
+    letter-spacing:1.5px;
+  }
+
+  /* LANDING HERO */
+
+.landing-hero{
+  min-height:570px;
+  padding:40px 18px 35px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:center;
+  background:
+    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
+    url('landing.gym.png') center center / 100% 100% no-repeat;
+}
+
+/* BRAND */
+
+.landing-hero-brand{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(25px,6vw,44px);
+  font-style:italic;
+  font-weight:900;
+  letter-spacing:0;
+  color:#ffffff;
+  margin:0 0 48px;
+  text-shadow:2px 3px 8px rgba(0,0,0,.65);
+}
+
+.landing-hero-brand span{
+  color:#d6b94a;
+}
+
+/* MAIN HEADLINE */
+
+.landing-hero h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(42px,10vw,78px);
+  line-height:.88;
+  margin:0 0 20px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-.5px;
+  text-transform:uppercase;
+  color:#ffffff;
+  text-shadow:2px 3px 8px rgba(0,0,0,.65);
+}
+
+.landing-hero h1 span{
+  color:#d6b94a;
+}
+
+/* START YOUR JOURNEY */
+
+.landing-journey{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  width:100%;
+  max-width:900px;
+  margin-top:0;
+}
+
+.landing-journey-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  color:#ffffff;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(17px,4vw,25px);
+  font-weight:700;
+  font-style:italic;
+  letter-spacing:2px;
+  margin-bottom:32px;
+  white-space:nowrap;
+}
+
+.landing-journey-title span{
+  height:2px;
+  flex:1;
+  background:#d6b94a;
+}
+
+/* MEMBER OPTIONS */
+
+.landing-journey-options{
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  justify-content:center;
+  width:100%;
+}
+
+.landing-option{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:8px 5px;
+  background:transparent;
+  border:0;
+  color:#ffffff;
+  font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  position:static;
+  transform:none;
+}
+
+.landing-option svg{
+  width:42px;
+  height:42px;
+}
+
+.landing-option strong{
+  font-size:clamp(12px,2.8vw,21px);
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+
+.landing-option small{
+  color:#dddddd;
+  font-size:clamp(10px,2.2vw,15px);
+  white-space:nowrap;
+}
+
+.landing-option-gold{
+  color:#d6b94a;
+}
+
+.landing-option-divider{
+  width:1px;
+  background:#d6b94a;
+  flex-shrink:0;
+}
+
+/* OLD BUTTON RESET */
+
+.landing-login,
+.landing-member{
+  position:static;
+  top:auto;
+  transform:none;
+  margin:0;
+  width:auto;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:8px 5px;
+  box-shadow:none;
+}
+
+/* CATEGORIES */
+
+.landing-categories{
+  padding:22px 12px;
+  text-align:center;
+  color:#d6b94a;
+  letter-spacing:2px;
+  font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+  .landing-top{
+    padding:18px 15px;
+  }
+
+  .landing-tagline{
+    letter-spacing:1.5px;
+  }
+
+  .landing-hero{
+    min-height:570px;
+    padding:40px 18px 35px;
+  }
+
 </style>
 </head>
 
