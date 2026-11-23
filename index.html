@@ -905,28 +905,41 @@ color: #ffffff;
 }
 .landing-hero{
   min-height:520px;
-  padding:60px 20px 45px;
+  padding:55px 20px 45px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:flex-end;
+  justify-content:center;
   text-align:center;
   background:
     linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
     url('landing.gym.png') center center / 100% 100% no-repeat;
 }
+
+.landing-hero-brand{
+  font-family:Impact,"Arial Black",sans-serif;
+  font-size:clamp(23px,4vw,36px);
+  font-style:italic;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#ffffff;
+  margin-bottom:22px;
+  text-shadow:2px 3px 8px rgba(0,0,0,.65);
+}
+
+.landing-hero-brand span{
+  color:#d6b94a;
+}
+
 .landing-hero h1{
   font-family:Impact,"Arial Black",sans-serif;
-  font-size:clamp(38px,7vw,76px);
-  line-height:0.95;
-  margin:0 0 22px;
+  font-size:clamp(38px,7vw,68px);
+  line-height:1;
+  margin:0 0 35px;
   font-weight:900;
   font-style:italic;
   letter-spacing:1px;
-  text-transform:uppercase;
   color:#ffffff;
-  position:relative;
-  top:-110px;
   text-shadow:2px 3px 8px rgba(0,0,0,.65);
 }
 
@@ -934,23 +947,46 @@ color: #ffffff;
   color:#d6b94a;
 }
 
-.landing-hero p{
-  color:#c5c5bd;
-  font-size:clamp(16px,2.5vw,22px);
-  max-width:600px;
-  line-height:1.5;
-  margin-top:0px;
-  transform:translateY(-120px);
-}
-  .landing-hero p.landing-quote{
+.landing-journey{
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
-  gap:14px;
+  gap:15px;
   width:100%;
-  max-width:900px;
+  max-width:420px;
 }
 
+.landing-journey-title{
+  color:#ffffff;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:3px;
+  margin-bottom:8px;
+}
+
+.landing-login,
+.landing-member{
+  width:100%;
+  padding:16px 20px;
+  border-radius:6px;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:2px;
+  cursor:pointer;
+}
+
+.landing-login{
+  background:rgba(0,0,0,.45);
+  color:#ffffff;
+  border:1px solid #ffffff;
+}
+
+.landing-member{
+  background:#d6b94a;
+  color:#111111;
+  border:1px solid #d6b94a;
+}
 .landing-quote .quote-line{
   flex:1;
   max-width:90px;
@@ -1013,29 +1049,32 @@ color: #ffffff;
 
 <div class="landing-container" id="landingPage">
 
-
-<div style="display:flex; justify-content:flex-end; padding:12px 5%;">
-  <button class="landing-login" id="landingLogin">
-    LOG IN
-  </button>
-</div>
-  
   <section class="landing-hero">
-    <h1>
-  YOUR TRAINING
-  <br>
-  <span>PROGRAM</span>
-</h1>
 
-    <p class="landing-quote">
-  <span class="quote-line"></span>
-  <span class="quote-text">MOVE BETTER. GET STRONGER.</span>
-  <span class="quote-line"></span>
-</p>
-    <button class="landing-member" id="landingMember">
-      BECOME A MEMBER
+  <div class="landing-hero-brand">
+    THE <span>MOVE</span> METHOD
+  </div>
+
+  <h1>
+    MOVE BETTER.<br>
+    <span>GET STRONGER.</span>
+  </h1>
+
+  <div class="landing-journey">
+    <div class="landing-journey-title">
+      START YOUR JOURNEY
+    </div>
+
+    <button class="landing-login" id="landingLogin">
+      I'M A MEMBER
     </button>
-  </section>
+
+    <button class="landing-member" id="landingMember">
+      JOIN THE METHOD
+    </button>
+  </div>
+
+</section>
 
 </div>
 <div id="appContainer">
