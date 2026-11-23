@@ -1059,6 +1059,99 @@ color: #ffffff;
   position:relative;
   gap:15px;
 }
+  .landing-journey{
+  width:100%;
+  max-width:900px;
+  margin-top:5px;
+  position:relative;
+}
+
+.landing-journey-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  color:#ffffff;
+  font-size:16px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:3px;
+  margin-bottom:32px;
+  white-space:nowrap;
+}
+
+.landing-journey-title span{
+  height:2px;
+  flex:1;
+  background:#d6b94a;
+}
+
+.landing-journey-options{
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  justify-content:center;
+  width:100%;
+}
+
+.landing-option{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:8px 5px;
+  background:transparent;
+  border:0;
+  color:#ffffff;
+  font-family:Arial,Helvetica,sans-serif;
+  cursor:pointer;
+  position:static;
+  transform:none;
+}
+
+.landing-option svg{
+  width:42px;
+  height:42px;
+}
+
+.landing-option strong{
+  font-size:clamp(12px,2.8vw,21px);
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+
+.landing-option small{
+  color:#dddddd;
+  font-size:clamp(10px,2.2vw,15px);
+  white-space:nowrap;
+}
+
+.landing-option-gold{
+  color:#d6b94a;
+}
+
+.landing-option-divider{
+  width:1px;
+  background:#d6b94a;
+  flex-shrink:0;
+}
+
+.landing-login,
+.landing-member{
+  position:static;
+  top:auto;
+  transform:none;
+  margin:0;
+  width:auto;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:8px 5px;
+  box-shadow:none;
+}
 </style>
 </head>
 
@@ -1078,18 +1171,38 @@ color: #ffffff;
   </h1>
 
   <div class="landing-journey">
-    <div class="landing-journey-title">
-      START YOUR JOURNEY
-    </div>
 
-    <button class="landing-login" id="landingLogin">
-      I'M A MEMBER
-    </button>
-
-    <button class="landing-member" id="landingMember">
-      JOIN THE METHOD
-    </button>
+  <div class="landing-journey-title">
+    <span></span>
+    START YOUR JOURNEY
+    <span></span>
   </div>
+
+  <div class="landing-journey-options">
+
+    <button class="landing-option" id="landingLogin">
+      <svg viewBox="0 0 48 48" width="42" height="42">
+        <circle cx="24" cy="13" r="8" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+        <path d="M7 43 C7 29 41 29 41 43" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+      </svg>
+      <strong>I'M A MEMBER</strong>
+      <small>Sign in to your account</small>
+    </button>
+
+    <div class="landing-option-divider"></div>
+
+    <button class="landing-option landing-option-gold" id="landingMember">
+      <svg viewBox="0 0 48 48" width="42" height="42">
+        <circle cx="20" cy="13" r="8" fill="none" stroke="#d6b94a" stroke-width="2.5"/>
+        <path d="M3 43 C3 29 37 29 37 43" fill="none" stroke="#d6b94a" stroke-width="2.5"/>
+        <path d="M39 10 V26 M31 18 H47" fill="none" stroke="#d6b94a" stroke-width="2.5"/>
+      </svg>
+      <strong>JOIN THE METHOD</strong>
+      <small>Become a member</small>
+    </button>
+
+  </div>
+</div>
 
 </section>
 
