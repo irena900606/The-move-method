@@ -940,6 +940,28 @@ color: #ffffff;
   margin-top:70px;
   transform:translateY(80px);
 }
+  .landing-hero p.landing-quote{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  width:100%;
+  max-width:900px;
+}
+
+.landing-quote .quote-line{
+  flex:1;
+  max-width:90px;
+  min-width:18px;
+  height:2px;
+  background:#d6b94a;
+}
+
+.landing-quote .quote-text{
+  color:#c5c5bd;
+  font-size:clamp(14px,2.2vw,20px);
+  text-align:center;
+}
 
 .landing-member{
   display:inline-block;
@@ -1041,10 +1063,11 @@ color: #ffffff;
       <span>GET STRONGER.</span>
     </h1>
 
-    <p>
-  "Strength is built. Movement is mastered."
+    <p class="landing-quote">
+  <span class="quote-line"></span>
+  <span class="quote-text">"Strength is built. Movement is mastered."</span>
+  <span class="quote-line"></span>
 </p>
-
     <button class="landing-member" id="landingMember">
       BECOME A MEMBER
     </button>
