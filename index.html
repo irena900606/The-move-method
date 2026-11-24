@@ -1475,8 +1475,8 @@ color: #ffffff;
 }
 
 /* MOBILE */
-
 @media(max-width:600px){
+
   .landing-top{
     padding:18px 15px;
   }
@@ -1488,57 +1488,27 @@ color: #ffffff;
   .landing-hero{
     min-height:570px;
     padding:40px 18px 35px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    position:relative;
+    text-align:center;
+    background:
+      linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
+      url('landing.gym.png') center center / cover no-repeat;
   }
-/* BRAND BESIDE THE WALL M */
 
-.landing-hero{
-  position:relative;
-}
-
-.landing-hero-brand{
-  position:absolute;
-  top:22%;
-  left:36%;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:0;
-  padding-left:12px;
-  border-left:2px solid #d6b94a;
-  margin:0;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(17px,4.5vw,25px);
-  font-weight:900;
-  font-style:italic;
-  line-height:1.05;
-  letter-spacing:0;
-  text-shadow:2px 2px 6px rgba(0,0,0,.8);
-}
-
-.landing-hero-brand span{
-  display:block;
-}
-
-.landing-hero-brand .brand-the,
-.landing-hero-brand .brand-method{
-  color:#ffffff;
-}
-
-.landing-hero-brand .brand-move{
-  color:#d6b94a;
+  .landing-hero-brand{
+    position:absolute;
+    top:22%;
+    left:36%;
   }
-  .landing-hero > .landing-hero-brand{
-  top:0;
-}
 
-.landing-hero > h1,
-.landing-hero > .landing-journey{
-  position:relative;
-  top:90px;
-}
+  .landing-hero h1{
+    margin-top:90px;
+  }
 
-.landing-hero h1{
-  transform:none;
 }
 
 </style>
