@@ -1278,20 +1278,14 @@ button.landing-option.landing-option-gold small{
   width:1px;
   height:90px;
   flex-shrink:0;
-  background:transparent;
-  position:relative;
-}
-
-.landing-option-divider::after{
-  content:"";
-  position:absolute;
-  inset:0;
   background:linear-gradient(
     to bottom,
-    transparent,
-    #d6b94a 50%,
-    transparent
+    transparent 0%,
+    #d6b94a 35%,
+    #d6b94a 65%,
+    transparent 100%
   );
+  box-shadow:0 0 5px rgba(214,185,74,0.25);
 }
 
 
