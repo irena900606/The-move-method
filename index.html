@@ -1276,17 +1276,22 @@ button.landing-option.landing-option-gold small{
 
 .landing-option-divider{
   width:1px;
+  height:90px;
+  flex-shrink:0;
+  background:transparent;
+  position:relative;
+}
+
+.landing-option-divider::after{
+  content:"";
+  position:absolute;
+  inset:0;
   background:linear-gradient(
     to bottom,
-    transparent 0%,
-    rgba(214,185,74,0.15) 15%,
-    rgba(214,185,74,0.7) 40%,
+    transparent,
     #d6b94a 50%,
-    rgba(214,185,74,0.7) 60%,
-    rgba(214,185,74,0.15) 85%,
-    transparent 100%
+    transparent
   );
-  flex-shrink:0;
 }
 
 
