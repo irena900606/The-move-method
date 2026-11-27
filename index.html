@@ -1572,13 +1572,23 @@ button.landing-option.landing-option-gold small{
   letter-spacing:-0.5px;
   transform:skewX(-8deg);
 }
-  
-.landing-tagline{
+ .landing-tagline{
+  position:relative;
   width:100%;
   box-sizing:border-box;
   margin-top:auto;
   padding:18px 4px;
-  background:#ffffff;
+
+  background:linear-gradient(
+    to bottom,
+    #090a09 0%,
+    #555650 12%,
+    #ffffff 40%,
+    #ffffff 60%,
+    #555650 88%,
+    #090a09 100%
+  );
+
   color:#8F762B;
   text-align:center;
   font-family:'Barlow Condensed',sans-serif;
@@ -1586,26 +1596,7 @@ button.landing-option.landing-option-gold small{
   font-weight:700;
   letter-spacing:3px;
   white-space:nowrap;
-  box-shadow:0 -8px 22px rgba(0,0,0,0.65);
-}
-.landing-tagline{
-  position:relative;
-}
-
-.landing-tagline::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:-25px;
-  height:25px;
-  background:linear-gradient(
-  to bottom,
-  #000000,
-  #ffffff
-);
-  pointer-events:none;
-}
+} 
   
 </style>
 </head>
