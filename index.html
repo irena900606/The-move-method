@@ -1588,6 +1588,24 @@ button.landing-option.landing-option-gold small{
   white-space:nowrap;
   box-shadow:0 -8px 22px rgba(0,0,0,0.65);
 }
+.landing-tagline{
+  position:relative;
+}
+
+.landing-tagline::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:-25px;
+  height:25px;
+  background:linear-gradient(
+    to bottom,
+    transparent,
+    #ffffff
+  );
+  pointer-events:none;
+}
   
 </style>
 </head>
